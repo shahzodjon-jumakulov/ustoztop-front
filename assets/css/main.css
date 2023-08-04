@@ -5,6 +5,34 @@
 body {
     background: #F4F6FF;
     font-family: "TT Norms";
+    viewport-fit: cover;
+    min-height: 100dvh;
+}
+
+input,
+textarea,
+button,
+select,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+    background: rgba(253, 197, 0, 0.20);
+}
+
+a.link {
+    font-size: 14px;
+    font-weight: 400;
+    color: #1977F1;
+}
+
+a.link:hover {
+    text-decoration: underline;
+}
+
+a.link:active {
+    color: #145FC1;
 }
 
 .lheight-normal {
