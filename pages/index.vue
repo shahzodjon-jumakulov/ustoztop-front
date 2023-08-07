@@ -9,7 +9,6 @@ const switchLocalePath = useSwitchLocalePath()
         <div>
             <NuxtLink :to="switchLocalePath('ru')">Main page ru</NuxtLink>
             <NuxtLink :to="switchLocalePath('uz')">Main page uz</NuxtLink>
-            <!-- <ModalAuth /> -->
         </div>
     </div>
 </template>

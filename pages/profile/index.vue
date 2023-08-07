@@ -1,29 +1,21 @@
 <script setup>
 const { locale } = useI18n()
+const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 // language dropdown
 const lang = ref(false)
 
-
-const docHeight = ref("calc(100vh - 50px)")
-
-const getDocHeight = computed(() => {
-    return `calc(${docHeight.value}px - 50px)`
-})
-
-onMounted(() => {
-    docHeight.value = window.innerHeight
-    console.log(docHeight.value)
-    window.addEventListener("resize", () => docHeight.value = window.innerHeight)
-})
+const login = useState("isLoginOpen")
+const signup = useState("isSignupOpen")
 
 </script>
 
 <template>
     <div class="profile flex flex-col justify-between pb-4">
         <div class="flex flex-col gap-4">
-            <div class="p-4 bg-white flex flex-col justify-center items-center">
-                <div class="avatar w-[60px] h-[60px] rounded-full">
+            <!-- avatar, auth -->
+            <div class="p-4 bg-white flex flex-col gap-[15px] justify-center items-center">
+                <div class="avatar w-[60px] rounded-full">
                     <div class="img border-bg rounded-full border-[1.2px] p-[2.4px] inline-flex">
                         <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="56" height="56"
                             viewBox="0 0 56 56" fill="none">
@@ -34,10 +26,9 @@ onMounted(() => {
                         </svg>
                     </div>
                 </div>
-                <div class="auth px-2.5 flex items-center w-max gap-[5px] h-[50px]">
-                    <span class="hover:text-blue active:text-pressed cursor-pointer">Вход</span>
-                    <span>/</span>
-                    <span class="hover:text-blue active:text-pressed cursor-pointer">Регистрация</span>
+                <div class="auth flex flex-col items-center w-full gap-2.5">
+                    <BaseButton @click="login = true" size="medium" type="primary">{{ $t("login") }}</BaseButton>
+                    <BaseButton @click="signup = true" size="medium" type="tertiary">{{ $t("signup") }}</BaseButton>
                 </div>
             </div>
             <!-- language with dropdown -->
@@ -103,30 +94,11 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-4 text-center mb-4 text-xs">
-            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
-            </NuxtLink>
-            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
-            </NuxtLink>
-            <NuxtLink to="https://redmedia.uz/main" class="group flex justify-center gap-[5px] flex-wrap">
-                <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
-                    агентством</span>
-                <span class="flex items-center gap-[4.5px]">
-                    <img src="~/assets/images/credit.svg" alt="redmedia">
-                </span>
-            </NuxtLink>
-        </div>
     </div>
 </template>
 
 <style scoped>
 .nav:active {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #E9EFFF;
-}
-
-.profile {
-    min-height: calc(100vh - 50px);
-    min-height: v-bind(getDocHeight);
-    transition: all 300ms ease-in-out;
 }
 </style>

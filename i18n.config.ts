@@ -14,6 +14,8 @@ export default defineI18nConfig(() => ({
       currLang: "Sayt tili: O‘zbekcha",
       about: "Biz haqimizda",
       faq: "Savol-javob",
+      login: "Kirish",
+      signup: "Ro‘yxatdan o‘tish",
     },
     ru: {
       welcome: "Привет",
@@ -27,6 +29,8 @@ export default defineI18nConfig(() => ({
       currLang: "Язык сайта: Русский ",
       about: "О сервисе",
       faq: "Вопрос-ответ",
+      login: "Вход",
+      signup: "Регистрация",
     },
   },
 }));

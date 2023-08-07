@@ -4,7 +4,7 @@ const props = defineProps(["type", "size"]);
 
 <template>
   <button
-    :class="`${props.type} ${props.size} py-3 px-5 rounded-full whitespace-nowrap outline-none flex items-center gap-[5px] w-max`"
+    :class="`${props.type} ${props.size} py-3 px-5 rounded-full whitespace-nowrap outline-none flex justify-center items-center gap-[5px] w-full`"
   >
     <slot></slot>
   </button>

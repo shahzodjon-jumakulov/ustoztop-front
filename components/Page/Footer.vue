@@ -5,75 +5,98 @@ const switchLocalePath = useSwitchLocalePath()
 </script>
 
 <template>
-    <div class="mt-auto bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex z-11 fixed bottom-0 w-full">
-        <NuxtLink :to="localePath('/')"
-            :class="{ 'active': useRoute().name == 'index___ru' || useRoute().name == 'index___uz' }"
-            class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
-            <div class="flex items-center justify-center w-6 h-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                    <path
-                        d="M15.6032 17.0024L18.5596 19.9586C16.8761 21.2518 14.7746 22.0132 12.5036 22.0132C6.98253 22.0132 2.49609 17.5227 2.49609 12.0078H6.61573C6.61573 15.2518 9.2579 17.8938 12.5022 17.8938C13.6406 17.8938 14.7015 17.5694 15.6032 17.0024Z"
-                        class="fill-lightGray group-[.active]:fill-blue" />
-                    <path
-                        d="M22.5062 12.0093C22.5062 14.2859 21.739 16.3916 20.4515 18.075L17.4951 15.1189C18.0621 14.2173 18.3866 13.152 18.3866 12.0078H22.5062V12.0093Z"
-                        class="fill-lightGray group-[.active]:fill-blue" />
-                    <path
-                        d="M12.5017 15.2236C14.2765 15.2236 15.7152 13.7849 15.7152 12.0102C15.7152 10.2355 14.2765 8.79688 12.5017 8.79688C10.7269 8.79688 9.28809 10.2355 9.28809 12.0102C9.28809 13.7849 10.7269 15.2236 12.5017 15.2236Z"
-                        class="fill-lightGray group-[.active]:fill-yellow" />
-                    <path
-                        d="M22.5068 12.0053H18.3871C18.3871 8.75985 15.7464 6.12079 12.5022 6.12079C9.2579 6.12079 6.61719 8.76131 6.61719 12.0053H2.49609C2.49609 6.48757 6.98399 2 12.5022 2C18.0203 2 22.5082 6.48757 22.5082 12.0053H22.5068Z"
-                        class="fill-lightGray group-[.active]:fill-blue" />
-                </svg>
-            </div>
-            <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{ $t("sticky.main")
-            }}</div>
-        </NuxtLink>
-        <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
-            <div class="flex justify-center items-center w-6 h-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M2 0C0.895431 0 0 0.895431 0 2V6C0 7.10457 0.895431 8 2 8H6C7.10457 8 8 7.10457 8 6V2C8 0.895431 7.10457 0 6 0H2ZM14 0C12.8954 0 12 0.895431 12 2V6C12 7.10457 12.8954 8 14 8H18C19.1046 8 20 7.10457 20 6V2C20 0.895431 19.1046 0 18 0H14ZM0 14C0 12.8954 0.895431 12 2 12H6C7.10457 12 8 12.8954 8 14V18C8 19.1046 7.10457 20 6 20H2C0.895431 20 0 19.1046 0 18V14ZM14 12C12.8954 12 12 12.8954 12 14V18C12 19.1046 12.8954 20 14 20H18C19.1046 20 20 19.1046 20 18V14C20 12.8954 19.1046 12 18 12H14Z"
-                        fill="#A7AABC" class="group-[.active]:fill-blue" />
-                </svg>
-            </div>
-            <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
-                $t("sticky.category") }}</div>
+    <div class="mt-auto z-11 fixed bottom-0 w-full">
+        <div class="flex flex-col gap-4 text-center mb-4 text-xs" v-if="useRoute().name == `profile___uz` || useRoute().name == `profile___ru`">
+            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
+            </NuxtLink>
+            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
+            </NuxtLink>
+            <NuxtLink to="https://redmedia.uz/main" class="group flex justify-center gap-[5px] flex-wrap">
+                <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
+                    агентством</span>
+                <span class="flex items-center gap-[4.5px]">
+                    <img src="~/assets/images/credit.svg" alt="redmedia">
+                </span>
+            </NuxtLink>
         </div>
-        <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
-            <div class="flex justify-center items-center w-6 h-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10ZM10 5.25C10.4142 5.25 10.75 5.58579 10.75 6V9.25H14C14.4142 9.25 14.75 9.58579 14.75 10C14.75 10.4142 14.4142 10.75 14 10.75H10.75V14C10.75 14.4142 10.4142 14.75 10 14.75C9.58579 14.75 9.25 14.4142 9.25 14V10.75H6C5.58579 10.75 5.25 10.4142 5.25 10C5.25 9.58579 5.58579 9.25 6 9.25H9.25V6C9.25 5.58579 9.58579 5.25 10 5.25Z"
-                        fill="#A7AABC" class="group-[.active]:fill-blue" />
-                </svg>
+        <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex">
+            <NuxtLink :to="localePath('/')"
+                :class="{ 'active': useRoute().name == 'index___ru' || useRoute().name == 'index___uz' }"
+                class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+                <div class="flex items-center justify-center w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                        <path
+                            d="M15.6032 17.0024L18.5596 19.9586C16.8761 21.2518 14.7746 22.0132 12.5036 22.0132C6.98253 22.0132 2.49609 17.5227 2.49609 12.0078H6.61573C6.61573 15.2518 9.2579 17.8938 12.5022 17.8938C13.6406 17.8938 14.7015 17.5694 15.6032 17.0024Z"
+                            class="fill-lightGray group-[.active]:fill-blue" />
+                        <path
+                            d="M22.5062 12.0093C22.5062 14.2859 21.739 16.3916 20.4515 18.075L17.4951 15.1189C18.0621 14.2173 18.3866 13.152 18.3866 12.0078H22.5062V12.0093Z"
+                            class="fill-lightGray group-[.active]:fill-blue" />
+                        <path
+                            d="M12.5017 15.2236C14.2765 15.2236 15.7152 13.7849 15.7152 12.0102C15.7152 10.2355 14.2765 8.79688 12.5017 8.79688C10.7269 8.79688 9.28809 10.2355 9.28809 12.0102C9.28809 13.7849 10.7269 15.2236 12.5017 15.2236Z"
+                            class="fill-lightGray group-[.active]:fill-yellow" />
+                        <path
+                            d="M22.5068 12.0053H18.3871C18.3871 8.75985 15.7464 6.12079 12.5022 6.12079C9.2579 6.12079 6.61719 8.76131 6.61719 12.0053H2.49609C2.49609 6.48757 6.98399 2 12.5022 2C18.0203 2 22.5082 6.48757 22.5082 12.0053H22.5068Z"
+                            class="fill-lightGray group-[.active]:fill-blue" />
+                    </svg>
+                </div>
+                <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
+                    $t("sticky.main")
+                }}</div>
+            </NuxtLink>
+            <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+                <div class="flex justify-center items-center w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M2 0C0.895431 0 0 0.895431 0 2V6C0 7.10457 0.895431 8 2 8H6C7.10457 8 8 7.10457 8 6V2C8 0.895431 7.10457 0 6 0H2ZM14 0C12.8954 0 12 0.895431 12 2V6C12 7.10457 12.8954 8 14 8H18C19.1046 8 20 7.10457 20 6V2C20 0.895431 19.1046 0 18 0H14ZM0 14C0 12.8954 0.895431 12 2 12H6C7.10457 12 8 12.8954 8 14V18C8 19.1046 7.10457 20 6 20H2C0.895431 20 0 19.1046 0 18V14ZM14 12C12.8954 12 12 12.8954 12 14V18C12 19.1046 12.8954 20 14 20H18C19.1046 20 20 19.1046 20 18V14C20 12.8954 19.1046 12 18 12H14Z"
+                            fill="#A7AABC" class="group-[.active]:fill-blue" />
+                    </svg>
+                </div>
+                <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
+                    $t("sticky.category") }}</div>
             </div>
-            <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{ $t("sticky.post")
-            }}</div>
+            <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+                <div class="flex justify-center items-center w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10ZM10 5.25C10.4142 5.25 10.75 5.58579 10.75 6V9.25H14C14.4142 9.25 14.75 9.58579 14.75 10C14.75 10.4142 14.4142 10.75 14 10.75H10.75V14C10.75 14.4142 10.4142 14.75 10 14.75C9.58579 14.75 9.25 14.4142 9.25 14V10.75H6C5.58579 10.75 5.25 10.4142 5.25 10C5.25 9.58579 5.58579 9.25 6 9.25H9.25V6C9.25 5.58579 9.58579 5.25 10 5.25Z"
+                            fill="#A7AABC" class="group-[.active]:fill-blue" />
+                    </svg>
+                </div>
+                <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
+                    $t("sticky.post")
+                }}</div>
+            </div>
+            <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+                <div class="flex justify-center items-center w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" viewBox="0 0 16 18" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M0 5.75V16C0 17.6481 1.88153 18.5889 3.2 17.6L6.8 14.9C7.51111 14.3667 8.48889 14.3667 9.2 14.9L12.8 17.6C14.1185 18.5889 16 17.6481 16 16V5.75H0ZM0 4.25H16V2C16 0.895431 15.1046 0 14 0H2C0.895431 0 0 0.895431 0 2V4.25Z"
+                            fill="#A7AABC" class="group-[.active]:fill-blue" />
+                    </svg>
+                </div>
+                <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
+                    $t("sticky.saved") }}</div>
+            </div>
+            <NuxtLink :to="localePath('/profile')"
+                :class="{ 'active': useRoute().name == 'profile___ru' || useRoute().name == 'profile___uz' }"
+                class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+                <div class="flex justify-center items-center w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="0 0 15 18" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M7.49988 8C9.70902 8 11.4999 6.20914 11.4999 4C11.4999 1.79086 9.70902 0 7.49988 0C5.29074 0 3.49988 1.79086 3.49988 4C3.49988 6.20914 5.29074 8 7.49988 8ZM7.49988 18C11.3659 18 14.4999 16.2091 14.4999 14C14.4999 11.7909 11.3659 10 7.49988 10C3.63388 10 0.499878 11.7909 0.499878 14C0.499878 16.2091 3.63388 18 7.49988 18Z"
+                            fill="#A7AABC" class="group-[.active]:fill-blue" />
+                    </svg>
+                </div>
+                <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
+                    $t("sticky.profile") }}</div>
+            </NuxtLink>
         </div>
-        <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
-            <div class="flex justify-center items-center w-6 h-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" viewBox="0 0 16 18" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0 5.75V16C0 17.6481 1.88153 18.5889 3.2 17.6L6.8 14.9C7.51111 14.3667 8.48889 14.3667 9.2 14.9L12.8 17.6C14.1185 18.5889 16 17.6481 16 16V5.75H0ZM0 4.25H16V2C16 0.895431 15.1046 0 14 0H2C0.895431 0 0 0.895431 0 2V4.25Z"
-                        fill="#A7AABC" class="group-[.active]:fill-blue" />
-                </svg>
-            </div>
-            <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
-                $t("sticky.saved") }}</div>
-        </div>
-        <NuxtLink :to="localePath('/profile')" :class="{ 'active': useRoute().name == 'profile___ru' || useRoute().name == 'profile___uz' }" class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
-            <div class="flex justify-center items-center w-6 h-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="0 0 15 18" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M7.49988 8C9.70902 8 11.4999 6.20914 11.4999 4C11.4999 1.79086 9.70902 0 7.49988 0C5.29074 0 3.49988 1.79086 3.49988 4C3.49988 6.20914 5.29074 8 7.49988 8ZM7.49988 18C11.3659 18 14.4999 16.2091 14.4999 14C14.4999 11.7909 11.3659 10 7.49988 10C3.63388 10 0.499878 11.7909 0.499878 14C0.499878 16.2091 3.63388 18 7.49988 18Z"
-                        fill="#A7AABC" class="group-[.active]:fill-blue" />
-                </svg>
-            </div>
-            <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
-                $t("sticky.profile") }}</div>
-        </NuxtLink>
     </div>
 </template>
+
+<style scoped>
+
+</style>
 
 <!-- <div class="footer flex flex-col gap-5 px-4 py-5">
     <div class="flex flex-col gap-5 w-full">
