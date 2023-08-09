@@ -1,4 +1,7 @@
 <script setup>
+const { signUp, signIn, signOut, user } = useAuth();
+
+const { supabase } = useSupabase()
 const { locale } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -8,11 +11,19 @@ const lang = ref(false)
 const login = useState("isLoginOpen")
 const signup = useState("isSignupOpen")
 
+const handleSubmit = () => {
+  signUp({ email: "kajeja6716@v1zw.com", password: "123456" });
+};
+
+const handleLogin = () => {
+    signIn({email: "kajeja6716@v1zw.com", password: "123456"})
+}
 </script>
 
 <template>
     <div class="profile flex flex-col justify-between pb-4">
         <div class="flex flex-col gap-4">
+            <div>{{ user }}</div>
             <!-- avatar, auth -->
             <div class="p-4 bg-white flex flex-col gap-[15px] justify-center items-center">
                 <div class="avatar w-[60px] rounded-full">
@@ -27,8 +38,9 @@ const signup = useState("isSignupOpen")
                     </div>
                 </div>
                 <div class="auth flex flex-col items-center w-full gap-2.5">
-                    <BaseButton @click="login = true" size="medium" type="primary">{{ $t("login") }}</BaseButton>
-                    <BaseButton @click="signup = true" size="medium" type="tertiary">{{ $t("signup") }}</BaseButton>
+                    <BaseButton @click="signOut" size="medium" type="primary">Signout</BaseButton>
+                    <BaseButton @click="handleLogin" size="medium" type="primary">{{ $t("login") }}</BaseButton>
+                    <BaseButton @click="handleSubmit" size="medium" type="tertiary">{{ $t("signup") }}</BaseButton>
                 </div>
             </div>
             <!-- language with dropdown -->
