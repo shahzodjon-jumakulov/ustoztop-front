@@ -48,7 +48,7 @@ const getLastWord = (str, last = false) => {
                 <img src="~/assets/images/avatar.png" alt="avatar">
             </div>
             <div class="flex flex-col gap-[5px]">
-                <div class="font-bold text-lg text-black">
+                <div class="flex gap-[5px] font-bold text-lg text-black">
                     {{ getLastWord(props.name, false) }}
                     <span class="whitespace-nowrap flex items-center gap-[5px]">
                         {{ getLastWord(props.name, true) }}
