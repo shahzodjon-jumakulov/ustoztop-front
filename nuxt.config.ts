@@ -4,15 +4,19 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css", "~/assets/fonts/TT-Norms/stylesheet.css"],
   modules: ["@nuxtjs/i18n"],
   i18n: {
-    vueI18n: './i18n.config.ts',
+    vueI18n: "./i18n.config.ts",
     locales: ["uz", "ru"],
     defaultLocale: "uz",
-    strategy: 'prefix_except_default',
+    strategy: "prefix_except_default",
   },
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
+      cssnano:
+        process.env.NODE_ENV === "production"
+          ? { preset: ["default", { discardComments: { removeAll: true } }] }
+          : false, // disable cssnano when not in production
     },
   },
 });
