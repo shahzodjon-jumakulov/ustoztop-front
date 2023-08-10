@@ -5,6 +5,7 @@
 body {
   background: #f4f6ff;
   font-family: "TT Norms";
+  font-variant: no-common-ligatures;
   viewport-fit: cover;
   min-height: 100dvh;
 }

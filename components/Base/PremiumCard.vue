@@ -30,19 +30,33 @@ const props = defineProps({
     },
 })
 
+const getLastWord = (str, last = false) => {
+    if (!last) {
+        var lastIndex = str.lastIndexOf(" ");
+        return str.substring(0, lastIndex);
+    } else {
+        var n = str.split(" ");
+        return n[n.length - 1]
+    }
+}
 </script>
 
 <template>
     <div class="bg-white p-4 sm:p-5 flex flex-col gap-[15px] rounded-3xl">
-        <div class="flex flex-col sm:flex-row gap-[15px]">
+        <div class="flex gap-[15px]">
             <div class="flex justify-start w-[64px] h-[64px] rounded-full border border-bg2 overflow-hidden">
                 <img src="~/assets/images/avatar.png" alt="avatar">
             </div>
             <div class="flex flex-col gap-[5px]">
-                <div class="flex gap-[5px]">
-                    <span class="font-bold text-lg text-black">{{ props.name }}</span>
-                    <img v-if="props.isVerified" src="~/assets/images/verified.svg" alt="verified" />
-                    <img v-if="props.isPremium" src="~/assets/images/crown.svg" alt="premium" />
+                <div class="font-bold text-lg text-black">
+                    {{ getLastWord(props.name, false) }}
+                    <span class="whitespace-nowrap flex items-center gap-[5px]">
+                        {{ getLastWord(props.name, true) }}
+                        <img v-if="props.isVerified" class="w-[18px] h-[18px] inline-flex"
+                            src="~/assets/images/verified.png" alt="verified" />
+                        <img v-if="props.isPremium" class="w-[18px] h-[18px] inline-flex" src="~/assets/images/crown.png"
+                            alt="premium" />
+                    </span>
                 </div>
                 <div v-if="props.type == 'tutor'" class="flex gap-[5px]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">

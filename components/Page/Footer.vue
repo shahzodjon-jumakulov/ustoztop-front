@@ -1,16 +1,31 @@
 <script setup>
-const { locale } = useI18n()
+const route = useRoute()
 const localePath = useLocalePath()
-const switchLocalePath = useSwitchLocalePath()
-
 const isAuth = useAuthenticated()
+
+const activeNav = ref(null)
+
+function getActiveNav() {
+    if (route.name == 'index___ru' || route.name == 'index___uz') {
+        activeNav.value = "main"
+    } else if (route.name == 'saved___ru' || route.name == 'saved___uz') {
+        activeNav.value = "saved"
+    } else if (route.name == 'profile___ru' || route.name == 'profile___uz') {
+        activeNav.value = "profile"
+    } else {
+        activeNav.value = null
+    }
+}
+
+getActiveNav()
+
+watch(() => route.fullPath, () => getActiveNav());
 </script>
 
 <template>
     <div class="mt-auto z-99 sticky bottom-0 w-full">
         <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex">
-            <NuxtLink :to="localePath('/')"
-                :class="{ 'active': useRoute().name == 'index___ru' || useRoute().name == 'index___uz' }"
+            <NuxtLink :to="localePath('/')" :class="{ 'active': activeNav == 'main' }"
                 class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                 <div class="flex items-center justify-center w-6 h-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -55,7 +70,8 @@ const isAuth = useAuthenticated()
                     $t("sticky.post")
                 }}</div>
             </div>
-            <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+            <NuxtLink :to="localePath('/saved')" :class="{ 'active': activeNav == 'saved' }"
+                class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                 <div class="flex justify-center items-center w-6 h-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" viewBox="0 0 16 18" fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -65,9 +81,8 @@ const isAuth = useAuthenticated()
                 </div>
                 <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
                     $t("sticky.saved") }}</div>
-            </div>
-            <NuxtLink :to="localePath('/profile')"
-                :class="{ 'active': useRoute().name == 'profile___ru' || useRoute().name == 'profile___uz' }"
+            </NuxtLink>
+            <NuxtLink :to="localePath('/profile')" :class="{ 'active': activeNav == 'profile' }"
                 class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                 <div class="flex justify-center items-center w-6 h-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="0 0 15 18" fill="none">
@@ -83,9 +98,7 @@ const isAuth = useAuthenticated()
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <!-- <div class="footer flex flex-col gap-5 px-4 py-5">
     <div class="flex flex-col gap-5 w-full">
