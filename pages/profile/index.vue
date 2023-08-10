@@ -1,7 +1,6 @@
 <script setup>
-const { signUp, signIn, signOut, user } = useAuth();
+// const { signUp, signIn, signOut, user } = useAuth();
 
-const { supabase } = useSupabase()
 const { locale } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
@@ -10,20 +9,11 @@ const lang = ref(false)
 
 const login = useState("isLoginOpen")
 const signup = useState("isSignupOpen")
-
-const handleSubmit = () => {
-  signUp({ email: "kajeja6716@v1zw.com", password: "123456" });
-};
-
-const handleLogin = () => {
-    signIn({email: "kajeja6716@v1zw.com", password: "123456"})
-}
 </script>
 
 <template>
     <div class="profile flex flex-col justify-between pb-4">
-        <div class="flex flex-col gap-4">
-            <div>{{ user }}</div>
+        <div class="flex flex-col gap-4 h-full">
             <!-- avatar, auth -->
             <div class="p-4 bg-white flex flex-col gap-[15px] justify-center items-center">
                 <div class="avatar w-[60px] rounded-full">
@@ -38,9 +28,8 @@ const handleLogin = () => {
                     </div>
                 </div>
                 <div class="auth flex flex-col items-center w-full gap-2.5">
-                    <BaseButton @click="signOut" size="medium" type="primary">Signout</BaseButton>
-                    <BaseButton @click="handleLogin" size="medium" type="primary">{{ $t("login") }}</BaseButton>
-                    <BaseButton @click="handleSubmit" size="medium" type="tertiary">{{ $t("signup") }}</BaseButton>
+                    <BaseButton @click="login = true" size="medium" type="primary">{{ $t("login.title") }}</BaseButton>
+                    <BaseButton @click="signup = true" size="medium" type="tertiary">{{ $t("signup.title") }}</BaseButton>
                 </div>
             </div>
             <!-- language with dropdown -->
@@ -105,6 +94,20 @@ const handleLogin = () => {
                     </NuxtLink>
                 </div>
             </div>
+            <!-- terms and rules -->
+            <div class="flex flex-col gap-4 text-center mb-4 text-xs mt-auto">
+                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
+                </NuxtLink>
+                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
+                </NuxtLink>
+                <NuxtLink to="https://redmedia.uz/main" class="group flex justify-center gap-[5px] flex-wrap">
+                    <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
+                        агентством</span>
+                    <span class="flex items-center gap-[4.5px]">
+                        <img src="~/assets/images/credit.svg" alt="redmedia">
+                    </span>
+                </NuxtLink>
+            </div>
         </div>
     </div>
 </template>
@@ -112,5 +115,9 @@ const handleLogin = () => {
 <style scoped>
 .nav:active {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #E9EFFF;
+}
+
+.profile {
+    height: calc(100svh - 50px);
 }
 </style>

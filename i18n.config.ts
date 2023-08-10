@@ -14,8 +14,17 @@ export default defineI18nConfig(() => ({
       currLang: "Sayt tili: O‘zbekcha",
       about: "Biz haqimizda",
       faq: "Savol-javob",
-      login: "Kirish",
-      signup: "Ro‘yxatdan o‘tish",
+      login: {
+        title: "Kirish",
+        loginbtn: "Kirish",
+      },
+      signup: {
+        title: "Ro‘yxatdan o‘tish",
+      },
+      submit: "Tasdiqlash",
+      categories: {
+        select: "Kategoriyani tanlang",
+      },
     },
     ru: {
       welcome: "Привет",
@@ -29,8 +38,17 @@ export default defineI18nConfig(() => ({
       currLang: "Язык сайта: Русский ",
       about: "О сервисе",
       faq: "Вопрос-ответ",
-      login: "Вход",
-      signup: "Регистрация",
+      login: {
+        title: "Вход",
+        loginbtn: "Войти",
+      },
+      signup: {
+        title: "Регистрация",
+      },
+      submit: "Подтвердить",
+      categories: {
+        select: "Выберите категорию",
+      },
     },
   },
 }));

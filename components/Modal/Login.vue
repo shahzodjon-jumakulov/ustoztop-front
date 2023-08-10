@@ -3,6 +3,7 @@
 
 const isSelected = ref(null)
 const auth = useState("isLoginOpen", () => false)
+const signup = useState("isSignupOpen", () => false)
 
 watch(auth, () => {
     if (auth.value) {
@@ -11,13 +12,55 @@ watch(auth, () => {
         enableScroll();
     }
 })
+
+// inputs
+const phone = ref(null)
+const password = ref(null)
+
+const show = ref(false)
+const isFocused = ref(false)
+
+const toggleShowPassword = () => {
+    show.value = !show.value;
+    if (isFocused.value) {
+        // If the input was focused, refocus it after toggling visibility
+        requestAnimationFrame(() => {
+            document.getElementById('passwordInput').focus();
+        });
+    }
+};
+
+// format phone number input
+const formatPhoneNumber = (event) => {
+    let inputValue = event.target.value.replace(/\D/g, '').slice(3);
+
+    if (inputValue.length > 9) {
+        inputValue = inputValue.substring(0, 9);
+    }
+
+    if (inputValue.length <= 2) {
+        phone.value = "+998 " + inputValue;
+    } else if (inputValue.length <= 5) {
+        phone.value = "+998 " + inputValue.substring(0, 2) + " " + inputValue.substring(2);
+    } else if (inputValue.length <= 7) {
+        phone.value = "+998 " + inputValue.substring(0, 2) + " " + inputValue.substring(2, 5) + "-" + inputValue.substring(5);
+    } else {
+        phone.value = "+998 " + inputValue.substring(0, 2) + " " + inputValue.substring(2, 5) + "-" + inputValue.substring(5, 7) + "-" + inputValue.substring(7, 9);
+    }
+};
+
+const handleFocus = () => {
+    if (!phone.value) {
+        phone.value = "+998 ";
+    }
+};
 </script>
 
 <template>
     <teleport to="body">
         <div class="fixed inset-0 z-10 h-[100svh]" v-if="auth">
-            <div class="bg-black bg-opacity-60 w-full absolute"></div>
-            <div class="flex justify-center items-center w-full h-full fixed">
+            <div class="bg-black bg-opacity-60 w-full absolute hidden md:block"></div>
+            <div class="container flex justify-center items-center w-full fixed">
                 <div
                     class="p-5 bg-white inline-flex flex-col gap-2.5 justify-start items-center md:rounded-3xl w-full h-full">
                     <div class="ml-auto hidden md:block" @click="auth = false, isSelected = null">
@@ -38,46 +81,73 @@ watch(auth, () => {
                                         fill="#A7AABC" />
                                 </svg>
                             </div>
-                            <div class="text-2xl text-black font-bold">{{ $t("login") }}</div>
+                            <div class="text-2xl text-black font-bold">{{ $t("login.title") }}</div>
                         </div>
-                        <div class="flex flex-col gap-2.5 h-full">
-                            <div class="group h-1/2" :class="{ selected: isSelected == 1 }" @click="isSelected = 1">
+                        <div class="flex flex-col gap-[10px]">
+                            <div class="relative h-[50px] w-full">
+                                <input type="tel" id="floating_filled"
+                                    class="block h-full w-full p-4 pl-[54px] bg-bg rounded-[25px] text-base text-black outline-none peer caret-yellow border border-bg focus:border-blue"
+                                    placeholder=" " v-model="phone" @input="formatPhoneNumber" pattern="\d*" maxlength="18"
+                                    @focus="handleFocus" required />
+                                <label for="floating_filled"
+                                    class="absolute text-sm text-gray duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-[54px] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                    Номер телефона
+                                </label>
                                 <div
-                                    class="bg-white group-active:bg-bg2 group-[.selected]:bg-bg border border-bg2 group-[.selected]:border-blue rounded-3xl p-[5px] flex flex-col gap-[5px] justify-center items-center cursor-pointer h-full">
-                                    <div class="px-2.5 py-1.5">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="29" height="36" viewBox="0 0 29 36"
-                                            fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M14.5 16C18.9183 16 22.5 12.4183 22.5 8C22.5 3.58172 18.9183 0 14.5 0C10.0817 0 6.5 3.58172 6.5 8C6.5 12.4183 10.0817 16 14.5 16ZM14.5 36C22.232 36 28.5 32.4183 28.5 28C28.5 23.5817 22.232 20 14.5 20C6.76801 20 0.5 23.5817 0.5 28C0.5 32.4183 6.76801 36 14.5 36Z"
-                                                class="fill-icon group-[.selected]:fill-blue" />
-                                        </svg>
-                                    </div>
-                                    <div class="text-gray text-base group-[.selected]:text-black">
-                                        Репетитор
-                                    </div>
+                                    class="input-focus absolute inset-y-0 left-0 flex justify-center items-center ml-5 w-6 pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19"
+                                        fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M10 0.25C9.58579 0.25 9.25 0.585786 9.25 1C9.25 1.41421 9.58579 1.75 10 1.75C10.9521 1.75 11.8948 1.93753 12.7745 2.30187C13.6541 2.66622 14.4533 3.20025 15.1265 3.87348C15.7997 4.5467 16.3338 5.34593 16.6981 6.22554C17.0625 7.10516 17.25 8.04792 17.25 9C17.25 9.41421 17.5858 9.75 18 9.75C18.4142 9.75 18.75 9.41421 18.75 9C18.75 7.85093 18.5237 6.71312 18.0839 5.65152C17.6442 4.58992 16.9997 3.62533 16.1872 2.81282C15.3747 2.0003 14.4101 1.35578 13.3485 0.916054C12.2869 0.476325 11.1491 0.25 10 0.25ZM18 17V15.3541C18 14.5363 17.5021 13.8008 16.7428 13.4971L14.7086 12.6835C13.7429 12.2971 12.6422 12.7156 12.177 13.646L12 14C12 14 9.5 13.5 7.5 11.5C5.5 9.5 5 7 5 7L5.35402 6.82299C6.28438 6.35781 6.70285 5.25714 6.31654 4.29136L5.50289 2.25722C5.19916 1.4979 4.46374 1 3.64593 1H2C0.895431 1 0 1.89543 0 3C0 11.8366 7.16344 19 16 19C17.1046 19 18 18.1046 18 17ZM9.25 5C9.25 4.58579 9.58579 4.25 10 4.25C10.6238 4.25 11.2414 4.37286 11.8177 4.61157C12.394 4.85028 12.9177 5.20016 13.3588 5.64124C13.7998 6.08232 14.1497 6.60596 14.3884 7.18225C14.6271 7.75855 14.75 8.37622 14.75 9C14.75 9.41421 14.4142 9.75 14 9.75C13.5858 9.75 13.25 9.41421 13.25 9C13.25 8.5732 13.1659 8.15059 13.0026 7.75628C12.8393 7.36197 12.5999 7.00369 12.2981 6.7019C11.9963 6.40011 11.638 6.16072 11.2437 5.99739C10.8494 5.83406 10.4268 5.75 10 5.75C9.58579 5.75 9.25 5.41421 9.25 5Z"
+                                            fill="#787B8D" />
+                                    </svg>
                                 </div>
                             </div>
-                            <div class="group h-1/2" :class="{ selected: isSelected == 2 }" @click="isSelected = 2">
+                            <div class="relative h-[50px] w-full">
+                                <input :type="show ? 'text' : 'password'" id="passwordInput"
+                                    class="block h-full w-full p-4 pl-[54px] bg-bg rounded-[25px] text-base text-black outline-none peer caret-yellow border border-bg focus:border-blue"
+                                    @focus="isFocused = true" @blur="isFocused = false" placeholder=" "
+                                    v-model="password" />
+                                <label for="passwordInput"
+                                    class="absolute text-sm text-gray duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-[54px] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                    Пароль
+                                </label>
                                 <div
-                                    class="bg-white group-active:bg-bg2 group-[.selected]:bg-bg border border-bg2 group-[.selected]:border-blue rounded-3xl p-[5px] flex flex-col gap-[5px] justify-center items-center cursor-pointer h-full">
-                                    <div class="px-2.5 py-1.5">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="49" viewBox="0 0 48 49"
-                                            fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M43.2779 41.8586H39.4221V12.4611C39.4221 8.20246 35.9696 4.75 31.7116 4.75H16.2894C12.0308 4.75 8.57888 8.20246 8.57888 12.4611V41.8586H4.72307C3.92472 41.8586 3.27734 42.5059 3.27734 43.3043C3.27734 44.1026 3.92472 44.75 4.72307 44.75H43.2779C44.0762 44.75 44.7236 44.1026 44.7236 43.3043C44.7236 42.5059 44.0762 41.8586 43.2779 41.8586ZM14.7523 10.9563C15.0142 10.695 15.3757 10.5329 15.7752 10.5329H21.3826C22.1809 10.5329 22.8283 11.1803 22.8283 11.9786C22.8283 12.3781 22.6667 12.7396 22.4049 13.0015C22.143 13.2633 21.782 13.4249 21.3826 13.4249H15.7752C14.9763 13.4249 14.3289 12.7775 14.3289 11.9786C14.3289 11.5797 14.4905 11.2181 14.7523 10.9563ZM14.7523 15.9436C15.0142 15.6823 15.3757 15.5202 15.7752 15.5202H21.3826C22.1809 15.5202 22.8283 16.1676 22.8283 16.9659C22.8283 17.3648 22.6667 17.7264 22.4049 17.9883C22.143 18.2495 21.782 18.4117 21.3826 18.4117H15.7752C14.9763 18.4117 14.3289 17.7643 14.3289 16.9659C14.3289 16.567 14.4905 16.2055 14.7523 15.9436ZM14.3289 21.9527C14.3289 21.5533 14.4905 21.1922 14.7523 20.9304C15.0142 20.6685 15.3757 20.507 15.7752 20.507H21.3826C22.1809 20.507 22.8283 21.1544 22.8283 21.9527C22.8283 22.3522 22.6667 22.7137 22.4049 22.975C22.143 23.2369 21.782 23.3984 21.3826 23.3984H15.7752C14.9763 23.3984 14.3289 22.7516 14.3289 21.9527ZM29.7834 41.8586H18.217V33.6656C18.217 30.4716 20.8065 27.8827 24.0005 27.8827C27.1944 27.8827 29.7834 30.4716 29.7834 33.6656V41.8586ZM33.2481 22.975C32.9868 23.2369 32.6252 23.3984 32.2258 23.3984H26.6184C25.8195 23.3984 25.1727 22.7516 25.1727 21.9527C25.1727 21.5533 25.3342 21.1922 25.5961 20.9304C25.8574 20.6685 26.2189 20.507 26.6184 20.507H32.2258C33.0247 20.507 33.6715 21.1544 33.6715 21.9527C33.6715 22.3522 33.5099 22.7137 33.2481 22.975ZM33.2481 17.9883C32.9868 18.2495 32.6252 18.4117 32.2258 18.4117H26.6184C25.8195 18.4117 25.1727 17.7643 25.1727 16.9659C25.1727 16.567 25.3342 16.2055 25.5961 15.9436C25.8579 15.6818 26.2189 15.5202 26.6184 15.5202H32.2258C33.0247 15.5202 33.6715 16.1676 33.6715 16.9659C33.6715 17.3648 33.5099 17.7264 33.2481 17.9883ZM33.2481 13.0015C32.9868 13.2633 32.6252 13.4249 32.2258 13.4249H26.6184C25.8195 13.4249 25.1727 12.7775 25.1727 11.9786C25.1727 11.5797 25.3342 11.2181 25.5961 10.9563C25.8574 10.695 26.2189 10.5329 26.6184 10.5329H32.2258C33.0247 10.5329 33.6715 11.1803 33.6715 11.9786C33.6715 12.3781 33.5099 12.7396 33.2481 13.0015Z"
-                                                fill="#787B8D" class="group-[.selected]:fill-blue" />
-                                        </svg>
-                                    </div>
-                                    <div class="text-gray text-base group-[.selected]:text-black">
-                                        Учебное заведение
-                                    </div>
+                                    class="input-focus absolute inset-y-0 left-0 flex justify-center items-center ml-5 w-6 pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19"
+                                        fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M8 0.25C5.37665 0.25 3.25 2.37665 3.25 5V5.0702C1.39935 5.42125 0 7.04721 0 9V15C0 17.2091 1.79086 19 4 19H12C14.2091 19 16 17.2091 16 15V9C16 7.04721 14.6006 5.42125 12.75 5.0702V5C12.75 2.37665 10.6234 0.25 8 0.25ZM11.25 5C11.25 3.20507 9.79493 1.75 8 1.75C6.20507 1.75 4.75 3.20507 4.75 5H11.25ZM10 12C10 13.1046 9.10457 14 8 14C6.89543 14 6 13.1046 6 12C6 10.8954 6.89543 10 8 10C9.10457 10 10 10.8954 10 12Z"
+                                            fill="#787B8D" />
+                                    </svg>
+                                </div>
+                                <div @mousedown="toggleShowPassword"
+                                    class="group absolute inset-y-0 right-5 flex justify-center items-center ml-5 w-6">
+                                    <svg v-if="show" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M21.1303 14.1469C22.2899 12.9268 22.2899 11.0732 21.1303 9.8531C19.1745 7.79533 15.8155 5 12 5C8.18448 5 4.82549 7.79533 2.86971 9.8531C1.7101 11.0732 1.7101 12.9268 2.86971 14.1469C4.82549 16.2047 8.18448 19 12 19C15.8155 19 19.1745 16.2047 21.1303 14.1469ZM12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                                            class="fill-lightGray group-hover:fill-blue group-active:fill-pressed" />
+                                    </svg>
+                                    <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M3.46967 4.53033C3.17678 4.23744 3.17678 3.76256 3.46967 3.46967C3.76256 3.17678 4.23744 3.17678 4.53033 3.46967L20.5303 19.4697C20.8232 19.7626 20.8232 20.2374 20.5303 20.5303C20.2374 20.8232 19.7626 20.8232 19.4697 20.5303L16.6429 17.7036C15.2337 18.4709 13.66 19 12 19C8.18448 19 4.82549 16.2047 2.86971 14.1469C1.7101 12.9268 1.7101 11.0732 2.86971 9.8531C3.69953 8.98001 4.78196 7.97414 6.04468 7.10534L3.46967 4.53033ZM9.41536 10.476C9.15145 10.9227 9 11.4436 9 12C9 13.6569 10.3431 15 12 15C12.5564 15 13.0773 14.8486 13.524 14.5846L9.41536 10.476ZM12 5C15.8155 5 19.1745 7.79533 21.1303 9.8531C22.2899 11.0732 22.2899 12.9268 21.1303 14.1469C20.6902 14.6099 20.1791 15.1103 19.6078 15.6077L9.4127 5.41264C10.2422 5.15256 11.1086 5 12 5Z"
+                                            class="fill-lightGray group-hover:fill-blue group-active:fill-pressed" />
+                                    </svg>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex justify-center items-center gap-[5px] text-sm pb-4">
-                            <span>Есть аккаунт?</span>
-                            <NuxtLink to="#" class="link">Вход</NuxtLink>
+                        <div class="flex flex-col gap-4 items-center mt-auto">
+                            <div class="link text-blue hover:text-pressed active:text-[#145FC1]">Забыли пароль?</div>
+                            <div class="flex justify-center items-center gap-[5px] text-sm">
+                                <span>Нет аккаунта?</span>
+                                <div @click="signup = true, auth = false"
+                                    class="link text-blue hover:text-pressed active:text-[#145FC1]">Зарегистрироваться
+                                </div>
+                            </div>
                         </div>
+                        <BaseButton type="primary" size="large">{{ $t("login.loginbtn") }}</BaseButton>
                     </div>
                 </div>
             </div>
@@ -85,6 +155,16 @@ watch(auth, () => {
     </teleport>
 </template>
 
-<style scoped>.group {
+<style scoped>
+.container {
+    height: calc(100% - 50px);
+}
+
+.group {
     -webkit-tap-highlight-color: transparent;
-}</style>
+}
+
+input:focus~.input-focus svg path {
+    fill: #1977F1;
+}
+</style>

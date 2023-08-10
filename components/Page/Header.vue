@@ -66,7 +66,7 @@ const searchPopular = [
 </script>
 
 <template>
-    <div class="flex gap-2.5 bg-white p-4 min-w-full text-base justify-between items-center h-14 sm:h-[72px]">
+    <div class="flex gap-2.5 bg-white p-4 sm:p-5 min-w-full text-base justify-between items-center h-14 sm:h-[72px] mb-4 sm:mb-5">
         <NuxtLink to="/" class="flex cursor-pointer h-6 sm:h-8">
             <PageLogo color="blue" />
         </NuxtLink>

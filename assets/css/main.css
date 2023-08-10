@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 body {
-    background: #F4F6FF;
-    font-family: "TT Norms";
-    viewport-fit: cover;
-    min-height: 100dvh;
+  background: #f4f6ff;
+  font-family: "TT Norms";
+  viewport-fit: cover;
+  min-height: 100dvh;
 }
 
 input,
@@ -15,27 +15,47 @@ button,
 select,
 span,
 a {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
-    background: rgba(253, 197, 0, 0.20);
+  background: rgba(253, 197, 0, 0.2);
 }
 
 a.link {
-    font-size: 14px;
-    font-weight: 400;
-    color: #1977F1;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1977f1;
 }
 
 a.link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 a.link:active {
-    color: #145FC1;
+  color: #145fc1;
 }
 
 .lheight-normal {
-    line-height: normal;
+  line-height: normal;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.container {
+  padding: 0 16px;
+}
+
+@media screen and (min-width: 480px) {
+  .container {
+    padding: 0 20px;
+  }
 }

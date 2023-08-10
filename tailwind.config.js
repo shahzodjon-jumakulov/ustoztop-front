@@ -9,6 +9,9 @@ module.exports = {
     "./app.vue",
     "./error.vue",
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {},
     colors: {
@@ -29,11 +32,11 @@ module.exports = {
       pressed: "#166BD9",
     },
     screens: {
-      'sm': '480px',
-      'md': '768px',
-      'lg': '1000px',
-      'xl': '1280px',
+      sm: "480px",
+      md: "768px",
+      lg: "1000px",
+      xl: "1280px",
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };

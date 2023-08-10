@@ -2,23 +2,12 @@
 const { locale } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
+
+const isAuth = useAuthenticated()
 </script>
 
 <template>
-    <div class="mt-auto z-11 fixed bottom-0 w-full">
-        <div class="flex flex-col gap-4 text-center mb-4 text-xs" v-if="useRoute().name == `profile___uz` || useRoute().name == `profile___ru`">
-            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
-            </NuxtLink>
-            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
-            </NuxtLink>
-            <NuxtLink to="https://redmedia.uz/main" class="group flex justify-center gap-[5px] flex-wrap">
-                <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
-                    агентством</span>
-                <span class="flex items-center gap-[4.5px]">
-                    <img src="~/assets/images/credit.svg" alt="redmedia">
-                </span>
-            </NuxtLink>
-        </div>
+    <div class="mt-auto z-99 sticky bottom-0 w-full">
         <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex">
             <NuxtLink :to="localePath('/')"
                 :class="{ 'active': useRoute().name == 'index___ru' || useRoute().name == 'index___uz' }"
@@ -54,7 +43,7 @@ const switchLocalePath = useSwitchLocalePath()
                 <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
                     $t("sticky.category") }}</div>
             </div>
-            <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+            <div v-if="isAuth" class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                 <div class="flex justify-center items-center w-6 h-6">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd"
