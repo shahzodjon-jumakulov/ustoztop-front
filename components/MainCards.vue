@@ -55,7 +55,8 @@ const cards = [
 
 <template>
     <div class="flex flex-col gap-5 sm:px-5 mb-4">
-        <div class="px-4 sm:px-0 gap-2 text-2xl sm:text-[32px] lheight-normal font-bold text-black">
+        <div class="flex items-center px-4 sm:px-0 gap-[10px] text-blue text-xl sm:text-2xl lheight-normal font-bold">
+            <img width="24" height="24" src="~/assets/images/crown.png" alt="premium">
             Премиум репетиторы и учебные заведения
         </div>
         <div class="flex flex-col gap-4">

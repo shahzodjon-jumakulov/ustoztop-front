@@ -23,8 +23,8 @@ watch(() => route.fullPath, () => getActiveNav());
 </script>
 
 <template>
-    <div class="mt-auto z-99 sticky bottom-0 w-full">
-        <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex">
+    <div class="mt-auto z-10 sticky bottom-0 w-full lg:relative lg:bg-blue">
+        <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex lg:hidden">
             <NuxtLink :to="localePath('/')" :class="{ 'active': activeNav == 'main' }"
                 class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                 <div class="flex items-center justify-center w-6 h-6">
@@ -95,109 +95,100 @@ watch(() => route.fullPath, () => getActiveNav());
                     $t("sticky.profile") }}</div>
             </NuxtLink>
         </div>
+        <div class="footer hidden lg:flex flex-col gap-10 p-10">
+            <div class="flex flex-col gap-10 w-full">
+                <div class="links flex justify-between text-sm text-white">
+                    <NuxtLink to="/" class="flex cursor-pointer h-10">
+                        <PageLogo color="white" :isAnimated="true" />
+                    </NuxtLink>
+                    <div class="flex gap-20">
+                        <div class="flex flex-col gap-5">
+                            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">О сервисе</NuxtLink>
+                            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Вопрос-ответ</NuxtLink>
+                        </div>
+                        <div class="flex flex-col gap-5">
+                            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
+                            </NuxtLink>
+                            <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
+                            </NuxtLink>
+                        </div>
+                        <div class="flex gap-5">
+                            <NuxtLink to="#"
+                                class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
+                                <img src="~/assets/images/telegram.svg" alt="telegram">
+                            </NuxtLink>
+                            <NuxtLink to="#"
+                                class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
+                                <img src="~/assets/images/instagram.svg" alt="instagram">
+                            </NuxtLink>
+                            <NuxtLink to="#"
+                                class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
+                                <img src="~/assets/images/facebook.svg" alt="facebook">
+                            </NuxtLink>
+                            <NuxtLink to="#"
+                                class="group bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
+                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17.3442 1.87364C17.1484 1.13727 16.5689 0.556364 15.8317 0.357273C14.4988 1.30047e-07 9.15059 0 9.15059 0C9.15059 0 3.80514 1.30047e-07 2.46945 0.357273C1.73496 0.553636 1.15553 1.13455 0.956949 1.87364C0.600586 3.21 0.600586 6 0.600586 6C0.600586 6 0.600586 8.79 0.956949 10.1264C1.15281 10.8627 1.73224 11.4436 2.46945 11.6427C3.80514 12 9.15059 12 9.15059 12C9.15059 12 14.4988 12 15.8317 11.6427C16.5662 11.4464 17.1456 10.8655 17.3442 10.1264C17.7006 8.79 17.7006 6 17.7006 6C17.7006 6 17.7006 3.21 17.3442 1.87364Z"
+                                        fill="#1977F1" />
+                                    <path d="M7.44222 8.57182L11.8845 6L7.44222 3.42818V8.57182Z"
+                                        class="fill-white group-hover:fill-yellow" />
+                                </svg>
+                            </NuxtLink>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5 text-white">
+                <hr class="border border-lightBlue" />
+                <div class="flex justify-between text-xs">
+                    <span>©2023 Ustoztop. Все права защищены</span>
+                    <NuxtLink to="https://redmedia.uz/main" class="group flex items-center gap-2.5">
+                        <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
+                            агентством</span>
+                        <span class="flex items-center gap-[4.5px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                                <path
+                                    d="M16.2369 2.1097C14.5387 0.41764 12.3308 0 9.34666 0C6.36253 0 4.1538 0.413034 2.45637 2.1097C0.758945 3.80483 0.34668 6.01587 0.34668 9C0.34668 11.9841 0.758177 14.1944 2.45637 15.8903C4.1538 17.587 6.35946 18 9.34666 18C12.3339 18 14.5395 17.587 16.2369 15.8903C17.9351 14.1936 18.3466 11.9841 18.3466 9C18.3466 6.01587 17.939 3.8056 16.2369 2.1097Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M7.43889 8.53919C7.0819 8.1822 6.99515 7.71773 6.99515 7.08973C6.99515 6.46174 7.0819 5.99727 7.43889 5.64104C7.79588 5.28405 8.25958 5.1973 8.88758 5.1973C9.51557 5.1973 9.97927 5.28482 10.337 5.64104C10.6948 5.99727 10.7808 6.46174 10.7808 7.08973C10.7808 7.71773 10.694 8.1822 10.337 8.53919C9.98004 8.89618 9.51634 8.98294 8.88758 8.98294C8.81695 8.98294 8.74785 8.9814 8.68106 8.9791L10.3831 10.6811C10.9121 10.556 11.3596 10.3318 11.7443 9.94719C12.4483 9.24396 12.6187 8.32807 12.6187 7.0905C12.6187 5.85293 12.4498 4.93704 11.7443 4.23381C11.0403 3.53288 10.1251 3.35938 8.88758 3.35938C7.65001 3.35938 6.73489 3.53058 6.03166 4.23381C5.32766 4.93704 5.15723 5.85293 5.15723 7.0905V14.6395H6.99592V10.6965L10.9389 14.6395H13.5392L7.43966 8.53996L7.43889 8.53919Z"
+                                    fill="#1977F1" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="12" viewBox="0 0 64 12" fill="none">
+                                <path
+                                    d="M3.23889 7.42522H2.84505V11.2991H0.84668V1.85156H4.70754C6.73278 1.85156 8.01104 3.0208 8.01104 4.63839C8.01104 6.0794 6.99151 7.15345 5.3601 7.38453L8.1738 11.2991H5.93052L3.23889 7.42522ZM2.84505 5.99803H4.65303C5.53668 5.99803 6.03953 5.53586 6.03953 4.81574C6.03953 4.09561 5.53668 3.61963 4.65303 3.61963H2.84505V5.99879V5.99803Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M12.3379 9.80036C13.2216 9.80036 13.6699 9.4879 13.9824 8.91672L15.5186 9.93625C14.9612 10.7516 14.0369 11.4725 12.2834 11.4725C9.95877 11.4725 8.4502 9.85487 8.4502 7.72061C8.4502 5.58634 10.0947 3.96875 12.1475 3.96875C14.4584 3.96875 15.8311 5.77673 15.8311 7.5709C15.8311 7.88336 15.8172 8.15514 15.7904 8.33248H10.4209C10.652 9.27064 11.386 9.80036 12.3379 9.80036ZM13.9417 7.01353C13.7513 6.07538 13.1264 5.49114 12.202 5.49114C11.2777 5.49114 10.5983 6.03469 10.3941 7.01353H13.9417Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M24.0017 1.36014V11.2968H22.1393V10.5628C21.6088 11.134 20.8618 11.4733 19.9374 11.4733C17.8715 11.4733 16.376 9.85575 16.376 7.72148C16.376 5.58722 17.8308 3.96963 19.8829 3.96963C20.7389 3.96963 21.4598 4.25522 21.9895 4.75808V1.35938H24.0017V1.36014ZM22.0717 7.72225C22.0717 6.55301 21.3239 5.73769 20.223 5.73769C19.1221 5.73769 18.3744 6.58065 18.3744 7.72225C18.3744 8.86385 19.149 9.69299 20.223 9.69299C21.2971 9.69299 22.0717 8.89072 22.0717 7.72225Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M33.857 11.2991L33.381 4.7881L31.342 10.9867H29.6699L27.6308 4.77428L27.1418 11.2991H25.2793L25.9587 1.85156H27.8481V1.86538L28.3103 1.85156L30.5121 8.52613L32.7008 1.85156L33.163 1.86538V1.85156H35.0386L35.7318 11.2991H33.8563H33.857Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M40.4473 9.80036C41.331 9.80036 41.7793 9.4879 42.0918 8.91672L43.628 9.93625C43.0706 10.7516 42.1463 11.4725 40.3928 11.4725C38.0681 11.4725 36.5596 9.85487 36.5596 7.72061C36.5596 5.58634 38.204 3.96875 40.2569 3.96875C42.5677 3.96875 43.9404 5.77673 43.9404 7.5709C43.9404 7.88336 43.9266 8.15514 43.8997 8.33248H38.5303C38.7614 9.27064 39.4953 9.80036 40.4473 9.80036ZM42.0511 7.01353C41.8607 6.07538 41.2358 5.49114 40.3114 5.49114C39.3871 5.49114 38.7077 6.03469 38.5034 7.01353H42.0511Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M52.1111 1.36014V11.2968H50.2486V10.5628C49.7181 11.134 48.9711 11.4733 48.0468 11.4733C45.9809 11.4733 44.4854 9.85575 44.4854 7.72148C44.4854 5.58722 45.9402 3.96963 47.9923 3.96963C48.8483 3.96963 49.5692 4.25522 50.0989 4.75808V1.35938H52.1111V1.36014ZM50.1811 7.72225C50.1811 6.55301 49.4333 5.73769 48.3324 5.73769C47.2315 5.73769 46.4837 6.58065 46.4837 7.72225C46.4837 8.86385 47.2584 9.69299 48.3324 9.69299C49.4064 9.69299 50.1811 8.89072 50.1811 7.72225Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M53.1602 1.80874C53.1602 1.0748 53.7444 0.53125 54.4791 0.53125C55.2138 0.53125 55.7842 1.0748 55.7842 1.80874C55.7842 2.54268 55.213 3.08623 54.4791 3.08623C53.7452 3.08623 53.1602 2.55573 53.1602 1.80874ZM53.4596 4.1334H55.4718V11.297H53.4596V4.1334Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                                <path
+                                    d="M63.9998 4.13521V11.2988H62.1373V10.5104C61.6206 11.1222 60.8729 11.4754 59.9355 11.4754C57.8695 11.4754 56.374 9.8578 56.374 7.72354C56.374 5.58927 57.8695 4.09375 59.9355 4.09375C60.8736 4.09375 61.6214 4.42003 62.1373 5.00427V4.13444H63.9998V4.13521ZM62.0697 7.72354C62.0697 6.5543 61.322 5.73898 60.2211 5.73898C59.1202 5.73898 58.3724 6.58194 58.3724 7.72354C58.3724 8.86514 59.147 9.69428 60.2211 9.69428C61.2951 9.69428 62.0697 8.89201 62.0697 7.72354Z"
+                                    class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
+                            </svg>
+                        </span>
+                    </NuxtLink>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped></style>
 
-<!-- <div class="footer flex flex-col gap-5 px-4 py-5">
-    <div class="flex flex-col gap-5 w-full">
-        <div class="flex items-center justify-between">
-            <NuxtLink to="/" class="flex cursor-pointer h-8">
-                <PageLogo color="white" />
-            </NuxtLink>
-            <div class="flex items-center p-2.5 gap-1">
-                <NuxtLink :to="switchLocalePath('uz')" v-if="locale == 'ru'" class="flex flex-col items-center">
-                    <img src="~/assets/images/ru.svg" alt="ru">
-                    <div class="text-sm text-white">Рус</div>
-                </NuxtLink>
-                <NuxtLink :to="switchLocalePath('ru')" v-else class="flex flex-col items-center">
-                    <img src="~/assets/images/uz.svg" alt="uz">
-                    <div class="text-sm text-white">O‘zb</div>
-                </NuxtLink>
-            </div>
-        </div>
-        <div class="links flex flex-col justify-between gap-5 text-sm text-white">
-            <div class="flex flex-col gap-4">
-                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">О сервисе</NuxtLink>
-                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Вопрос-ответ</NuxtLink>
-            </div>
-            <div class="flex flex-col gap-4">
-                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
-                </NuxtLink>
-                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
-                </NuxtLink>
-            </div>
-            <div class="flex gap-5">
-                <NuxtLink to="#"
-                    class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
-                    <img src="~/assets/images/telegram.svg" alt="telegram">
-                </NuxtLink>
-                <NuxtLink to="#"
-                    class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
-                    <img src="~/assets/images/instagram.svg" alt="instagram">
-                </NuxtLink>
-                <NuxtLink to="#"
-                    class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
-                    <img src="~/assets/images/facebook.svg" alt="facebook">
-                </NuxtLink>
-                <NuxtLink to="#"
-                    class="group bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
-                    <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M17.3442 1.87364C17.1484 1.13727 16.5689 0.556364 15.8317 0.357273C14.4988 1.30047e-07 9.15059 0 9.15059 0C9.15059 0 3.80514 1.30047e-07 2.46945 0.357273C1.73496 0.553636 1.15553 1.13455 0.956949 1.87364C0.600586 3.21 0.600586 6 0.600586 6C0.600586 6 0.600586 8.79 0.956949 10.1264C1.15281 10.8627 1.73224 11.4436 2.46945 11.6427C3.80514 12 9.15059 12 9.15059 12C9.15059 12 14.4988 12 15.8317 11.6427C16.5662 11.4464 17.1456 10.8655 17.3442 10.1264C17.7006 8.79 17.7006 6 17.7006 6C17.7006 6 17.7006 3.21 17.3442 1.87364Z"
-                            fill="#1977F1" />
-                        <path d="M7.44222 8.57182L11.8845 6L7.44222 3.42818V8.57182Z"
-                            class="fill-white group-hover:fill-yellow" />
-                    </svg>
-                </NuxtLink>
-            </div>
-        </div>
-    </div>
-    <div class="flex flex-col gap-4">
-        <hr class="border border-lightBlue" />
-        <div class="flex flex-col gap-4 justify-between text-xs">
-            <span>©2023 Ustoztop. Все права защищены</span>
-            <NuxtLink to="https://redmedia.uz/main" class="group flex flex-col gap-2.5">
-                <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
-                    агентством</span>
-                <span class="flex items-center gap-[4.5px]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
-                        <path
-                            d="M16.2369 2.1097C14.5387 0.41764 12.3308 0 9.34666 0C6.36253 0 4.1538 0.413034 2.45637 2.1097C0.758945 3.80483 0.34668 6.01587 0.34668 9C0.34668 11.9841 0.758177 14.1944 2.45637 15.8903C4.1538 17.587 6.35946 18 9.34666 18C12.3339 18 14.5395 17.587 16.2369 15.8903C17.9351 14.1936 18.3466 11.9841 18.3466 9C18.3466 6.01587 17.939 3.8056 16.2369 2.1097Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M7.43889 8.53919C7.0819 8.1822 6.99515 7.71773 6.99515 7.08973C6.99515 6.46174 7.0819 5.99727 7.43889 5.64104C7.79588 5.28405 8.25958 5.1973 8.88758 5.1973C9.51557 5.1973 9.97927 5.28482 10.337 5.64104C10.6948 5.99727 10.7808 6.46174 10.7808 7.08973C10.7808 7.71773 10.694 8.1822 10.337 8.53919C9.98004 8.89618 9.51634 8.98294 8.88758 8.98294C8.81695 8.98294 8.74785 8.9814 8.68106 8.9791L10.3831 10.6811C10.9121 10.556 11.3596 10.3318 11.7443 9.94719C12.4483 9.24396 12.6187 8.32807 12.6187 7.0905C12.6187 5.85293 12.4498 4.93704 11.7443 4.23381C11.0403 3.53288 10.1251 3.35938 8.88758 3.35938C7.65001 3.35938 6.73489 3.53058 6.03166 4.23381C5.32766 4.93704 5.15723 5.85293 5.15723 7.0905V14.6395H6.99592V10.6965L10.9389 14.6395H13.5392L7.43966 8.53996L7.43889 8.53919Z"
-                            fill="#1977F1" />
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="12" viewBox="0 0 64 12" fill="none">
-                        <path
-                            d="M3.23889 7.42522H2.84505V11.2991H0.84668V1.85156H4.70754C6.73278 1.85156 8.01104 3.0208 8.01104 4.63839C8.01104 6.0794 6.99151 7.15345 5.3601 7.38453L8.1738 11.2991H5.93052L3.23889 7.42522ZM2.84505 5.99803H4.65303C5.53668 5.99803 6.03953 5.53586 6.03953 4.81574C6.03953 4.09561 5.53668 3.61963 4.65303 3.61963H2.84505V5.99879V5.99803Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M12.3379 9.80036C13.2216 9.80036 13.6699 9.4879 13.9824 8.91672L15.5186 9.93625C14.9612 10.7516 14.0369 11.4725 12.2834 11.4725C9.95877 11.4725 8.4502 9.85487 8.4502 7.72061C8.4502 5.58634 10.0947 3.96875 12.1475 3.96875C14.4584 3.96875 15.8311 5.77673 15.8311 7.5709C15.8311 7.88336 15.8172 8.15514 15.7904 8.33248H10.4209C10.652 9.27064 11.386 9.80036 12.3379 9.80036ZM13.9417 7.01353C13.7513 6.07538 13.1264 5.49114 12.202 5.49114C11.2777 5.49114 10.5983 6.03469 10.3941 7.01353H13.9417Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M24.0017 1.36014V11.2968H22.1393V10.5628C21.6088 11.134 20.8618 11.4733 19.9374 11.4733C17.8715 11.4733 16.376 9.85575 16.376 7.72148C16.376 5.58722 17.8308 3.96963 19.8829 3.96963C20.7389 3.96963 21.4598 4.25522 21.9895 4.75808V1.35938H24.0017V1.36014ZM22.0717 7.72225C22.0717 6.55301 21.3239 5.73769 20.223 5.73769C19.1221 5.73769 18.3744 6.58065 18.3744 7.72225C18.3744 8.86385 19.149 9.69299 20.223 9.69299C21.2971 9.69299 22.0717 8.89072 22.0717 7.72225Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M33.857 11.2991L33.381 4.7881L31.342 10.9867H29.6699L27.6308 4.77428L27.1418 11.2991H25.2793L25.9587 1.85156H27.8481V1.86538L28.3103 1.85156L30.5121 8.52613L32.7008 1.85156L33.163 1.86538V1.85156H35.0386L35.7318 11.2991H33.8563H33.857Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M40.4473 9.80036C41.331 9.80036 41.7793 9.4879 42.0918 8.91672L43.628 9.93625C43.0706 10.7516 42.1463 11.4725 40.3928 11.4725C38.0681 11.4725 36.5596 9.85487 36.5596 7.72061C36.5596 5.58634 38.204 3.96875 40.2569 3.96875C42.5677 3.96875 43.9404 5.77673 43.9404 7.5709C43.9404 7.88336 43.9266 8.15514 43.8997 8.33248H38.5303C38.7614 9.27064 39.4953 9.80036 40.4473 9.80036ZM42.0511 7.01353C41.8607 6.07538 41.2358 5.49114 40.3114 5.49114C39.3871 5.49114 38.7077 6.03469 38.5034 7.01353H42.0511Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M52.1111 1.36014V11.2968H50.2486V10.5628C49.7181 11.134 48.9711 11.4733 48.0468 11.4733C45.9809 11.4733 44.4854 9.85575 44.4854 7.72148C44.4854 5.58722 45.9402 3.96963 47.9923 3.96963C48.8483 3.96963 49.5692 4.25522 50.0989 4.75808V1.35938H52.1111V1.36014ZM50.1811 7.72225C50.1811 6.55301 49.4333 5.73769 48.3324 5.73769C47.2315 5.73769 46.4837 6.58065 46.4837 7.72225C46.4837 8.86385 47.2584 9.69299 48.3324 9.69299C49.4064 9.69299 50.1811 8.89072 50.1811 7.72225Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M53.1602 1.80874C53.1602 1.0748 53.7444 0.53125 54.4791 0.53125C55.2138 0.53125 55.7842 1.0748 55.7842 1.80874C55.7842 2.54268 55.213 3.08623 54.4791 3.08623C53.7452 3.08623 53.1602 2.55573 53.1602 1.80874ZM53.4596 4.1334H55.4718V11.297H53.4596V4.1334Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                        <path
-                            d="M63.9998 4.13521V11.2988H62.1373V10.5104C61.6206 11.1222 60.8729 11.4754 59.9355 11.4754C57.8695 11.4754 56.374 9.8578 56.374 7.72354C56.374 5.58927 57.8695 4.09375 59.9355 4.09375C60.8736 4.09375 61.6214 4.42003 62.1373 5.00427V4.13444H63.9998V4.13521ZM62.0697 7.72354C62.0697 6.5543 61.322 5.73898 60.2211 5.73898C59.1202 5.73898 58.3724 6.58194 58.3724 7.72354C58.3724 8.86514 59.147 9.69428 60.2211 9.69428C61.2951 9.69428 62.0697 8.89201 62.0697 7.72354Z"
-                            class="fill-white group-hover:fill-yellow group-active:fill-[#E4B100]" />
-                    </svg>
-                </span>
-            </NuxtLink>
-        </div>
-    </div>
-</div> -->

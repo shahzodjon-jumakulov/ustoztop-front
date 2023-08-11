@@ -78,7 +78,7 @@ const submit = () => {
     <teleport to="body">
         <div class="fixed inset-0 z-10 h-[100svh]" v-if="auth">
             <div class="bg-black bg-opacity-60 w-full absolute"></div>
-            <div class="container flex justify-center items-center w-full h-full fixed">
+            <div class="modal flex justify-center items-center w-full h-full fixed">
                 <div
                     class="p-5 bg-white inline-flex flex-col gap-2.5 justify-start items-center md:rounded-3xl w-full h-full">
                     <div class="ml-auto hidden md:block" @click="(auth = false), (isSelected = null)">
@@ -211,7 +211,7 @@ const submit = () => {
 </template>
 
 <style scoped>
-.container {
+.modal {
     height: calc(100% - 50px);
 }
 

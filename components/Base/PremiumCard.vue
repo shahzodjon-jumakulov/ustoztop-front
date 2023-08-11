@@ -43,12 +43,12 @@ const getLastWord = (str, last = false) => {
 
 <template>
     <div class="bg-white p-4 sm:p-5 flex flex-col gap-[15px] rounded-3xl">
-        <div class="flex gap-[15px]">
-            <div class="flex justify-start w-[64px] h-[64px] rounded-full border border-bg2 overflow-hidden">
+        <div class="flex items-center gap-[15px]">
+            <div class="flex flex-none justify-start w-[64px] h-[64px] rounded-full border border-bg2 overflow-hidden">
                 <img src="~/assets/images/avatar.png" alt="avatar">
             </div>
             <div class="flex flex-col gap-[5px]">
-                <div class="flex gap-[5px] font-bold text-lg text-black">
+                <div class="flex flex-wrap gap-[5px] font-bold text-lg text-black">
                     {{ getLastWord(props.name, false) }}
                     <span class="whitespace-nowrap flex items-center gap-[5px]">
                         {{ getLastWord(props.name, true) }}

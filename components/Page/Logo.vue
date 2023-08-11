@@ -2,11 +2,12 @@
 const hovered = ref(false);
 const animation = ref(false)
 // :width="hovered && !animation ? '40.8' : '18.9978'"
-const props = defineProps(['color'])
+const props = defineProps(['color', 'isAnimated'])
 </script>
 
 <template>
   <div class="logo flex items-center h-full" @mouseenter="hovered = !hovered" @mouseleave="animation = !animation">
+    <!-- logo -->
     <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" height="100%" viewBox="0 0 42 32"
       fill="none" class="mr-[5px]">
       <g clip-path="url(#clip0_1793_4870)">
@@ -26,6 +27,8 @@ const props = defineProps(['color'])
         </clipPath>
       </defs>
     </svg>
+
+    <!-- ust -->
     <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 69 40" fill="none">
       <path
         d="M3.93944 28.6468C5.98292 30.5741 8.66498 31.5378 11.9856 31.5378C15.3205 31.5378 17.9954 30.5741 20.0106 28.6468C22.0256 26.7193 23.0331 24.18 23.0331 21.0286V7.54399H16.6686V20.3111C16.6686 21.9571 16.2571 23.2515 15.434 24.1941C14.6109 25.1366 13.4615 25.608 11.9856 25.608C10.5098 25.608 9.35324 25.1436 8.51597 24.2151C7.67872 23.2726 7.2601 21.9713 7.2601 20.3111V7.54399H0.895508V21.0286C0.895508 24.18 1.91015 26.7193 3.93944 28.6468Z"
@@ -38,11 +41,14 @@ const props = defineProps(['color'])
         :fill="props.color == 'white' ? '#FFFFFF' : '#1977F1'" />
     </svg>
 
-    <svg xmlns="http://www.w3.org/2000/svg" height="100%" fill="none" viewBox="0 0 27 40">
-      <rect x="3.70996" y="9.71094" width="19" height="19" rx="9.49892"
+    <!-- O -->
+    <svg xmlns="http://www.w3.org/2000/svg" :width="!isAnimated ? null : (hovered && !animation ? '49' : '27')"
+      height="100%" fill="none" :viewBox="!isAnimated ? '0 0 27 40' : null">
+      <rect x="3.70996" y="9.71094" :width="hovered && !animation && isAnimated ? '40.8' : '19'" height="19" rx="9.49892"
         :stroke="props.color == 'white' ? '#FFFFFF' : '#1977F1'" stroke-width="6.4" />
     </svg>
 
+    <!-- zt -->
     <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 43 40" fill="none">
       <path
         d="M21.3942 25.0754H11.4749L21.3942 8.40428V7.53906H2.89639V13.2579H11.9644L1.93848 30.1824V30.8787H21.3942V25.0754Z"
@@ -52,10 +58,14 @@ const props = defineProps(['color'])
         fill="#FDC500" />
     </svg>
 
-    <svg xmlns="http://www.w3.org/2000/svg" height="100%" fill="none" viewBox="0 0 27 40">
-      <rect x="4.08203" y="9.71094" width="19" height="19" rx="9.49892" stroke="#FDC500" stroke-width="6.4" />
+    <!-- O -->
+    <svg xmlns="http://www.w3.org/2000/svg" :width="!isAnimated ? null : (!hovered && animation ? '49' : '27')"
+      height="100%" fill="none" :viewBox="!isAnimated ? '0 0 27 40' : null">
+      <rect x="4.08203" y="9.71094" :width="!hovered && animation && isAnimated ? '40.8' : '19'" height="19" rx="9.49892"
+        stroke="#FDC500" stroke-width="6.4" />
     </svg>
 
+    <!-- p -->
     <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 31 40" fill="none">
       <path
         d="M17.7216 6.89062C20.0483 6.89062 22.1481 7.42524 24.0225 8.49444C25.9088 9.54958 27.3849 11.0197 28.449 12.9049C29.5132 14.7901 30.0461 16.8933 30.0461 19.2146C30.0461 21.5359 29.5132 23.6463 28.449 25.5454C27.3849 27.4306 25.9088 28.9078 24.0225 29.9769C22.1481 31.0463 20.0483 31.5808 17.7216 31.5808C15.3377 31.5808 13.1807 30.9266 11.2508 29.6183V39.3044H4.88574V7.54481H9.07873L10.1647 9.67619C12.2796 7.81916 14.798 6.89062 17.7216 6.89062ZM12.5907 23.7939C13.8112 25.0038 15.3444 25.6088 17.1886 25.6088C19.0345 25.6088 20.5594 25.0038 21.7664 23.7939C22.9853 22.5841 23.5955 21.0576 23.5955 19.2146C23.5955 17.3716 22.9853 15.8452 21.7664 14.6353C20.5594 13.4254 19.0345 12.8205 17.1886 12.8205C15.3444 12.8205 13.8112 13.4325 12.5907 14.6564C11.3853 15.8663 10.7817 17.3858 10.7817 19.2146C10.7817 21.0436 11.3853 22.5699 12.5907 23.7939Z"

@@ -66,18 +66,27 @@ const searchPopular = [
 </script>
 
 <template>
-    <div class="flex gap-2.5 bg-white p-4 sm:p-5 min-w-full text-base justify-between items-center h-14 sm:h-[72px] mb-4 sm:mb-5">
-        <NuxtLink to="/" class="flex cursor-pointer h-6 sm:h-8">
-            <PageLogo color="blue" />
+    <div class="flex gap-5 lg:gap-2.5 bg-white p-4 sm:p-5 min-w-full text-base justify-between items-center mb-4 sm:mb-5">
+        <NuxtLink to="/" class="flex cursor-pointer h-6 sm:h-8 md:h-10">
+            <PageLogo class="hidden md:flex" color="blue" :isAnimated="true" />
+            <PageLogo class="flex md:hidden" color="blue" :isAnimated="false" />
         </NuxtLink>
-        <div class="search group" @click="toggleSearch(true)">
+        <BaseButton class="hidden lg:flex w-max" type="tertiary" size="large">
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M2.08301 0C0.978438 0 0.0830078 0.895431 0.0830078 2V6C0.0830078 7.10457 0.978438 8 2.08301 8H6.08301C7.18758 8 8.08301 7.10457 8.08301 6V2C8.08301 0.895431 7.18758 0 6.08301 0H2.08301ZM14.083 0C12.9784 0 12.083 0.895431 12.083 2V6C12.083 7.10457 12.9784 8 14.083 8H18.083C19.1876 8 20.083 7.10457 20.083 6V2C20.083 0.895431 19.1876 0 18.083 0H14.083ZM0.0830078 14C0.0830078 12.8954 0.978438 12 2.08301 12H6.08301C7.18758 12 8.08301 12.8954 8.08301 14V18C8.08301 19.1046 7.18758 20 6.08301 20H2.08301C0.978438 20 0.0830078 19.1046 0.0830078 18V14ZM14.083 12C12.9784 12 12.083 12.8954 12.083 14V18C12.083 19.1046 12.9784 20 14.083 20H18.083C19.1876 20 20.083 19.1046 20.083 18V14C20.083 12.8954 19.1876 12 18.083 12H14.083Z"
+                    fill="#787B8D" />
+            </svg>
+            <span>Категории</span>
+        </BaseButton>
+        <div class="search group md:hidden" @click="toggleSearch(true)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M18.249 10.5078C18.249 14.788 14.7792 18.2578 10.499 18.2578C6.21882 18.2578 2.74902 14.788 2.74902 10.5078C2.74902 6.22761 6.21882 2.75781 10.499 2.75781C14.7792 2.75781 18.249 6.22761 18.249 10.5078ZM10.499 19.7578C15.6077 19.7578 19.749 15.6164 19.749 10.5078C19.749 5.39918 15.6077 1.25781 10.499 1.25781C5.39039 1.25781 1.24902 5.39918 1.24902 10.5078C1.24902 15.6164 5.39039 19.7578 10.499 19.7578ZM21.4202 21.4348C20.6491 22.206 19.3989 22.206 18.6278 21.4348L16.7549 19.562C17.845 18.8068 18.7921 17.8597 19.5473 16.7695L21.4202 18.6424C22.1913 19.4135 22.1913 20.6637 21.4202 21.4348Z"
                     fill="#A7AABC" class="group-active:fill-blue" />
             </svg>
         </div>
-        <div class="search-mobile fixed inset-0 bg-white flex flex-col gap-4 pt-4 sm:pt-5" v-show="searchMobile">
+        <div class="search-mobile z-[1] fixed inset-0 bg-white flex flex-col gap-4 pt-4 sm:pt-5" v-show="searchMobile">
             <div class="flex items-center px-4 gap-[5px]">
                 <div class="group p-0.5" @click="searchMobile = false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -172,6 +181,44 @@ const searchPopular = [
                 </div>
             </div>
         </div>
+        <div class="hidden md:block search-bar w-full overflow-hidden relative rounded-3xl h-[50px]">
+            <input type="text" id="search" v-model="search"
+                class="rounded-3xl bg-bg hover:bg-bg2 w-full h-full pl-5 outline-none caret-yellow placeholder:text-gray placeholder:text-base"
+                placeholder="Поиск объявлений" autocomplete="off" />
+            <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
+                :class="{ active: search, searched: searched }">
+                <div class="clear cursor-pointer" @click="search = null">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
+                            fill="#A7AABC" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
+                            class="pressed" />
+                    </svg>
+                </div>
+                <BaseButton type="primary" size="medium" @click="searched = true">Найти</BaseButton>
+            </div>
+        </div>
+        <div class="navbar hidden lg:flex items-center">
+            <div class="hidden xl:flex lang px-2.5 w-max gap-[5px]">
+                <img src="~/assets/images/ru.svg" alt="ru" />
+                <span>Рус</span>
+            </div>
+            <NuxtLink to="#" class="group saved px-2.5 flex w-max gap-[5px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M4 8.75V19C4 20.6481 5.88153 21.5889 7.2 20.6L10.8 17.9C11.5111 17.3667 12.4889 17.3667 13.2 17.9L16.8 20.6C18.1185 21.5889 20 20.6481 20 19V8.75H4ZM4 7.25H20V5C20 3.89543 19.1046 3 18 3H6C4.89543 3 4 3.89543 4 5V7.25Z"
+                        class="fill-icon group-hover:fill-blue group-active:fill-pressed" />
+                </svg>
+                <span class="hidden group-hover:text-blue group-active:text-pressed">Избранное</span>
+            </NuxtLink>
+            <div class="auth px-2.5 flex w-max gap-[5px]">
+                <span class="hover:text-blue active:text-pressed cursor-pointer">Вход</span>
+                <span>/</span>
+                <span class="hover:text-blue active:text-pressed cursor-pointer">Регистрация</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -186,6 +233,10 @@ const searchPopular = [
 }
 
 .btn-group.active.searched {
+    transform: translateX(calc(100% - 23px));
+}
+
+.search-mobile .btn-group.active.searched {
     transform: translateX(calc(100% - 12px));
 }
 
@@ -223,53 +274,5 @@ input:active {
 }
 </style>
 
-<!-- <NuxtLink to="/" class="flex cursor-pointer">
-    <PageLogo color="blue" />
-</NuxtLink>
-<BaseButton type="tertiary" size="large">
-    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-        <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M2.08301 0C0.978438 0 0.0830078 0.895431 0.0830078 2V6C0.0830078 7.10457 0.978438 8 2.08301 8H6.08301C7.18758 8 8.08301 7.10457 8.08301 6V2C8.08301 0.895431 7.18758 0 6.08301 0H2.08301ZM14.083 0C12.9784 0 12.083 0.895431 12.083 2V6C12.083 7.10457 12.9784 8 14.083 8H18.083C19.1876 8 20.083 7.10457 20.083 6V2C20.083 0.895431 19.1876 0 18.083 0H14.083ZM0.0830078 14C0.0830078 12.8954 0.978438 12 2.08301 12H6.08301C7.18758 12 8.08301 12.8954 8.08301 14V18C8.08301 19.1046 7.18758 20 6.08301 20H2.08301C0.978438 20 0.0830078 19.1046 0.0830078 18V14ZM14.083 12C12.9784 12 12.083 12.8954 12.083 14V18C12.083 19.1046 12.9784 20 14.083 20H18.083C19.1876 20 20.083 19.1046 20.083 18V14C20.083 12.8954 19.1876 12 18.083 12H14.083Z"
-            fill="#787B8D" />
-    </svg>
-    <span>Категории</span>
-</BaseButton>
-<div class="search-bar w-full overflow-hidden relative rounded-3xl">
-    <input type="text" id="search" v-model="search"
-        class="rounded-3xl bg-bg hover:bg-bg2 w-full h-full pl-5 outline-none caret-yellow placeholder:text-gray placeholder:text-base"
-        placeholder="Поиск объявлений" autocomplete="off" />
-    <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
-        :class="{ active: search, searched: searched }">
-        <div class="clear cursor-pointer" @click="search = null">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                    fill="#A7AABC" />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                    class="pressed" />
-            </svg>
-        </div>
-        <BaseButton type="primary" size="medium" @click="searched = true">Найти</BaseButton>
-    </div>
-</div>
-<div class="navbar flex items-center">
-    <div class="lang px-2.5 flex w-max gap-[5px]">
-        <img src="~/assets/images/ru.svg" alt="ru" />
-        <span>Рус</span>
-    </div>
-    <NuxtLink to="#" class="group saved px-2.5 flex w-max gap-[5px]">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M4 8.75V19C4 20.6481 5.88153 21.5889 7.2 20.6L10.8 17.9C11.5111 17.3667 12.4889 17.3667 13.2 17.9L16.8 20.6C18.1185 21.5889 20 20.6481 20 19V8.75H4ZM4 7.25H20V5C20 3.89543 19.1046 3 18 3H6C4.89543 3 4 3.89543 4 5V7.25Z"
-                class="fill-icon group-hover:fill-blue group-active:fill-pressed" />
-        </svg>
-        <span class="group-hover:text-blue group-active:text-pressed">Избранное</span>
-    </NuxtLink>
-    <div class="auth px-2.5 flex w-max gap-[5px]">
-        <span class="hover:text-blue active:text-pressed cursor-pointer">Вход</span>
-        <span>/</span>
-        <span class="hover:text-blue active:text-pressed cursor-pointer">Регистрация</span>
-    </div>
-</div>
+<!--
 <BaseButton type="primary" size="large">Разместить объявление</BaseButton> -->
