@@ -28,6 +28,14 @@ const props = defineProps({
         required: true,
         type: String,
     },
+    avatar: {
+        required: true,
+        type: String,
+    },
+    tags: {
+        required: true,
+        type: Array,
+    }
 })
 
 const getLastWord = (str, last = false) => {
@@ -39,23 +47,59 @@ const getLastWord = (str, last = false) => {
         return n[n.length - 1]
     }
 }
+
+const tooltipTags = ref([])
+const visibleTags = ref([])
+const isTouched = ref(false)
+
+watch(isTouched, () => {
+    if (isTouched.value) {
+        setTimeout(() => {
+            isTouched.value = false
+        }, 5000);
+    }
+})
+
+const handleTags = (tags) => {
+    for (var i = 0; i < tags.length; i++) {
+        if (i < 2) {
+            visibleTags.value.push(tags[i]);
+        } else {
+            tooltipTags.value.push(tags[i]);
+        }
+    }
+}
+
+handleTags(props.tags)
+
+function isInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+
+    );
+}
+// TODO handle tooltip if not in viewport
 </script>
 
 <template>
     <div class="bg-white p-4 sm:p-5 flex flex-col gap-[15px] rounded-3xl">
         <div class="flex items-center gap-[15px]">
             <div class="flex flex-none justify-start w-[64px] h-[64px] rounded-full border border-bg2 overflow-hidden">
-                <img src="~/assets/images/avatar.png" alt="avatar">
+                <img :src="props.avatar" alt="avatar">
             </div>
             <div class="flex flex-col gap-[5px]">
                 <div class="flex flex-wrap gap-[5px] font-bold text-lg text-black">
                     {{ getLastWord(props.name, false) }}
                     <span class="whitespace-nowrap flex items-center gap-[5px]">
                         {{ getLastWord(props.name, true) }}
-                        <img v-if="props.isVerified" class="w-[18px] h-[18px] inline-flex"
+                        <img v-if="props.isVerified" class="w-[18px] h-[18px] inline-flex select-none"
                             src="~/assets/images/verified.png" alt="verified" />
-                        <img v-if="props.isPremium" class="w-[18px] h-[18px] inline-flex" src="~/assets/images/crown.png"
-                            alt="premium" />
+                        <img v-if="props.isPremium" class="w-[18px] h-[18px] inline-flex select-none"
+                            src="~/assets/images/crown.png" alt="premium" />
                     </span>
                 </div>
                 <div v-if="props.type == 'tutor'" class="flex gap-[5px]">
@@ -77,8 +121,16 @@ const getLastWord = (str, last = false) => {
             </div>
         </div>
         <div class="flex gap-2.5">
-            <div v-for="item in 3" :key="item.key"
-                class="px-2.5 text-blue text-xs bg-[#E8F1FE] rounded-full h-6 flex items-center">Математика</div>
+            <div v-for="item in visibleTags" :key="item.key"
+                class="px-2.5 text-blue text-xs bg-[#E8F1FE] rounded-full h-6 flex items-center">{{ item }}</div>
+            <div class="group relative w-max" :class="{ 'tooltip': isTouched }" @touchstart="isTouched = true">
+                <div class="px-2.5 text-blue text-xs bg-[#E8F1FE] rounded-full h-6 flex items-center cursor-pointer">
+                    +{{ tooltipTags.length }}
+                </div>
+                <BaseTooltip class="opacity-0 group-hover:opacity-100 group-[.tooltip]:opacity-100">
+                    <span v-for="item in tooltipTags" :key="item.key">{{ item }}</span>
+                </BaseTooltip>
+            </div>
         </div>
         <div class="flex flex-col gap-2.5">
             <div class="text-sm leading-[140%] line-clamp-2">

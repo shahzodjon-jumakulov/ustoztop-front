@@ -23,8 +23,8 @@ watch(() => route.fullPath, () => getActiveNav());
 </script>
 
 <template>
-    <div class="mt-auto z-10 sticky bottom-0 w-full lg:relative lg:bg-blue">
-        <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex lg:hidden">
+    <div class="mt-auto z-10 sticky bottom-0 w-full lg:relative">
+        <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex lg:hidden mt-4 sm:mt-5 md:mt-6">
             <NuxtLink :to="localePath('/')" :class="{ 'active': activeNav == 'main' }"
                 class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                 <div class="flex items-center justify-center w-6 h-6">
@@ -95,7 +95,7 @@ watch(() => route.fullPath, () => getActiveNav());
                     $t("sticky.profile") }}</div>
             </NuxtLink>
         </div>
-        <div class="footer hidden lg:flex flex-col gap-10 p-10">
+        <div class="footer hidden lg:flex flex-col gap-10 p-10 lg:bg-blue mt-10">
             <div class="flex flex-col gap-10 w-full">
                 <div class="links flex justify-between text-sm text-white">
                     <NuxtLink to="/" class="flex cursor-pointer h-10">

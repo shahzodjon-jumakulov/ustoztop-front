@@ -10,7 +10,7 @@ useHead({
 <template>
   <div>
     <NuxtLayout>
-      <VitePwaManifest />
+      <!-- <VitePwaManifest /> -->
       <NuxtPage />
     </NuxtLayout>
   </div>

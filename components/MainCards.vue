@@ -8,6 +8,14 @@ const cards = [
         type: "tutor",
         location: "Ташкент",
         lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
     },
     {
         name: "PDP IT Academy",
@@ -16,6 +24,14 @@ const cards = [
         type: "center",
         location: "Ташкент",
         lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
     },
     {
         name: "Дилшод Тулкинов",
@@ -24,6 +40,14 @@ const cards = [
         type: "center",
         location: "Ташкент",
         lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
     },
     {
         name: "Astrum IT Academy",
@@ -32,6 +56,14 @@ const cards = [
         type: "tutor",
         location: "Ташкент",
         lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
     },
     {
         name: "Шахриёр Ибрагимов",
@@ -40,6 +72,14 @@ const cards = [
         type: "center",
         location: "Ташкент",
         lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
     },
     {
         name: "CAMBRIDGE",
@@ -48,20 +88,222 @@ const cards = [
         type: "tutor",
         location: "Ташкент",
         lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Нажмида Абдуллаева",
+        verified: true,
+        premium: true,
+        type: "tutor",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "PDP IT Academy",
+        verified: true,
+        premium: true,
+        type: "center",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Дилшод Тулкинов",
+        verified: true,
+        premium: true,
+        type: "center",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Astrum IT Academy",
+        verified: true,
+        premium: true,
+        type: "tutor",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Шахриёр Ибрагимов",
+        verified: true,
+        premium: true,
+        type: "center",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "CAMBRIDGE",
+        verified: true,
+        premium: true,
+        type: "tutor",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Нажмида Абдуллаева",
+        verified: true,
+        premium: true,
+        type: "tutor",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "PDP IT Academy",
+        verified: true,
+        premium: true,
+        type: "center",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Дилшод Тулкинов",
+        verified: true,
+        premium: true,
+        type: "center",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Astrum IT Academy",
+        verified: true,
+        premium: true,
+        type: "tutor",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "Шахриёр Ибрагимов",
+        verified: true,
+        premium: true,
+        type: "center",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
+    },
+    {
+        name: "CAMBRIDGE",
+        verified: true,
+        premium: true,
+        type: "tutor",
+        location: "Ташкент",
+        lastOnline: "11:47",
+        tags: [
+            'Математика',
+            'Для детей',
+            'Школьные предметы',
+            'Компьютер и IT',
+            'Профессиональные',
+            'Бизнес',
+        ],
     },
 ]
 
 </script>
 
 <template>
-    <div class="flex flex-col gap-5 sm:px-5 mb-4">
+    <div class="container flex flex-col gap-5 sm:px-5 mb-4">
         <div class="flex items-center px-4 sm:px-0 gap-[10px] text-blue text-xl sm:text-2xl lheight-normal font-bold">
             <img width="24" height="24" src="~/assets/images/crown.png" alt="premium">
             Премиум репетиторы и учебные заведения
         </div>
-        <div class="flex flex-col gap-4">
-            <BasePremiumCard v-for="item in cards" :key="item.key" :name="item.name" :type="item.type" :isVerified="item.verified"
-                :isPremium="item.premium" :location="item.location" :lastOnline="item.lastOnline" />
+        <div class="flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-5">
+            <BasePremiumCard v-for="(item, index) in cards" :key="item.key"
+                class="md:w-[calc(50%-10px)] xl:w-[calc(100%/3-(2/3*20px))]" :name="item.name" :type="item.type"
+                :isVerified="item.verified" :isPremium="item.premium" :location="item.location"
+                :lastOnline="item.lastOnline" :avatar="`https://picsum.photos/64?random=${index}`" :tags="item.tags" />
         </div>
     </div>
 </template>

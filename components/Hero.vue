@@ -4,6 +4,9 @@ import { Carousel, Slide } from 'vue3-carousel'
 
 const { locale } = useI18n()
 
+const isTouchDevice = ref(false)
+const isScrolling = ref(false)
+
 // dummy data
 const categories = {
     uz: [
@@ -124,12 +127,16 @@ const categories = {
     ],
 }
 
+onMounted(() => {
+    isTouchDevice.value = isTouchScreen()
+})
+
 </script>
 
 <template>
     <div class="flex flex-col xl:flex-row gap-4 sm:gap-5 select-none xl:mx-auto">
         <div class="flex xl:flex-col gap-2.5 xl:gap-0 overflow-x-scroll no-scrollbar px-4 sm:px-5 xl:bg-white xl:rounded-3xl xl:p-5 xl:w-[392px]"
-            v-dragscroll.x="true">
+            v-dragscroll="!isTouchDevice" @dragscrollstart="isScrolling = true" @dragscrollend="isScrolling = false">
             <div class="hidden xl:block text-2xl font-bold text-black mb-2.5">{{ $t("categories.select") }}</div>
             <div
                 class="xl:hidden flex items-center gap-2.5 whitespace-nowrap py-[5px] px-2.5 bg-white hover:bg-bg2 pressed-bg font-bold text-sm text-black rounded-[80px]">
@@ -145,7 +152,7 @@ const categories = {
                     <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">19</span>
                 </div>
             </div>
-            <NuxtLink to="#" v-for="item in categories[locale]" :key="item.key"
+            <NuxtLink :to="!isScrolling ? '#' : null" v-for="item in categories[locale]" :key="item.key"
                 class="flex items-center gap-2.5 whitespace-nowrap py-[5px] px-2.5 xl:py-2.5 bg-white hover:bg-bg2 pressed-bg font-bold text-sm xl:text-base text-black rounded-[80px] xl:[&:nth-of-type(n+8)]:hidden">
                 <div class="w-6 h-6 xl:w-[30px] xl:h-[30px] bg-bg2 rounded-full overflow-hidden">
                     <img class="ml-[3px]" src="~/assets/images/category.svg" alt="icon">
