@@ -4,8 +4,14 @@ const props = defineProps({
     isTop: {
         default: false,
         type: Boolean,
-    }
+    },
+    isSaved: {
+        default: false,
+        type: Boolean,
+    },
 })
+
+const saved = ref(props.isSaved)
 
 </script>
 
@@ -13,7 +19,24 @@ const props = defineProps({
     <div class="p-4 bg-white flex flex-col gap-[15px] rounded-3xl">
         <div class="flex flex-col gap-2.5">
             <div class="flex flex-col gap-[5px]">
-                <div class="text-xl sm:text-2xl text-blue font-bold">Репетитор по математике </div>
+                <div class="flex justify-between">
+                    <div class="text-xl sm:text-2xl text-blue font-bold">Репетитор по математике </div>
+                    <div class="hidden md:flex items-center gap-2.5">
+                        <div v-if="isTop" class="bg-lightYellow px-[13.7px] py-[5.7px] rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="22" viewBox="0 0 42 22" fill="none">
+                                <path
+                                    d="M8.45192 13.6609H10.025V16.711H7.57285C6.16943 16.711 5.05906 16.3096 4.24165 15.507C3.43201 14.6967 3.02724 13.5882 3.02724 12.1816V6.78078H0.713867V6.0469L5.76849 0.714844H6.42777V4.02874H9.95555V6.78078H6.4856V11.723C6.4856 12.3422 6.65523 12.82 6.99451 13.1563C7.33379 13.4927 7.81959 13.6609 8.45192 13.6609ZM18.3413 17.0665C17.0381 17.0665 15.8583 16.776 14.8019 16.195C13.7455 15.614 12.9166 14.8114 12.3151 13.787C11.7214 12.7626 11.4245 11.6235 11.4245 10.3699C11.4245 9.1009 11.7214 7.95804 12.3151 6.94131C12.9166 5.91694 13.7455 5.11809 14.8019 4.54475C15.8583 3.96377 17.0381 3.67327 18.3413 3.67327C19.6367 3.67327 20.8126 3.96377 21.8691 4.54475C22.9254 5.11809 23.7544 5.91694 24.3558 6.94131C24.9573 7.96568 25.258 9.10851 25.258 10.3699C25.258 11.6235 24.9573 12.7626 24.3558 13.787C23.7544 14.8114 22.9254 15.614 21.8691 16.195C20.8126 16.776 19.6367 17.0665 18.3413 17.0665ZM15.8892 12.8811C16.5292 13.5233 17.3466 13.8443 18.3413 13.8443C19.336 13.8443 20.1533 13.5233 20.7933 12.8811C21.4333 12.2313 21.7534 11.3942 21.7534 10.3699C21.7534 9.34551 21.4333 8.51227 20.7933 7.87012C20.1533 7.22034 19.336 6.89544 18.3413 6.89544C17.3466 6.89544 16.5292 7.22034 15.8892 7.87012C15.2491 8.51227 14.9291 9.34551 14.9291 10.3699C14.9291 11.3942 15.2491 12.2313 15.8892 12.8811ZM34.7196 3.67327C35.9838 3.67327 37.1248 3.96377 38.1434 4.54475C39.1683 5.11809 39.9704 5.91694 40.5486 6.94131C41.1269 7.96568 41.4165 9.10851 41.4165 10.3699C41.4165 11.6312 41.1269 12.778 40.5486 13.8099C39.9704 14.8343 39.1683 15.6369 38.1434 16.2179C37.1248 16.799 35.9838 17.0894 34.7196 17.0894C33.4242 17.0894 32.2522 16.7339 31.2035 16.023V21.2863H27.7448V4.02874H30.0232L30.6133 5.18689C31.7625 4.17782 33.131 3.67327 34.7196 3.67327ZM31.9315 12.8582C32.5947 13.5156 33.4279 13.8443 34.43 13.8443C35.433 13.8443 36.2616 13.5156 36.9174 12.8582C37.5797 12.2008 37.9114 11.3713 37.9114 10.3699C37.9114 9.36842 37.5797 8.53902 36.9174 7.88159C36.2616 7.22416 35.433 6.89544 34.43 6.89544C33.4279 6.89544 32.5947 7.22798 31.9315 7.89306C31.2765 8.55048 30.9486 9.37612 30.9486 10.3699C30.9486 11.3637 31.2765 12.1931 31.9315 12.8582Z"
+                                    fill="#FDC500" />
+                            </svg>
+                        </div>
+                        <svg class="ml-auto cursor-pointer group" :class="{ 'saved': saved }" @click="saved = !saved"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M4 7.75391V18.0039C4 19.652 5.88153 20.5928 7.2 19.6039L10.8 16.9039C11.5111 16.3706 12.4889 16.3706 13.2 16.9039L16.8 19.6039C18.1185 20.5928 20 19.652 20 18.0039V7.75391H4ZM4 6.25391H20V4.00391C20 2.89934 19.1046 2.00391 18 2.00391H6C4.89543 2.00391 4 2.89934 4 4.00391V6.25391Z"
+                                class="fill-lightGray group-hover:fill-blue group-active:fill-pressed group-[.saved]:fill-blue group-[.saved]-hover:fill-pressed" />
+                        </svg>
+                    </div>
+                </div>
                 <div class="flex items-center gap-[5px] text-gray text-sm sm:text-base">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -33,7 +56,7 @@ const props = defineProps({
             <div class="text-lg font-bold">700 000 сум/в месяц</div>
             <div class="flex flex-col">
                 <div class="flex flex-col sm:flex-row gap-2.5 justify-between">
-                    <div class="flex gap-5 w-full">
+                    <div class="flex gap-5 w-full flex-wrap">
                         <div class="flex gap-[5px] items-center text-xs text-gray">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -61,14 +84,15 @@ const props = defineProps({
                             </span>
                             17.07.2023
                         </div>
-                        <svg v-if="!isTop" class="ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        <svg v-if="!isTop" class="md:hidden ml-auto cursor-pointer group" :class="{ 'saved': saved }"
+                            @click="saved = !saved" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                 d="M4 7.75391V18.0039C4 19.652 5.88153 20.5928 7.2 19.6039L10.8 16.9039C11.5111 16.3706 12.4889 16.3706 13.2 16.9039L16.8 19.6039C18.1185 20.5928 20 19.652 20 18.0039V7.75391H4ZM4 6.25391H20V4.00391C20 2.89934 19.1046 2.00391 18 2.00391H6C4.89543 2.00391 4 2.89934 4 4.00391V6.25391Z"
-                                fill="#1977F1" />
+                                class="fill-lightGray group-hover:fill-blue group-active:fill-pressed group-[.saved]:fill-blue group-[.saved]-hover:fill-pressed" />
                         </svg>
                     </div>
-                    <div v-if="isTop" class="flex items-center sm:gap-2.5">
+                    <div v-if="isTop" class="flex md:hidden items-center sm:gap-2.5">
                         <div class="bg-lightYellow px-[13.7px] py-[5.7px] rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" width="42" height="22" viewBox="0 0 42 22" fill="none">
                                 <path
@@ -76,11 +100,11 @@ const props = defineProps({
                                     fill="#FDC500" />
                             </svg>
                         </div>
-                        <svg class="ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none">
+                        <svg class="ml-auto cursor-pointer group" :class="{ 'saved': saved }" @click="saved = !saved"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                 d="M4 7.75391V18.0039C4 19.652 5.88153 20.5928 7.2 19.6039L10.8 16.9039C11.5111 16.3706 12.4889 16.3706 13.2 16.9039L16.8 19.6039C18.1185 20.5928 20 19.652 20 18.0039V7.75391H4ZM4 6.25391H20V4.00391C20 2.89934 19.1046 2.00391 18 2.00391H6C4.89543 2.00391 4 2.89934 4 4.00391V6.25391Z"
-                                fill="#1977F1" />
+                                class="fill-lightGray group-hover:fill-blue group-active:fill-pressed group-[.saved]:fill-blue group-[.saved]-hover:fill-pressed" />
                         </svg>
                     </div>
                 </div>

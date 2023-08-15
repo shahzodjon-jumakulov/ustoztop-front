@@ -10,6 +10,10 @@ body {
   min-height: 100dvh;
 }
 
+input {
+  font-variant: no-common-ligatures;
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }

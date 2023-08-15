@@ -148,7 +148,7 @@ onMounted(() => {
                     </svg>
                 </div>
                 <div class="flex items-center gap-[5px]">
-                    Все объявления
+                    {{ $t("categories.allAnnouncements") }}
                     <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">19</span>
                 </div>
             </div>
@@ -164,15 +164,15 @@ onMounted(() => {
                     </span>
                 </div>
             </NuxtLink>
-            <BaseButton class="hidden xl:block mt-2.5" type="primary" size="large">Все категории</BaseButton>
+            <BaseButton class="hidden xl:block mt-2.5" type="primary" size="large">{{ $t("categories.all") }}</BaseButton>
         </div>
-        <carousel class="lg:hidden" :items-to-show="1.2" :wrap-around="true" :autoplay="5000">
+        <carousel class="lg:hidden" :items-to-show="1.2" :wrap-around="true" :autoplay="5000" :transition="1000" :pauseAutoplayOnHover="true">
             <slide class="rounded-2xl overflow-hidden sm:rounded-3xl" v-for="slide in 3" :key="slide">
                 <img src="~/assets/images/carousel.png" alt="carousel">
             </slide>
         </carousel>
-        <div class="mx-5 xl:mx-0 xl:w-[804px]">
-            <img class="hidden lg:block w-full rounded-3xl" src="~/assets/images/carousel.png" alt="carousel">
+        <div class="mx-5 xl:mx-0 xl:w-[804px] hidden lg:block">
+            <img class="w-full rounded-3xl" src="~/assets/images/carousel.png" alt="carousel">
         </div>
     </div>
 </template>

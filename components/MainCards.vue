@@ -294,7 +294,7 @@ const cards = [
 </script>
 
 <template>
-    <div class="container flex flex-col gap-5 sm:px-5 mb-4">
+    <div class="flex flex-col gap-5 sm:px-5 xl:px-8 xl:max-w-[1280px] xl:mx-auto mb-4">
         <div class="flex items-center px-4 sm:px-0 gap-[10px] text-blue text-xl sm:text-2xl lheight-normal font-bold">
             <img width="24" height="24" src="~/assets/images/crown.png" alt="premium">
             Премиум репетиторы и учебные заведения

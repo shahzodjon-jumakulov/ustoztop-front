@@ -4,9 +4,9 @@
 
 <template>
     <div class="min-h-screen flex flex-col">
-        <PageHeader class="hidden md:flex" />
         <ModalLogin />
         <ModalSignup />
+        <PageHeader class="hidden lg:flex" />
         <div>
             <slot></slot>
         </div>

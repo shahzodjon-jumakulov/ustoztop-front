@@ -24,6 +24,14 @@ export default defineI18nConfig(() => ({
       submit: "Tasdiqlash",
       categories: {
         select: "Kategoriyani tanlang",
+        all: "Barcha kategoriyalar",
+        allAnnouncements: "Barcha e’lonlar",
+      },
+      saved: {
+        tabs: [
+          "Saqlangan e‘lonlar",
+          "Yaqinda ko‘rilganlar",
+        ],
       },
     },
     ru: {
@@ -48,6 +56,14 @@ export default defineI18nConfig(() => ({
       submit: "Подтвердить",
       categories: {
         select: "Выберите категорию",
+        all: "Все категории",
+        allAnnouncements: "Все объявления",
+      },
+      saved: {
+        tabs: [
+          "Избранные объявления",
+          "Недавно просмотренные",
+        ],
       },
     },
   },

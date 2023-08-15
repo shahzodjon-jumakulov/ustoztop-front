@@ -1,4 +1,11 @@
 <script setup>
+const localePath = useLocalePath();
+const switchLocalePath = useSwitchLocalePath();
+const { locale } = useI18n();
+const signup = useState("isSignupOpen", () => false);
+const login = useState("isLoginOpen", () => false);
+
+
 // search input
 const search = ref(null);
 const searched = ref(false);
@@ -77,7 +84,7 @@ const searchPopular = [
                     d="M2.08301 0C0.978438 0 0.0830078 0.895431 0.0830078 2V6C0.0830078 7.10457 0.978438 8 2.08301 8H6.08301C7.18758 8 8.08301 7.10457 8.08301 6V2C8.08301 0.895431 7.18758 0 6.08301 0H2.08301ZM14.083 0C12.9784 0 12.083 0.895431 12.083 2V6C12.083 7.10457 12.9784 8 14.083 8H18.083C19.1876 8 20.083 7.10457 20.083 6V2C20.083 0.895431 19.1876 0 18.083 0H14.083ZM0.0830078 14C0.0830078 12.8954 0.978438 12 2.08301 12H6.08301C7.18758 12 8.08301 12.8954 8.08301 14V18C8.08301 19.1046 7.18758 20 6.08301 20H2.08301C0.978438 20 0.0830078 19.1046 0.0830078 18V14ZM14.083 12C12.9784 12 12.083 12.8954 12.083 14V18C12.083 19.1046 12.9784 20 14.083 20H18.083C19.1876 20 20.083 19.1046 20.083 18V14C20.083 12.8954 19.1876 12 18.083 12H14.083Z"
                     fill="#787B8D" />
             </svg>
-            <span>Категории</span>
+            <span>{{ $t("sticky.category") }}</span>
         </BaseButton>
         <div class="search group md:hidden" @click="toggleSearch(true)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +105,7 @@ const searchPopular = [
                 <div class="search-bar w-full overflow-hidden relative rounded-3xl">
                     <input type="text" id="searchMobile" v-model="search"
                         class="rounded-3xl bg-bg hover:bg-bg2 w-full h-[34px] sm:h-[50px] px-2.5 outline-none caret-yellow placeholder:text-gray placeholder:text-sm text-sm text-black"
-                        placeholder="Поиск объявлений" autocomplete="off" />
+                        placeholder="Поиск объявлений" autocomplete="off" :class="searched ? 'pr-7' : 'pr-[85px]'" />
                     <div class="btn-group absolute right-2.5 top-0 my-[7px] flex gap-[5px] items-center"
                         :class="{ active: search, searched: searched }">
                         <div class="clear cursor-pointer" @click="search = null">
@@ -184,7 +191,7 @@ const searchPopular = [
         <div class="hidden md:block search-bar w-full overflow-hidden relative rounded-3xl h-[50px]">
             <input type="text" id="search" v-model="search"
                 class="rounded-3xl bg-bg hover:bg-bg2 w-full h-full pl-5 outline-none caret-yellow placeholder:text-gray placeholder:text-base"
-                placeholder="Поиск объявлений" autocomplete="off" />
+                placeholder="Поиск объявлений" autocomplete="off" :class="searched ? 'pr-10' : 'pr-[135px]'" />
             <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
                 :class="{ active: search, searched: searched }">
                 <div class="clear cursor-pointer" @click="search = null">
@@ -201,24 +208,34 @@ const searchPopular = [
             </div>
         </div>
         <div class="navbar hidden lg:flex items-center">
-            <div class="hidden xl:flex lang px-2.5 w-max gap-[5px]">
+            <NuxtLink v-if="locale == 'ru'" :to="switchLocalePath('uz')" class="hidden lg:flex lang px-2.5 w-max gap-[5px]">
                 <img src="~/assets/images/ru.svg" alt="ru" />
-                <span>Рус</span>
-            </div>
-            <NuxtLink to="#" class="group saved px-2.5 flex w-max gap-[5px]">
+                <span class="hidden 2xl:block">Рус</span>
+            </NuxtLink>
+            <NuxtLink v-else :to="switchLocalePath('ru')" class="hidden lg:flex lang px-2.5 w-max gap-[5px]">
+                <img src="~/assets/images/uz.svg" alt="uz" />
+                <span class="hidden 2xl:block">O‘zb</span>
+            </NuxtLink>
+            <NuxtLink :to="localePath('/saved')" class="group saved px-2.5 flex w-max gap-[5px]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M4 8.75V19C4 20.6481 5.88153 21.5889 7.2 20.6L10.8 17.9C11.5111 17.3667 12.4889 17.3667 13.2 17.9L16.8 20.6C18.1185 21.5889 20 20.6481 20 19V8.75H4ZM4 7.25H20V5C20 3.89543 19.1046 3 18 3H6C4.89543 3 4 3.89543 4 5V7.25Z"
                         class="fill-icon group-hover:fill-blue group-active:fill-pressed" />
                 </svg>
-                <span class="hidden group-hover:text-blue group-active:text-pressed">Избранное</span>
+                <span class="hidden 2xl:block group-hover:text-blue group-active:text-pressed">{{ $t("sticky.saved")
+                }}</span>
             </NuxtLink>
             <div class="auth px-2.5 flex w-max gap-[5px]">
-                <span class="hover:text-blue active:text-pressed cursor-pointer">Вход</span>
+                <span @click="login = true" class="hover:text-blue active:text-pressed cursor-pointer">
+                    {{ $t("login.title") }}
+                </span>
                 <span>/</span>
-                <span class="hover:text-blue active:text-pressed cursor-pointer">Регистрация</span>
+                <span @click="signup = true" class="hover:text-blue active:text-pressed cursor-pointer">
+                    {{ $t("signup.title") }}
+                </span>
             </div>
         </div>
+        <BaseButton class="hidden xl:block w-max" type="primary" size="large">Разместить объявление</BaseButton>
     </div>
 </template>
 

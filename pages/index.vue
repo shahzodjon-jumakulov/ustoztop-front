@@ -5,8 +5,8 @@ const switchLocalePath = useSwitchLocalePath()
 
 <template>
     <div>
-        <PageHeader class="flex md:hidden" />
-        <div class="flex flex-col gap-8 sm:gap-10">
+        <PageHeader class="flex lg:hidden" />
+        <div class="flex flex-col gap-4 sm:gap-8 md:gap-10">
             <Hero />
             <MainCards />
         </div>

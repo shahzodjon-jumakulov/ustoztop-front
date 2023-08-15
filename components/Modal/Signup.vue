@@ -76,9 +76,10 @@ const submit = () => {
 
 <template>
     <teleport to="body">
-        <div class="fixed inset-0 z-10 h-[100svh]" v-if="auth">
-            <div class="bg-black bg-opacity-60 w-full absolute"></div>
-            <div class="modal flex justify-center items-center w-full h-full fixed">
+        <div class="fixed inset-0 z-[11] h-[100svh]" v-if="auth">
+            <div @click="auth = false" class="bg-black bg-opacity-60 w-full absolute md:h-full"></div>
+            <div
+                class="h-[calc(100%-50px)] flex justify-center items-center w-full md:w-[500px] md:h-max fixed md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
                 <div
                     class="p-5 bg-white inline-flex flex-col gap-2.5 justify-start items-center md:rounded-3xl w-full h-full">
                     <div class="ml-auto hidden md:block" @click="(auth = false), (isSelected = null)">
@@ -89,7 +90,7 @@ const submit = () => {
                                 class="fill-[#A7AABC] group-hover:fill-blue group-active:fill-pressed" />
                         </svg>
                     </div>
-                    <div class="flex flex-col text-center w-full h-full gap-8">
+                    <div class="flex flex-col text-center w-full h-full gap-8 md:gap-5">
                         <div class="flex items-center justify-center">
                             <div class="ml-auto md:hidden absolute left-5" @click="(auth = false), (isSelected = null)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -103,8 +104,9 @@ const submit = () => {
                                 {{ $t("signup.title") }}
                             </div>
                         </div>
-                        <div v-if="isSelected == null" class="flex flex-col gap-2.5 h-full">
-                            <div class="group h-1/2" :class="{ selected: isSelected == 1 }" @click="isSelected = 1">
+                        <div v-if="isSelected == null" class="flex flex-col md:flex-row gap-2.5 h-full md:h-[196px]">
+                            <div class="group h-1/2 md:h-full md:w-1/2" :class="{ selected: isSelected == 1 }"
+                                @click="isSelected = 1">
                                 <div
                                     class="bg-white group-active:bg-bg2 group-[.selected]:bg-bg border border-bg2 group-[.selected]:border-blue rounded-3xl p-[5px] flex flex-col gap-[5px] justify-center items-center cursor-pointer h-full">
                                     <div class="px-2.5 py-1.5">
@@ -120,7 +122,8 @@ const submit = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="group h-1/2" :class="{ selected: isSelected == 2 }" @click="isSelected = 2">
+                            <div class="group h-1/2 md:h-full md:w-1/2" :class="{ selected: isSelected == 2 }"
+                                @click="isSelected = 2">
                                 <div
                                     class="bg-white group-active:bg-bg2 group-[.selected]:bg-bg border border-bg2 group-[.selected]:border-blue rounded-3xl p-[5px] flex flex-col gap-[5px] justify-center items-center cursor-pointer h-full">
                                     <div class="px-2.5 py-1.5">
@@ -211,11 +214,6 @@ const submit = () => {
 </template>
 
 <style scoped>
-.modal {
-    height: calc(100% - 50px);
-}
-
 .group {
     -webkit-tap-highlight-color: transparent;
-}
-</style>
+}</style>
