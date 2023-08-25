@@ -8,11 +8,10 @@ const props = defineProps(['color', 'isAnimated'])
 <template>
   <div class="logo flex items-center h-full" @mouseenter="hovered = !hovered" @mouseleave="animation = !animation">
     <!-- logo -->
-    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" height="100%" viewBox="0 0 42 32"
-      fill="none" class="mr-[5px]">
-      <g clip-path="url(#clip0_1793_4870)">
+    <svg class="mr-[5px]" xmlns="http://www.w3.org/2000/svg" height="80%" viewBox="0 0 42 32" fill="none">
+      <g clip-path="url(#clip0_2232_104631)">
         <path
-          d="M27.4407 21.5236L33.6273 27.7039C30.1137 30.4065 25.7055 32 20.9416 32C9.3984 32 0 22.611 0 11.0794V0H8.62239V11.0794C8.62239 17.8627 14.1515 23.3863 20.9416 23.3863C23.3236 23.3863 25.5546 22.7079 27.4407 21.5236Z"
+          d="M27.4411 21.5236L33.6277 27.7039C30.114 30.4065 25.7059 32 20.942 32C9.39877 32 0.000366211 22.611 0.000366211 11.0794V0H8.62275V11.0794C8.62275 17.8627 14.1519 23.3863 20.942 23.3863C23.3239 23.3863 25.555 22.7079 27.4411 21.5236Z"
           :fill="props.color == 'white' ? '#FFFFFF' : '#1977F1'" />
         <path
           d="M41.8835 0V11.0794C41.8835 15.8385 40.2776 20.2423 37.5723 23.7631L31.3857 17.5828C32.5821 15.6985 33.2611 13.4697 33.2611 11.0794V0H41.8835Z"
@@ -22,7 +21,7 @@ const props = defineProps(['color', 'isAnimated'])
           fill="#FDC500" />
       </g>
       <defs>
-        <clipPath id="clip0_1793_4870">
+        <clipPath id="clip0_2232_104631">
           <rect width="41.8832" height="32" fill="white" />
         </clipPath>
       </defs>
@@ -74,9 +73,7 @@ const props = defineProps(['color', 'isAnimated'])
   </div>
 </template>
 
-<style scoped>
-.logo svg,
+<style scoped>.logo svg,
 .logo svg rect {
   transition: all 300ms ease-in-out;
-}
-</style>
+}</style>

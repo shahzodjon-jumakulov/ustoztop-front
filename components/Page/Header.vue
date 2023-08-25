@@ -2,6 +2,7 @@
 const localePath = useLocalePath();
 const switchLocalePath = useSwitchLocalePath();
 const { locale } = useI18n();
+const isCategories = useState("isCategoriesOpen", () => false)
 const signup = useState("isSignupOpen", () => false);
 const login = useState("isLoginOpen", () => false);
 
@@ -10,6 +11,7 @@ const login = useState("isLoginOpen", () => false);
 const search = ref(null);
 const searched = ref(false);
 const searchMobile = ref(false);
+const searchFocused = ref(false);
 const input = ref(null)
 const requests = ref([])
 
@@ -28,6 +30,15 @@ watch(search, () => {
         requests.value = []
     }
 });
+
+watch(searchFocused, () => {
+    if (searchFocused.value) {
+        useState('isCategoriesOpen').value = false;
+        disableScroll();
+    } else {
+        enableScroll();
+    }
+})
 
 function cons(val) {
     console.log(val);
@@ -70,15 +81,22 @@ const searchPopular = [
         name: "Веб-дизайн"
     },
 ]
+
+function toggleSearchFocused() {
+    searchFocused.value = true;
+    const searchBar = document.getElementById("searchbar")
+    searchBar.focus();
+}
 </script>
 
 <template>
-    <div class="flex gap-5 lg:gap-2.5 bg-white p-4 sm:p-5 min-w-full text-base justify-between items-center mb-4 sm:mb-5">
+    <div
+        class="flex gap-5 lg:gap-2.5 bg-white p-4 sm:p-5 min-w-full text-base justify-between items-center mb-4 sm:mb-5 relative">
         <NuxtLink to="/" class="flex cursor-pointer h-6 sm:h-8 md:h-10">
             <PageLogo class="hidden md:flex" color="blue" :isAnimated="true" />
             <PageLogo class="flex md:hidden" color="blue" :isAnimated="false" />
         </NuxtLink>
-        <BaseButton class="hidden lg:flex w-max" type="tertiary" size="large">
+        <BaseButton class="hidden lg:flex w-max" type="tertiary" size="large" @click="isCategories = true">
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M2.08301 0C0.978438 0 0.0830078 0.895431 0.0830078 2V6C0.0830078 7.10457 0.978438 8 2.08301 8H6.08301C7.18758 8 8.08301 7.10457 8.08301 6V2C8.08301 0.895431 7.18758 0 6.08301 0H2.08301ZM14.083 0C12.9784 0 12.083 0.895431 12.083 2V6C12.083 7.10457 12.9784 8 14.083 8H18.083C19.1876 8 20.083 7.10457 20.083 6V2C20.083 0.895431 19.1876 0 18.083 0H14.083ZM0.0830078 14C0.0830078 12.8954 0.978438 12 2.08301 12H6.08301C7.18758 12 8.08301 12.8954 8.08301 14V18C8.08301 19.1046 7.18758 20 6.08301 20H2.08301C0.978438 20 0.0830078 19.1046 0.0830078 18V14ZM14.083 12C12.9784 12 12.083 12.8954 12.083 14V18C12.083 19.1046 12.9784 20 14.083 20H18.083C19.1876 20 20.083 19.1046 20.083 18V14C20.083 12.8954 19.1876 12 18.083 12H14.083Z"
@@ -93,7 +111,7 @@ const searchPopular = [
                     fill="#A7AABC" class="group-active:fill-blue" />
             </svg>
         </div>
-        <div class="search-mobile z-[1] fixed inset-0 bg-white flex flex-col gap-4 pt-4 sm:pt-5" v-show="searchMobile">
+        <div class="search-mobile z-[2] fixed inset-0 bg-white flex flex-col gap-4 pt-4 sm:pt-5" v-show="searchMobile">
             <div class="flex items-center px-4 gap-[5px]">
                 <div class="group p-0.5" @click="searchMobile = false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -188,23 +206,121 @@ const searchPopular = [
                 </div>
             </div>
         </div>
-        <div class="hidden md:block search-bar w-full overflow-hidden relative rounded-3xl h-[50px]">
-            <input type="text" id="search" v-model="search"
-                class="rounded-3xl bg-bg hover:bg-bg2 w-full h-full pl-5 outline-none caret-yellow placeholder:text-gray placeholder:text-base"
-                placeholder="Поиск объявлений" autocomplete="off" :class="searched ? 'pr-10' : 'pr-[135px]'" />
-            <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
-                :class="{ active: search, searched: searched }">
-                <div class="clear cursor-pointer" @click="search = null">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                            fill="#A7AABC" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                            class="pressed" />
-                    </svg>
+        <div class="hidden md:block search-bar w-full min-[1600px]:relative rounded-3xl">
+            <div class="overflow-hidden h-[50px] w-full relative">
+                <input type="text" id="search" v-model="search" @click="toggleSearchFocused()"
+                    class="rounded-3xl bg-bg hover:bg-bg2 w-full h-full pl-5 outline-none caret-yellow placeholder:text-gray placeholder:text-base"
+                    placeholder="Поиск объявлений" autocomplete="off" :class="searched ? 'pr-10' : 'pr-[135px]'" />
+                <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
+                    :class="{ active: search, searched: searched }">
+                    <div class="clear cursor-pointer" @click="search = null">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
+                                fill="#A7AABC" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
+                                class="pressed" />
+                        </svg>
+                    </div>
+                    <BaseButton type="primary" size="medium" @click="searched = true">Найти</BaseButton>
                 </div>
-                <BaseButton type="primary" size="medium" @click="searched = true">Найти</BaseButton>
+            </div>
+            <div class="absolute w-[calc(100%-40px)] h-10 top-5 left-5 min-[1600px]:top-0 min-[1600px]:left-0 min-[1600px]:w-full"
+                :class="searchFocused ? 'block' : 'hidden'">
+                <div @click="searchFocused = false" class="bg-black bg-opacity-60 w-full fixed inset-0 z-20 md:h-full">
+                </div>
+                <div class="bg-white z-[21] absolute pt-[50px] w-full rounded-3xl">
+                    <div class="p-2.5">
+                        <div class="w-full overflow-hidden absolute top-0 left-0 rounded-3xl">
+                            <input type="text" id="searchbar" v-model="search"
+                                class="rounded-3xl bg-bg hover:bg-bg2 w-full px-5 outline-none caret-yellow placeholder:text-gray placeholder:text-base h-[34px] sm:h-[50px]"
+                                placeholder="Поиск объявлений" autocomplete="off"
+                                :class="searched ? 'pr-7' : 'pr-[85px]'" />
+                            <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
+                                :class="{ active: search, searched: searched }">
+                                <div class="clear cursor-pointer" @click="search = null">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                                        fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
+                                            fill="#A7AABC" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
+                                            class="pressed" />
+                                    </svg>
+                                </div>
+                                <BaseButton type="primary" size="medium" @click="searched = true">Найти</BaseButton>
+                            </div>
+                        </div>
+                        <div v-if="!requests.length" class="popular flex flex-col gap-[5px]">
+                            <div class="text-xs text-gray pl-4">ТОП-5 популярных запросов</div>
+                            <div class="flex flex-col">
+                                <div v-for="item in searchPopular.slice(0, 5)" :key="item.key"
+                                    class="group h-[34px] px-4 flex items-center gap-2.5 hover:bg-bg rounded-full">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none">
+                                            <g clip-path="url(#clip0_1877_31382)">
+                                                <path
+                                                    d="M11.7901 13.4928L14.4494 16.1519C12.9351 17.3152 11.0448 18 9.00197 18C4.03564 18 0 13.9607 0 9H3.70569C3.70569 11.9181 6.08238 14.2946 9.00066 14.2946C10.0247 14.2946 10.979 14.0028 11.7901 13.4928Z"
+                                                    fill="#787B8D" class="group-hover:fill-blue" />
+                                                <path
+                                                    d="M17.9988 9.00131C17.9988 11.0492 17.3086 12.9433 16.1505 14.4576L13.4912 11.7985C14.0013 10.9874 14.2931 10.0292 14.2931 9H17.9988V9.00131Z"
+                                                    fill="#787B8D" class="group-hover:fill-blue" />
+                                                <path
+                                                    d="M9.00005 11.8981C10.5965 11.8981 11.8907 10.604 11.8907 9.00765C11.8907 7.41129 10.5965 6.11719 9.00005 6.11719C7.40357 6.11719 6.10938 7.41129 6.10938 9.00765C6.10938 10.604 7.40357 11.8981 9.00005 11.8981Z"
+                                                    fill="#787B8D" class="group-hover:fill-yellow" />
+                                                <path
+                                                    d="M18 9H14.2943C14.2943 6.08062 11.9189 3.70673 9.00066 3.70673C6.08238 3.70673 3.707 6.08193 3.707 9H0C0 4.03666 4.03695 0 9.00066 0C13.9644 0 18.0013 4.03666 18.0013 9H18Z"
+                                                    fill="#787B8D" class="group-hover:fill-blue" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_1877_31382">
+                                                    <rect width="18" height="18" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <div class="text-sm text-black ">{{ item.name }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else class="requests flex flex-col gap-[5px]">
+                            <div class="text-xs text-gray pl-4">Запросы</div>
+                            <div class="flex flex-col">
+                                <div v-for="item in requests" :key="item.key"
+                                    class="group h-[34px] px-4 flex items-center gap-2.5 hover:bg-bg rounded-full">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none">
+                                            <g clip-path="url(#clip0_1877_31382)">
+                                                <path
+                                                    d="M11.7901 13.4928L14.4494 16.1519C12.9351 17.3152 11.0448 18 9.00197 18C4.03564 18 0 13.9607 0 9H3.70569C3.70569 11.9181 6.08238 14.2946 9.00066 14.2946C10.0247 14.2946 10.979 14.0028 11.7901 13.4928Z"
+                                                    fill="#787B8D" class="group-hover:fill-blue" />
+                                                <path
+                                                    d="M17.9988 9.00131C17.9988 11.0492 17.3086 12.9433 16.1505 14.4576L13.4912 11.7985C14.0013 10.9874 14.2931 10.0292 14.2931 9H17.9988V9.00131Z"
+                                                    fill="#787B8D" class="group-hover:fill-blue" />
+                                                <path
+                                                    d="M9.00005 11.8981C10.5965 11.8981 11.8907 10.604 11.8907 9.00765C11.8907 7.41129 10.5965 6.11719 9.00005 6.11719C7.40357 6.11719 6.10938 7.41129 6.10938 9.00765C6.10938 10.604 7.40357 11.8981 9.00005 11.8981Z"
+                                                    fill="#787B8D" class="group-hover:fill-yellow" />
+                                                <path
+                                                    d="M18 9H14.2943C14.2943 6.08062 11.9189 3.70673 9.00066 3.70673C6.08238 3.70673 3.707 6.08193 3.707 9H0C0 4.03666 4.03695 0 9.00066 0C13.9644 0 18.0013 4.03666 18.0013 9H18Z"
+                                                    fill="#787B8D" class="group-hover:fill-blue" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_1877_31382">
+                                                    <rect width="18" height="18" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <div class="text-sm text-black" v-html="matchingText(item.name)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="navbar hidden lg:flex items-center">
@@ -291,5 +407,5 @@ input:active {
 }
 </style>
 
-<!--
-<BaseButton type="primary" size="large">Разместить объявление</BaseButton> -->
+
+<!-- <div class="peer-focus:block hidden fixed inset-0 z-20 bg-black bg-opacity-60 w-full h-full"></div> -->

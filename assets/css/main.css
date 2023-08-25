@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import url("node_modules/@egjs/vue3-flicking/dist/flicking-inline.css"); */
 
 body {
   background: #f4f6ff;
@@ -54,6 +55,23 @@ a.link:active {
   padding: 0 16px;
   margin: 0 auto;
   max-width: 100%;
+}
+
+.custom-scrollbar::-webkit-scrollbar,
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+  background: #99CBFF;
+  border-radius: 38px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+  background: #E9EFFF;
 }
 
 @media screen and (min-width: 480px) {

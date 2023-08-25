@@ -1,5 +1,4 @@
 <script setup>
-// const { signUp, signIn, signOut, user } = useAuth();
 
 const { locale } = useI18n()
 const localePath = useLocalePath()

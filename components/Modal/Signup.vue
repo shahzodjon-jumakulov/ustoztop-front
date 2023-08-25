@@ -2,24 +2,23 @@
 const isSelected = ref(null);
 const widthOfNav = ref(0)
 const leftOfNav = ref(0)
-const auth = useState("isSignupOpen", () => false);
-const login = useState("isLoginOpen", () => false);
+const auth = useState("isSignupOpen");
+const login = useState("isLoginOpen");
 
 // input
 const phone = ref(null)
 
 watch(auth, () => {
     if (auth.value) {
-        disableScroll();
-    } else {
-        enableScroll();
-    }
-    if (auth.value) {
+        useState('isCategoriesOpen').value = false;
         setTimeout(() => {
             if (isSelected.value != null) {
                 handleSelected()
             }
         }, 1);
+        disableScroll();
+    } else {
+        enableScroll();
     }
 });
 
@@ -216,4 +215,5 @@ const submit = () => {
 <style scoped>
 .group {
     -webkit-tap-highlight-color: transparent;
-}</style>
+}
+</style>

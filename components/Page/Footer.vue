@@ -2,6 +2,7 @@
 const route = useRoute()
 const localePath = useLocalePath()
 const isAuth = useAuthenticated()
+const isCategories = useState("isCategoriesOpen")
 
 const activeNav = ref(null)
 
@@ -23,10 +24,11 @@ watch(() => route.fullPath, () => getActiveNav());
 </script>
 
 <template>
-    <div>
-        <div class="mt-auto z-10 fixed bottom-0 w-full lg:relative">
+    <div class="mt-auto z-10">
+        <div class="fixed bottom-0 w-full lg:relative">
             <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex lg:hidden mt-4 sm:mt-5 md:mt-6">
-                <NuxtLink :to="localePath('/')" :class="{ 'active': activeNav == 'main' }"
+                <NuxtLink :to="localePath('/')" :class="{ 'active': !isCategories && activeNav == 'main' }"
+                    @click="isCategories = false"
                     class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                     <div class="flex items-center justify-center w-6 h-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -48,7 +50,8 @@ watch(() => route.fullPath, () => getActiveNav());
                         $t("sticky.main")
                     }}</div>
                 </NuxtLink>
-                <div class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
+                <div @click="isCategories = true" :class="{ 'active': isCategories }"
+                    class="group cursor-pointer flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                     <div class="flex justify-center items-center w-6 h-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -71,7 +74,8 @@ watch(() => route.fullPath, () => getActiveNav());
                         $t("sticky.post")
                     }}</div>
                 </div>
-                <NuxtLink :to="localePath('/saved')" :class="{ 'active': activeNav == 'saved' }"
+                <NuxtLink :to="localePath('/saved')" :class="{ 'active': !isCategories && activeNav == 'saved' }"
+                    @click="isCategories = false"
                     class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                     <div class="flex justify-center items-center w-6 h-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" viewBox="0 0 16 18" fill="none">
@@ -83,7 +87,8 @@ watch(() => route.fullPath, () => getActiveNav());
                     <div class="text-lightGray text-[10px] group-[.active]:text-blue group-[.active]:font-bold">{{
                         $t("sticky.saved") }}</div>
                 </NuxtLink>
-                <NuxtLink :to="localePath('/profile')" :class="{ 'active': activeNav == 'profile' }"
+                <NuxtLink :to="localePath('/profile')" :class="{ 'active': !isCategories && activeNav == 'profile' }"
+                    @click="isCategories = false"
                     class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
                     <div class="flex justify-center items-center w-6 h-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="0 0 15 18" fill="none">
@@ -105,12 +110,16 @@ watch(() => route.fullPath, () => getActiveNav());
                         <div class="flex gap-20">
                             <div class="flex flex-col gap-5">
                                 <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">О сервисе</NuxtLink>
-                                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Вопрос-ответ</NuxtLink>
+                                <NuxtLink :to="localePath('/FAQ')" class="hover:text-yellow active:text-[#E4B100]">
+                                    Вопрос-ответ
+                                </NuxtLink>
                             </div>
                             <div class="flex flex-col gap-5">
-                                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
+                                <NuxtLink :to="localePath('/terms')" class="hover:text-yellow active:text-[#E4B100]">
+                                    Условия использования
                                 </NuxtLink>
-                                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
+                                <NuxtLink :to="localePath('/terms')" class="hover:text-yellow active:text-[#E4B100]">
+                                    Политика обработки данных
                                 </NuxtLink>
                             </div>
                             <div class="flex gap-5">
@@ -191,6 +200,7 @@ watch(() => route.fullPath, () => getActiveNav());
                 </div>
             </div>
         </div>
+        <div class="h-[50px] w-full"></div>
     </div>
 </template>
 

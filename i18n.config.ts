@@ -17,6 +17,8 @@ export default defineI18nConfig(() => ({
       login: {
         title: "Kirish",
         loginbtn: "Kirish",
+        confirmPhone: "Telefon raqamingizni tasdiqlang",
+        enterSms: "SMS kodni kiriting",
       },
       signup: {
         title: "Ro‘yxatdan o‘tish",
@@ -32,6 +34,16 @@ export default defineI18nConfig(() => ({
           "Saqlangan e‘lonlar",
           "Yaqinda ko‘rilganlar",
         ],
+      },
+      terms: {
+        title: "Ustoztop.uz xizmati qoidalari",
+        tabs: [
+          "Foydalanish shartlari",
+          "Maxfiylik siyosati",
+        ],
+      },
+      faqPage: {
+        title: "Часто задаваемые вопросы",
       },
     },
     ru: {
@@ -49,6 +61,8 @@ export default defineI18nConfig(() => ({
       login: {
         title: "Вход",
         loginbtn: "Войти",
+        confirmPhone: "Подтвердите номер телефона",
+        enterSms: "Введите код из СМС",
       },
       signup: {
         title: "Регистрация",
@@ -65,6 +79,16 @@ export default defineI18nConfig(() => ({
           "Недавно просмотренные",
         ],
       },
+      terms: {
+        title: "Правила сервиса ustoztop.uz",
+        tabs: [
+          "Условия использования",
+          "Политика конфиденциальности",
+        ],
+      },
+      faqPage: {
+        title: "Ko‘p so‘raladigan savollar",
+      }
     },
   },
 }));

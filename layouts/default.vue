@@ -4,12 +4,11 @@
 
 <template>
     <div class="min-h-screen flex flex-col">
+        <ModalCategories />
         <ModalLogin />
         <ModalSignup />
         <PageHeader class="hidden lg:flex" />
-        <div>
-            <slot></slot>
-        </div>
+        <slot></slot>
         <PageFooter />
     </div>
 </template>
