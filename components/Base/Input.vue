@@ -15,12 +15,17 @@ const props = defineProps({
     modelValue: {
         required: true,
     },
+    checkPassword: {
+        required: false,
+        type: String,
+    },
 })
 
 const errorMsg = ref(null);
+const requirements = ref([]);
 
 const isFocused = ref(false)
-const inputType = ref(props.type)
+const inputType = ref(props.type == "check_password" ? "password" : props.type)
 
 const inputModelValue = ref(null)
 inputModelValue.value = props.modelValue
@@ -32,8 +37,10 @@ const emit = defineEmits(['update:modelValue'])
 const updateValue = (event) => {
     if (props.type == 'tel') {
         formatPhoneNumber(event);
+    } else if (props.type == 'password' || props.type == 'check_password') {
+        validatePassword();
     }
-    emit('update:modelValue', event.target.value)
+    emit('update:modelValue', inputModelValue.value);
 }
 
 // phone number
@@ -64,7 +71,7 @@ const handleBlur = (event) => {
     isFocused.value = false;
     if (props.type == 'tel') {
         validatePhone();
-    } else if (props.type == 'password') {
+    } else if (props.type == 'password' || props.type == 'check_password') {
         validatePassword();
     }
 }
@@ -77,7 +84,7 @@ const toggleShowPassword = () => {
     if (isFocused.value) {
         // If the input was focused, refocus it after toggling visibility
         requestAnimationFrame(() => {
-            document.getElementById('password').focus();
+            document.getElementById(props.id).focus();
         });
     }
 };
@@ -106,18 +113,70 @@ function validatePhone() {
 }
 
 function validatePassword() {
-    if (inputModelValue.value) {
-        const isValid = false;
-        if (isValid) {
-            errorMsg.value = null;
-        } else {
-            errorMsg.value = 'Введен неверный пароль. Повторите попытку'
-        }
-    } else {
+    if (!inputModelValue.value) {
         errorMsg.value = 'Поле не должно быть пустым'
+        requirements.value.map(item => item.status = false)
         return false;
     }
+    else if (props.type == 'password') {
+        const isValid = true;
+        let errorArr = [
+            {
+                name: "Только буквы латинского алфавита, цифры и спецсимволы",
+                status: true,
+            },
+            {
+                name: "8 и более символов",
+                status: true,
+            },
+            {
+                name: "Хотя бы одна цифра",
+                status: true,
+            },
+            {
+                name: "Хотя бы одна заглавная буква",
+                status: true,
+            },
+        ];
+        // if (inputModelValue.value) {
+        //     var regEx = /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*-_+=();:?{}~,./|`~]{8,64}$/;
+        //     console.log(regEx.test(inputModelValue.value));
+        // }
+
+        // Only letters, numbers and characters
+        var regEx = /^[0-9A-Za-z!@#$%^&*()_\-+={[}\]|\:;"',.?\/\\~`]+[0-9A-Za-z!@#$%^&*()_\-+={[}\]|\:;"',.?\/\\~`]*$/g
+        if (regEx.test(inputModelValue.value)) errorArr[0].status = true
+        else errorArr[0].status = false;
+        // check length
+        if (inputModelValue.value.length < 8 || inputModelValue.value.length > 64) {
+            errorArr[1].status = false;
+        }
+        // AT least one number
+        var regExNumber = /.*[0-9].*/
+        if (regExNumber.test(inputModelValue.value)) errorArr[2].status = true
+        else errorArr[2].status = false;
+        // AT least one CAPITAL letter
+        var regExNumber = /.*[A-Z].*/
+        if (regExNumber.test(inputModelValue.value)) errorArr[3].status = true
+        else errorArr[3].status = false;
+
+        requirements.value = errorArr;
+    } else if (props.type == "check_password") {
+        if (inputModelValue.value === props.checkPassword) {
+            errorMsg.value = null;
+        } else {
+            errorMsg.value = "Пароли не совпадают";
+        }
+    }
 }
+
+if (props.checkPassword) {
+    watch(() => props.checkPassword, () => {
+        validatePassword();
+    })
+}
+
+//  ! @ # $ % ^ & * ( ) — _ + = ; : , ./ ? \ | ` ~ [ ] { }
 </script>
 
 <template>
@@ -125,8 +184,8 @@ function validatePassword() {
         <div class="relative h-[50px] w-full">
             <input :type="inputType" :id="props.id"
                 class="block h-full w-full pr-4 pt-5 pb-2.5 pl-[54px] bg-bg hover:bg-bg2 rounded-[25px] text-base text-black outline-none peer caret-yellow border border-bg focus:border-blue focus:hover:shadow-[0px_0px_0px_4px_rgba(25,119,241,0.20)] focus:bg-white group-[.error]:focus:border-red group-[.error]:focus:hover:shadow-[0px_0px_0px_4px_rgba(228,51,93,0.20)]"
-                placeholder=" " @input="updateValue" pattern="\d*" @focus="handleFocus"
-                v-model="inputModelValue" @blur="handleBlur" />
+                placeholder=" " @input="updateValue" pattern="\d*" @focus="handleFocus" v-model="inputModelValue"
+                @blur="handleBlur" />
             <label :for="props.id"
                 class="absolute text-sm text-gray duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-[54px] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 group-[.error]:text-red">
                 {{ props.placeholder }}
@@ -142,7 +201,8 @@ function validatePassword() {
                         d="M7.96798 1.16592C8.85365 -0.388639 11.1464 -0.388642 12.032 1.16592L19.7041 14.6324C20.5649 16.1433 19.4445 18 17.6721 18H2.32789C0.555459 18 -0.564896 16.1433 0.29587 14.6324L7.96798 1.16592ZM10.9999 14C10.9999 14.5523 10.5522 15 9.99994 15C9.44765 15 8.99994 14.5523 8.99994 14C8.99994 13.4477 9.44765 13 9.99994 13C10.5522 13 10.9999 13.4477 10.9999 14ZM10.7499 6C10.7499 5.58579 10.4142 5.25 9.99994 5.25C9.58573 5.25 9.24994 5.58579 9.24994 6V11C9.24994 11.4142 9.58573 11.75 9.99994 11.75C10.4142 11.75 10.7499 11.4142 10.7499 11V6Z"
                         fill="#E4335D" />
                 </svg>
-                <div v-if="props.type == 'password'" @mousedown="toggleShowPassword" class="group/eye w-6">
+                <div v-if="props.type == 'password' || props.type == 'check_password'" @mousedown="toggleShowPassword"
+                    class="group/eye w-6">
                     <svg v-if="show" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -157,9 +217,10 @@ function validatePassword() {
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-0.5">
+        <div class="flex flex-col gap-0.5" v-if="errorMsg || requirements.length">
             <span class="text-left text-red text-xs" v-if="errorMsg">{{ errorMsg }}</span>
-            <!-- <span class="text-left text-red text-xs">• 8 и более символов</span> -->
+            <span class="text-left text-red text-xs" v-if="requirements.length" v-for="item in requirements" :key="item.key"
+                :class="{ 'text-green': item.status }">• {{ item.name }}</span>
         </div>
     </div>
 </template>

@@ -5,135 +5,11 @@ const selectedCategory = ref(null)
 const selectedSubcategory = ref(null)
 const hoveredCategory = ref(0)
 
-const categories = {
-    uz: [
-        {
-            name: "Til kurslari",
-            count: 19,
-        },
-        {
-            name: "Maktab fanlari",
-            count: 9,
-        },
-        {
-            name: "Bolalar uchun",
-            count: 14,
-        },
-        {
-            name: "Kompyuter va IT",
-            count: 15,
-        },
-        {
-            name: "Professional",
-            count: 26,
-        },
-        {
-            name: "Biznes",
-            count: 24,
-        },
-        {
-            name: "San’at",
-            count: 13,
-        },
-        {
-            name: "Til kurslari",
-            count: 19,
-        },
-        {
-            name: "Maktab fanlari",
-            count: 9,
-        },
-        {
-            name: "Bolalar uchun",
-            count: 14,
-        },
-        {
-            name: "Kompyuter va IT",
-            count: 15,
-        },
-        {
-            name: "Professional",
-            count: 26,
-        },
-        {
-            name: "Biznes",
-            count: 24,
-        },
-        {
-            name: "San’at",
-            count: 13,
-        },
-        {
-            name: "Kompyuter va IT",
-            count: 15,
-        },
-        {
-            name: "Professional",
-            count: 26,
-        },
-        {
-            name: "Biznes",
-            count: 24,
-        },
-    ],
-    ru: [
-        {
-            name: "Языковые",
-            count: 19,
-        },
-        {
-            name: "Школьные предметы",
-            count: 9,
-        },
-        {
-            name: "Для детей",
-            count: 14,
-        },
-        {
-            name: "Компьютер и IT",
-            count: 15,
-        },
-        {
-            name: "Профессиональные",
-            count: 26,
-        },
-        {
-            name: "Бизнес",
-            count: 24,
-        },
-        {
-            name: "Искусство",
-            count: 13,
-        },
-        {
-            name: "Языковые",
-            count: 19,
-        },
-        {
-            name: "Школьные предметы",
-            count: 9,
-        },
-        {
-            name: "Для детей",
-            count: 14,
-        },
-        {
-            name: "Компьютер и IT",
-            count: 15,
-        },
-        {
-            name: "Профессиональные",
-            count: 26,
-        },
-        {
-            name: "Бизнес",
-            count: 24,
-        },
-        {
-            name: "Искусство",
-            count: 13,
-        },
-    ],
+const { data: categoriesData } = await useMyFetch(`/api/announcements/categories/?format=json`)
+console.log(categoriesData.value)
+const categories = ref([])
+if (categoriesData.value) {
+    categories.value = categoriesData.value
 }
 
 const subCategory = [
@@ -271,7 +147,7 @@ watch(isCategories, () => {
                         <div class="text-2xl text-black font-bold p-4 sm:p-5">{{ $t("sticky.category") }}</div>
                         <div class="flex flex-col custom-scrollbar overflow-auto py-2">
                             <div class="flex hover:bg-bg rounded-[200px] active:bg-bg2 justify-between items-center py-2.5 px-5 cursor-pointer"
-                                v-for="item in categories[locale]" :key="item.key" @click="selectedCategory = item">
+                                v-for="item in categories" :key="item.key" @click="selectedCategory = item">
                                 <div class="flex gap-2.5 items-center">
                                     <div class="w-[30px] h-[30px] bg-bg2 rounded-full overflow-hidden">
                                         <img class="ml-[3px]" src="~/assets/images/category.svg" alt="icon">
@@ -279,8 +155,9 @@ watch(isCategories, () => {
                                     <div class="flex items-center gap-[5px] text-left text-base font-bold text-black">
                                         <span>{{ item.name }}</span>
                                         <span
-                                            class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">
-                                            {{ item.count }}
+                                            class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6"
+                                            v-if="item.subcategories">
+                                            {{ item.subcategories.length }}
                                         </span>
                                     </div>
                                 </div>
@@ -337,10 +214,16 @@ watch(isCategories, () => {
                     </div>
                 </div>
                 <!-- tablet && desktop -->
-                <div class="lg:flex gap-10 hidden bg-white rounded-b-3xl w-full h-full ease-in-out p-5">
+                <div
+                    class="lg:flex gap-10 hidden bg-white rounded-b-3xl w-full h-full ease-in-out p-5 relative overflow-hidden">
+                    <!-- ICON of hovered category -->
+                    <div class="max-xl:hidden absolute -bottom-10 -right-10">
+                        <img src="~/assets/images/languages.png" alt="icon">
+                    </div>
+                    <!-- CATEGORIES -->
                     <div class="w-[350px] overflow-y-auto flex-shrink-0 pr-2.5">
                         <div class="flex hover:bg-bg2 rounded-[200px] justify-between items-center py-2.5 px-5 cursor-pointer"
-                            v-for="item, index in categories[locale]" :key="item.key" @click="selectedCategory = item"
+                            v-for="item, index in categories" :key="item.key" @click="selectedCategory = item"
                             @mouseover="hoveredCategory = index">
                             <div class="flex gap-2.5 items-center">
                                 <div class="w-[30px] h-[30px] bg-bg2 rounded-full overflow-hidden">
@@ -349,16 +232,19 @@ watch(isCategories, () => {
                                 <div class="flex items-center gap-[5px] text-left text-base font-bold text-black">
                                     <span>{{ item.name }}</span>
                                     <span
-                                        class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">
-                                        {{ item.count }}
+                                        class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6"
+                                        v-if="item.subcategories">
+                                        {{ item.subcategories.length }}
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- SUBCATEGORIES of hovered category -->
                     <div class="overflow-y-auto flex flex-col gap-5">
+                        <!-- name -->
                         <div class="flex text-2xl font-bold items-center">
-                            {{ categories[locale][hoveredCategory].name }}
+                            {{ categories[hoveredCategory].name }}
                             <div class="w-6 h-6 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12"
                                     fill="none">
@@ -368,16 +254,18 @@ watch(isCategories, () => {
                                 </svg>
                             </div>
                         </div>
-                        <div class="gap-5 columns-3">
-                            <div class="flex flex-col gap-2.5 pb-5 text-black" v-for="(item, index) in subCategory"
-                                :key="item.key" :class="{ 'inline-flex': item.sub }">
+                        <!-- categories -->
+                        <div class="gap-5 columns-3 xl:columns-4">
+                            <div class="flex flex-col gap-2.5 pb-5 text-black break-inside-avoid"
+                                v-for="(item, index) in categories[hoveredCategory].subcategories" :key="item.key"
+                                :class="{ 'inline-flex': item.sub }">
                                 <NuxtLink to="#" class="text-base font-bold hover:text-blue active:text-pressed">
                                     {{ item.name }}
                                 </NuxtLink>
-                                <div class="flex flex-col gap-[5px]" v-if="item.sub">
+                                <div class="flex flex-col gap-[5px] break-inside-avoid" v-if="item.subcategories">
                                     <NuxtLink to="#" class="text-sm text-left hover:text-blue active:text-pressed"
-                                        v-for="sub in item.sub" :key="sub.key">
-                                        {{ sub }}
+                                        v-for="sub in item.subcategories" :key="sub.key">
+                                        {{ sub.name }}
                                     </NuxtLink>
                                 </div>
                             </div>
@@ -385,6 +273,5 @@ watch(isCategories, () => {
                     </div>
                 </div>
             </div>
-        </div>
-    </Teleport>
-</template>
+    </div>
+</Teleport></template>

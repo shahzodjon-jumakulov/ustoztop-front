@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css", "~/assets/fonts/TT-Norms/stylesheet.css"],
   modules: ["@nuxtjs/i18n", "@vite-pwa/nuxt"],
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
   pwa: {
     // manifest: {
     //   name: "UstozTop",

@@ -200,7 +200,7 @@ watch(() => route.fullPath, () => getActiveNav());
                 </div>
             </div>
         </div>
-        <div class="h-[50px] w-full"></div>
+        <div class="max-lg:h-[50px] w-full"></div>
     </div>
 </template>
 

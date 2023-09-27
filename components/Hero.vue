@@ -1,7 +1,10 @@
 <script setup>
+import { AutoPlay } from "@egjs/flicking-plugins";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
+const { locale } = useI18n()
 
+// FLICKING carousel
 const carouselOptions = {
     circular: true,
     align: 'center',
@@ -18,245 +21,21 @@ const categoriesCarousel = {
     bounce: '10%',
     align: 'prev',
 }
-
+const plugins = [new AutoPlay({ duration: 5000, stopOnHover: true, delayAfterHover: 2000 })]
 const flicking = ref(null)
 
+// categories
+const { data: categoriesData } = await useMyFetch(`/api/announcements/categories/?format=json`)
+console.log(categoriesData.value)
+const categories = ref([])
+if (categoriesData.value) {
+    categories.value = categoriesData.value
+}
 const isCategories = useState('isCategoriesOpen');
-
-const { locale } = useI18n()
 
 const isTouchDevice = ref(false)
 const isScrolling = ref(false)
 const hoveredCategory = ref(null)
-
-// dummy data
-const categories = {
-    uz: [
-        {
-            name: "Til kurslari",
-            count: 19,
-        },
-        {
-            name: "Maktab fanlari",
-            count: 9,
-        },
-        {
-            name: "Bolalar uchun",
-            count: 14,
-        },
-        {
-            name: "Kompyuter va IT",
-            count: 15,
-        },
-        {
-            name: "Professional",
-            count: 26,
-        },
-        {
-            name: "Biznes",
-            count: 24,
-        },
-        {
-            name: "San’at",
-            count: 13,
-        },
-        {
-            name: "Til kurslari",
-            count: 19,
-        },
-        {
-            name: "Maktab fanlari",
-            count: 9,
-        },
-        {
-            name: "Bolalar uchun",
-            count: 14,
-        },
-        {
-            name: "Kompyuter va IT",
-            count: 15,
-        },
-        {
-            name: "Professional",
-            count: 26,
-        },
-        {
-            name: "Biznes",
-            count: 24,
-        },
-        {
-            name: "San’at",
-            count: 13,
-        },
-    ],
-    ru: [
-        {
-            name: "Языковые",
-            count: 19,
-        },
-        {
-            name: "Школьные предметы",
-            count: 9,
-        },
-        {
-            name: "Для детей",
-            count: 14,
-        },
-        {
-            name: "Компьютер и IT",
-            count: 15,
-        },
-        {
-            name: "Профессиональные",
-            count: 26,
-        },
-        {
-            name: "Бизнес",
-            count: 24,
-        },
-        {
-            name: "Искусство",
-            count: 13,
-        },
-        {
-            name: "Языковые",
-            count: 19,
-        },
-        {
-            name: "Школьные предметы",
-            count: 9,
-        },
-        {
-            name: "Для детей",
-            count: 14,
-        },
-        {
-            name: "Компьютер и IT",
-            count: 15,
-        },
-        {
-            name: "Профессиональные",
-            count: 26,
-        },
-        {
-            name: "Бизнес",
-            count: 24,
-        },
-        {
-            name: "Искусство",
-            count: 13,
-        },
-    ],
-}
-
-const subCategory = [
-    {
-        name: "Английский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-            "Английский для бизнеса",
-            "Разговорный английский",
-        ],
-    },
-    {
-        name: "Арабский",
-        sub: null,
-    },
-    {
-        name: "Греческий",
-        sub: null,
-    },
-    {
-        name: "Испанский",
-        sub: null,
-    },
-    {
-        name: "Итальянский",
-        sub: null,
-    },
-    {
-        name: "Каракалпакский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-            "Английский для бизнеса",
-            "Разговорный английский",
-        ],
-    },
-    {
-        name: "Китайский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-            "Английский для бизнеса",
-            "Разговорный английский",
-        ],
-    },
-    {
-        name: "Немецкий",
-        sub: null,
-    },
-    {
-        name: "Итальянский",
-        sub: null,
-    },
-    {
-        name: "Норвежский",
-        sub: null,
-    },
-    {
-        name: "Персидский",
-        sub: null,
-    },
-    {
-        name: "Польский",
-        sub: null,
-    },
-    {
-        name: "Узбекский",
-        sub: null,
-    },
-    {
-        name: "Французский",
-        sub: null,
-    },
-    {
-        name: "Корейский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-        ],
-    },
-    {
-        name: "Чешский",
-        sub: null,
-    },
-    {
-        name: "Японский",
-        sub: null,
-    },
-    {
-        name: "Турецкий",
-        sub: null,
-    },
-    {
-        name: "Французский",
-        sub: null,
-    },
-    {
-        name: "Хинди",
-        sub: null,
-    },
-    {
-        name: "Чешский",
-        sub: null,
-    },
-    {
-        name: "Японский",
-        sub: null,
-    },
-]
 
 onMounted(() => {
     isTouchDevice.value = isTouchScreen()
@@ -273,7 +52,7 @@ onMounted(() => {
 
 <template>
     <div class="flex flex-col xl:flex-row gap-4 sm:gap-5 select-none xl:mx-auto" @mouseleave="hoveredCategory = null">
-        <div class="hidden flex-col gap-0 px-4 bg-white rounded-3xl p-5 w-[392px] xl:flex">
+        <div class="hidden flex-col gap-0 px-4 bg-white rounded-3xl p-5 w-[392px] min-h-[488px] xl:flex">
             <div class="text-2xl font-bold text-black mb-2.5">{{ $t("categories.select") }}</div>
             <div
                 class="xl:hidden flex items-center gap-2.5 whitespace-nowrap py-[5px] px-2.5 bg-white hover:bg-bg2 pressed-bg font-bold text-sm text-black rounded-[80px]">
@@ -289,7 +68,7 @@ onMounted(() => {
                     <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">19</span>
                 </div>
             </div>
-            <NuxtLink :to="!isScrolling ? '#' : null" v-for="item, index in categories[locale].slice(0, 7)" :key="item.key"
+            <NuxtLink :to="!isScrolling ? '#' : null" v-for="item, index in categories.slice(0, 7)" :key="item.key"
                 @mouseover="hoveredCategory = index"
                 class="flex items-center gap-2.5 whitespace-nowrap py-[5px] px-2.5 xl:py-2.5 bg-white hover:bg-bg2 pressed-bg font-bold text-base text-black rounded-[80px]">
                 <div class="w-6 h-6 xl:w-[30px] xl:h-[30px] bg-bg2 rounded-full overflow-hidden">
@@ -297,8 +76,9 @@ onMounted(() => {
                 </div>
                 <div class="flex items-center gap-[5px]">
                     {{ item.name }}
-                    <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">
-                        {{ item.count }}
+                    <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6"
+                        v-if="item.subcategories">
+                        {{ item.subcategories.length }}
                     </span>
                 </div>
             </NuxtLink>
@@ -323,30 +103,31 @@ onMounted(() => {
                             class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">19</span>
                     </div>
                 </div>
-                <NuxtLink to="#" v-for="item in categories[locale]" :key="item"
+                <NuxtLink to="#" v-for="item in categories" :key="item"
                     class="flex items-center gap-2.5 whitespace-nowrap py-[5px] px-2.5 bg-white hover:bg-bg2 pressed-bg font-bold text-base text-black rounded-[80px] mx-[5px]">
                     <div class="w-6 h-6 bg-bg2 rounded-full overflow-hidden">
                         <img class="ml-[3px]" src="~/assets/images/category.svg" alt="icon">
                     </div>
                     <div class="flex items-center gap-[5px]">
                         {{ item.name }}
-                        <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">
-                            {{ item.count }}
+                        <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6"
+                            v-if="item.subcategories">
+                            {{ item.subcategories.length }}
                         </span>
                     </div>
                 </NuxtLink>
             </Flicking>
         </div>
-        <Flicking :hide-before-init="true" class="lg:hidden" :options="carouselOptions">
+        <Flicking :hide-before-init="true" class="lg:hidden" :options="carouselOptions" :plugins="plugins">
             <div class="rounded-2xl overflow-hidden sm:rounded-3xl px-[5px] w-4/5" v-for="slide in 3" :key="slide">
                 <img src="~/assets/images/carousel.png" alt="carousel">
             </div>
         </Flicking>
         <div class="mx-5 xl:mx-0 xl:w-[804px] hidden lg:block relative rounded-3xl overflow-hidden">
             <img class="w-full" src="~/assets/images/carousel.png" alt="carousel" v-if="hoveredCategory == null">
-            <div class="overflow-y-auto flex flex-col gap-5 bg-white absolute top-0 left-0 p-5 h-full" v-else>
+            <div class="overflow-y-auto flex flex-col gap-5 bg-white absolute top-0 left-0 p-5 h-full w-full" v-else>
                 <div class="flex text-2xl font-bold items-center">
-                    {{ categories[locale][hoveredCategory].name }}
+                    {{ categories[hoveredCategory].name }}
                     <div class="w-6 h-6 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -356,15 +137,16 @@ onMounted(() => {
                     </div>
                 </div>
                 <div class="gap-5 columns-4">
-                    <div class="flex flex-col gap-2.5 pb-5 text-black" v-for="(item, index) in subCategory" :key="item.key"
-                        :class="{ 'inline-flex': item.sub }">
-                        <NuxtLink to="#" class="text-base font-bold hover:text-blue active:text-pressed">
+                    <div class="flex flex-col gap-2.5 pb-5 text-black"
+                        v-for="(item, index) in categories[hoveredCategory].subcategories" :key="item.key"
+                        :class="{ 'inline-flex': item.subcategories }">
+                        <NuxtLink to="#" class="text-base font-bold hover:text-blue active:text-pressed break-inside-avoid">
                             {{ item.name }}
                         </NuxtLink>
-                        <div class="flex flex-col gap-[5px]" v-if="item.sub">
+                        <div class="flex flex-col gap-[5px]" v-if="item.subcategories">
                             <NuxtLink to="#" class="text-sm text-left hover:text-blue active:text-pressed"
-                                v-for="sub in item.sub" :key="sub.key">
-                                {{ sub }}
+                                v-for="sub in item.subcategories" :key="sub.key">
+                                {{ sub.name }}
                             </NuxtLink>
                         </div>
                     </div>

@@ -87,16 +87,27 @@ function toggleSearchFocused() {
     const searchBar = document.getElementById("searchbar")
     searchBar.focus();
 }
+
+
+// CATEGORIES
+const { data: categoriesData } = await useMyFetch(`/api/announcements/categories/?format=json`)
+console.log(categoriesData.value)
+const categories = ref([])
+if (categoriesData.value) {
+    categories.value = categoriesData.value
+}
 </script>
 
 <template>
     <div
         class="flex gap-5 lg:gap-2.5 bg-white p-4 sm:p-5 min-w-full text-base justify-between items-center mb-4 sm:mb-5 relative">
-        <NuxtLink to="/" class="flex cursor-pointer h-6 sm:h-8 md:h-10">
+        <!-- LOGO -->
+        <NuxtLink :to="localePath('/')" class="flex cursor-pointer h-6 sm:h-8 md:h-10">
             <PageLogo class="hidden md:flex" color="blue" :isAnimated="true" />
             <PageLogo class="flex md:hidden" color="blue" :isAnimated="false" />
         </NuxtLink>
-        <BaseButton class="hidden lg:flex w-max" type="tertiary" size="large" @click="isCategories = true">
+        <!-- CATEGORIES -->
+        <BaseButton class="hidden lg:flex w-max" type="tertiary" size="large" @click="isCategories = !isCategories">
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M2.08301 0C0.978438 0 0.0830078 0.895431 0.0830078 2V6C0.0830078 7.10457 0.978438 8 2.08301 8H6.08301C7.18758 8 8.08301 7.10457 8.08301 6V2C8.08301 0.895431 7.18758 0 6.08301 0H2.08301ZM14.083 0C12.9784 0 12.083 0.895431 12.083 2V6C12.083 7.10457 12.9784 8 14.083 8H18.083C19.1876 8 20.083 7.10457 20.083 6V2C20.083 0.895431 19.1876 0 18.083 0H14.083ZM0.0830078 14C0.0830078 12.8954 0.978438 12 2.08301 12H6.08301C7.18758 12 8.08301 12.8954 8.08301 14V18C8.08301 19.1046 7.18758 20 6.08301 20H2.08301C0.978438 20 0.0830078 19.1046 0.0830078 18V14ZM14.083 12C12.9784 12 12.083 12.8954 12.083 14V18C12.083 19.1046 12.9784 20 14.083 20H18.083C19.1876 20 20.083 19.1046 20.083 18V14C20.083 12.8954 19.1876 12 18.083 12H14.083Z"
@@ -104,6 +115,7 @@ function toggleSearchFocused() {
             </svg>
             <span>{{ $t("sticky.category") }}</span>
         </BaseButton>
+        <!-- SEARCH icon on mobile -->
         <div class="search group md:hidden" @click="toggleSearch(true)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -111,6 +123,7 @@ function toggleSearchFocused() {
                     fill="#A7AABC" class="group-active:fill-blue" />
             </svg>
         </div>
+        <!-- SEARCH modal -->
         <div class="search-mobile z-[2] fixed inset-0 bg-white flex flex-col gap-4 pt-4 sm:pt-5" v-show="searchMobile">
             <div class="flex items-center px-4 gap-[5px]">
                 <div class="group p-0.5" @click="searchMobile = false">
@@ -206,6 +219,7 @@ function toggleSearchFocused() {
                 </div>
             </div>
         </div>
+        <!-- SEARCH input NOT-mobile -->
         <div class="hidden md:block search-bar w-full min-[1600px]:relative rounded-3xl">
             <div class="overflow-hidden h-[50px] w-full relative">
                 <input type="text" id="search" v-model="search" @click="toggleSearchFocused()"
@@ -323,6 +337,7 @@ function toggleSearchFocused() {
                 </div>
             </div>
         </div>
+        <!-- LANG -->
         <div class="navbar hidden lg:flex items-center">
             <NuxtLink v-if="locale == 'ru'" :to="switchLocalePath('uz')" class="hidden lg:flex lang px-2.5 w-max gap-[5px]">
                 <img src="~/assets/images/ru.svg" alt="ru" />
