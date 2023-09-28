@@ -172,6 +172,7 @@ function validatePassword() {
 
 if (props.checkPassword) {
     watch(() => props.checkPassword, () => {
+        console.log(1)
         validatePassword();
     })
 }
@@ -219,8 +220,8 @@ if (props.checkPassword) {
         </div>
         <div class="flex flex-col gap-0.5" v-if="errorMsg || requirements.length">
             <span class="text-left text-red text-xs" v-if="errorMsg">{{ errorMsg }}</span>
-            <span class="text-left text-red text-xs" v-if="requirements.length" v-for="item in requirements" :key="item.key"
-                :class="{ 'text-green': item.status }">• {{ item.name }}</span>
+            <span class="text-left text-xs" v-if="requirements.length" v-for="item in requirements" :key="item.key"
+                :class="item.status ? 'text-green' : 'text-red'">• {{ item.name }}</span>
         </div>
     </div>
 </template>

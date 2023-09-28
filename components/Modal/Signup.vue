@@ -1,5 +1,8 @@
 <script setup>
 const progress = ref(0);
+const countdown = ref(60);
+const isValidCode = ref(null);
+const isPending = ref(false);
 
 const isSelected = ref(null);
 const widthOfNav = ref(0)
@@ -41,27 +44,24 @@ watch(progress, newVal => {
 })
 
 const handleSelected = () => {
-    console.log(1)
     const el = document.getElementById("nav");
-    if (isSelected.value == 1) {
-        widthOfNav.value = document.getElementById("tutor").offsetWidth
-        leftOfNav.value = document.getElementById("tutor").offsetLeft
-    } else if (isSelected.value == 2) {
-        widthOfNav.value = document.getElementById("center").offsetWidth
-        leftOfNav.value = document.getElementById("center").offsetLeft
+    const tutor = document.getElementById("tutor")
+    const learning = document.getElementById("center")
+    if (isSelected.value == 1 && tutor) {
+        widthOfNav.value = tutor.offsetWidth
+        leftOfNav.value = tutor.offsetLeft
+    } else if (isSelected.value == 2 && learning) {
+        widthOfNav.value = learning.offsetWidth
+        leftOfNav.value = learning.offsetLeft
     }
-    el.style.width = `${widthOfNav.value}px`
-    el.style.left = `${leftOfNav.value}px`
+    if (el && el.style) {
+        el.style.width = `${widthOfNav.value}px`
+        el.style.left = `${leftOfNav.value}px`
+    }
 }
 
-const submit = async () => {
-    const body = ref({
-        password1: "",
-        password2: "",
-        role: "TUTOR",
-        otp: "",
-        phone_number: ""
-    })
+const digits = ["", "", "", "", "", ""]
+const submitSms = async () => {
     let isValid = true;
     const submittedPhone = phone.value.replaceAll(" ", "").replaceAll("+", "").replaceAll("-", "")
     if (submittedPhone.toString().length != 12) isValid = false;
@@ -75,35 +75,128 @@ const submit = async () => {
     if (!regExChars.test(password.value)) isValid = false;
 
     if (isValid) {
-        body.value = {
-            password1: password.value,
-            password2: checkPass.value,
-            role: isSelected.value == 1 ? 'TUTOR' : 'COURSE_CENTER',
-            otp: "",
-            phone_number: submittedPhone,
-        }
+        progress.value++;
+        countdownTimer();
 
-        const smsBody = { phone_number: submittedPhone }
-        const data = ref(1);
-        // const { data } = await useMyFetch("/api/users/send-sms/", {
-        //     body: JSON.stringify(smsBody),
-        //     method: 'POST',
-        // })
-        if (data.value) {
-            console.log(data.value)
+        const smsBody = { phone_number: `+${submittedPhone}` }
+        const { data } = await useMyFetch("/api/users/send-sms/", {
+            body: JSON.stringify(smsBody),
+            method: 'POST',
+        })
+        console.log(data.value)
+    }
+}
+
+const submit = async () => {
+    const submittedPhone = phone.value.replaceAll(" ", "").replaceAll("+", "").replaceAll("-", "")
+    const body = {
+        password1: password.value,
+        password2: checkPass.value,
+        role: isSelected.value == 1 ? 'TUTOR' : 'COURSE_CENTER',
+        otp: digits.join(''),
+        phone_number: submittedPhone,
+    }
+    console.log(body)
+    // const data = ref(true);
+    const { data, error } = await useMyFetch('/api/users/register/', {
+        body: JSON.stringify(body),
+        method: 'POST',
+    })
+    console.log(data.value)
+    console.log(error.value)
+    if (data.value) {
+        isValidCode.value = true;
+    } else {
+        isValidCode.value = false;
+    }
+}
+
+function moveToNext(event, index) {
+    // if(event.target.value) {
+    //     digits[index] = 
+    // }
+    if (event.target.value.length === event.target.maxLength) {
+        const nextDigit = document.getElementById(`digit${index + 1}`)
+        if (nextDigit) {
+            nextDigit.focus();
         }
     }
+    if (index == 5) {
+        console.log("FInished")
+        submit();
+    }
+}
+
+const handleKeypress = (event, index) => {
+    var previous, next;
+    if (index > 0) {
+        previous = document.getElementById(`digit${index - 1}`)
+    }
+    if (index < 6) {
+        next = document.getElementById(`digit${index + 1}`)
+    }
+    if (event.keyCode == 8) {
+        if (event.target.value) {
+            event.target.value = ""
+            digits[index] = ""
+        } else if (previous) {
+            previous.focus();
+            previous.value = "";
+            digits[index - 1] = ""
+        }
+    }
+
+    if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)) {
+        if (digits[index]) {
+            digits[index] = +event.key;
+            event.target.value = "";
+        }
+    }
+
+    if (event.keyCode == 37 && previous) {
+        previous.focus();
+    }
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        // Prevent the default arrow key behavior
+        event.preventDefault();
+    }
+}
+
+function countdownTimer() {
+    if (countdown.value > 0) {
+        setTimeout(() => {
+            countdown.value--;
+            countdownTimer();
+        }, 1000);
+    }
+}
+
+async function resendSms() {
+    if (countdown.value == 0) {
+        countdown.value = 60;
+    }
+    countdownTimer();
+    const submittedPhone = phone.value.replaceAll(" ", "").replaceAll("+", "").replaceAll("-", "")
+    const smsBody = { phone_number: `+${submittedPhone}` }
+    const { data } = await useMyFetch("/api/users/send-sms/", {
+        body: JSON.stringify(smsBody),
+        method: 'POST',
+    })
+    console.log(data.value)
 }
 </script>
 
 <template>
     <teleport to="body">
         <div class="fixed inset-0 z-[11] h-[100svh]" v-if="auth">
-            <div @click="auth = false" class="bg-black bg-opacity-60 w-full absolute md:h-full"></div>
-            <div
-                class="h-[calc(100%-50px)] flex justify-center items-center w-full md:w-[500px] md:h-max fixed md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
-                <div
+            <div @click="auth = false" class="bg-black bg-opacity-60 w-full absolute md:h-full"
+                :class="{ 'h-full': isValidCode }"></div>
+            <div :class="{'!w-full !h-[calc(100%-50px)] !top-0 !translate-y-0':!isValidCode}"
+                class="w-max md:w-[500px] h-max fixed md:absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div v-if="isValidCode == null || isValidCode == false"
                     class="p-5 bg-white inline-flex flex-col gap-2.5 justify-start items-center md:rounded-3xl w-full h-full">
+                    <!-- TOP buttons -->
                     <div class="flex justify-between w-full">
                         <div v-if="progress != 0" class="group/icon hidden md:block cursor-pointer" @click="progress--">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -121,17 +214,20 @@ const submit = async () => {
                         </div>
                     </div>
                     <div class="flex flex-col text-center w-full h-full gap-8 md:gap-5 select-none">
+                        <!-- TITLE -->
                         <div class="flex items-center justify-center">
-                            <div class="ml-auto md:hidden absolute left-5" @click="auth = false">
+                            <!-- MOBILE only button -->
+                            <div class="group/icon ml-auto md:hidden absolute left-5 cursor-pointer"
+                                @click="progress ? progress-- : auth = false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                     fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM8.46967 6.46967L5.46967 9.46967C5.17678 9.76256 5.17678 10.2374 5.46967 10.5303L8.46967 13.5303C8.76256 13.8232 9.23744 13.8232 9.53033 13.5303C9.82322 13.2374 9.82322 12.7626 9.53033 12.4697L7.81066 10.75H14C14.4142 10.75 14.75 10.4142 14.75 10C14.75 9.58579 14.4142 9.25 14 9.25H7.81066L9.53033 7.53033C9.82322 7.23744 9.82322 6.76256 9.53033 6.46967C9.23744 6.17678 8.76256 6.17678 8.46967 6.46967Z"
-                                        fill="#A7AABC" />
+                                        class="fill-lightGray group-hover/icon:fill-blue group-active/icon:fill-pressed" />
                                 </svg>
                             </div>
                             <div class="text-2xl text-black font-bold">
-                                {{ $t("signup.title") }}
+                                {{ progress == 2 ? 'Введите код из СМС' : $t("signup.title") }}
                             </div>
                         </div>
                         <div v-if="progress == 0" class="flex flex-col md:flex-row gap-2.5 h-full md:h-[196px]">
@@ -172,7 +268,7 @@ const submit = async () => {
                                 </div>
                             </div>
                         </div>
-                        <div v-if="progress == 1">
+                        <div v-else-if="progress == 1">
                             <div class="flex flex-col gap-8">
                                 <!-- TAB switcher -->
                                 <div class="flex bg-bg w-max rounded-full p-[5px] mx-auto relative">
@@ -240,16 +336,34 @@ const submit = async () => {
                                 </div>
                             </div>
                         </div>
-                        <BaseButton v-if="isSelected" type="primary" size="large" @click="submit">{{ $t("submit") }}
+                        <div v-else-if="progress == 2" class="flex flex-col gap-5">
+                            <div class="text-gray text-sm">На номер <b>{{ phone }}</b> было отправлено
+                                СМС с 6-значным кодом</div>
+                            <div class="flex flex-col gap-2.5 items-center">
+                                <div class="flex gap-2.5 items-center justify-center">
+                                    <input :id="`digit${index}`" type="number" v-for="(digit, index) in digits"
+                                        :key="digit.key" v-model="digits[index]" min="0" max="9" maxlength="1"
+                                        @input="moveToNext($event, index)" @keydown="handleKeypress($event, index)"
+                                        class="w-[50px] h-[50px] rounded-full bg-bg text-lg text-black font-bold flex text-center caret-yellow border border-[rgba(0,0,0,0)] focus-within:border-blue focus-within:bg-white focus-within:outline-none hover:bg-[#E8EAF2]"
+                                        :class="{ '!border-blue !bg-white hover:shadow-[0px_0px_0px_4px_rgba(25,119,241,0.20)]': digit.toString().length, '!border-red !bg-white hover:shadow-[0px_0px_0px_4px_rgba(228,51,93,0.20)]': isValidCode == false }">
+                                </div>
+                                <div class="text-xs text-red" v-if="isValidCode == false">Неверный код</div>
+                            </div>
+                        </div>
+                        <BaseButton v-if="progress == 1" type="primary" size="large" @click="submitSms">{{ $t("submit") }}
+                        </BaseButton>
+                        <BaseButton v-if="progress == 2" :type="!isPending ? 'primary' : 'loading'" size="large"
+                            @click="submit">{{ $t("submit") }}
                         </BaseButton>
                         <!-- LOGIN if have account -->
-                        <div class="flex justify-center items-center gap-[5px] text-sm mt-auto">
+                        <div v-if="progress == 0 || progress == 1"
+                            class="flex justify-center items-center gap-[5px] text-sm mt-auto">
                             <span>Есть аккаунт?</span>
                             <div @click="login = true, auth = false"
                                 class="link text-blue hover:text-pressed active:text-[#145FC1] cursor-pointer">Вход</div>
                         </div>
                         <!-- terms and conditions -->
-                        <div v-if="isSelected" class="text-sm text-gray">
+                        <div v-if="progress == 1" class="text-sm text-gray">
                             При регистрации вы соглашаетесь c
                             <a href="#" target="_blank" class="underline hover:text-blue active:text-pressed">
                                 условиями использования
@@ -258,7 +372,32 @@ const submit = async () => {
                                 политикой обработки данных
                             </a>.
                         </div>
+                        <!-- SEND code AGAIN -->
+                        <div v-if="progress == 2" class="flex items-center self-center w-fit gap-[5px]"
+                            :class="{ 'cursor-pointer': countdown == 0 }">
+                            <div class="p-[3px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                    fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M9 18C4.02944 18 0 13.9706 0 9C0 4.02944 4.02944 0 9 0C13.9706 0 18 4.02944 18 9C18 13.9706 13.9706 18 9 18ZM13.2149 4.5C13.2149 4.08579 12.8791 3.75 12.4649 3.75C12.0507 3.75 11.7149 4.08579 11.7149 4.5V5.10195C10.9457 4.56522 10.0098 4.25 9 4.25C6.37665 4.25 4.25 6.37665 4.25 9C4.25 11.6234 6.37665 13.75 9 13.75C11.2143 13.75 13.0731 12.2355 13.6003 10.1869C13.7036 9.7858 13.4621 9.37692 13.0609 9.27367C12.6598 9.17043 12.2509 9.41192 12.1477 9.81306C11.7868 11.215 10.5133 12.25 9 12.25C7.20507 12.25 5.75 10.7949 5.75 9C5.75 7.20507 7.20507 5.75 9 5.75C9.82309 5.75 10.5752 6.05579 11.1483 6.56112L10.315 6.77316C9.91362 6.87531 9.67101 7.28354 9.77316 7.68496C9.87531 8.08638 10.2835 8.32899 10.685 8.22684L12.6498 7.72684C12.9822 7.64225 13.2149 7.34298 13.2149 7V4.5Z"
+                                        fill="#787B8D" :class="{ 'fill-blue': countdown == 0 }" />
+                                </svg>
+                            </div>
+                            <span v-if="countdown > 0" class="text-sm text-gray">
+                                Отправить повторно можно через {{ countdown }} сек
+                            </span>
+                            <span v-else class="text-blue" @click="resendSms">
+                                Отправить повторно
+                            </span>
+                        </div>
                     </div>
+                </div>
+                <div class="p-5 bg-white flex flex-col gap-2.5 items-center shadow-[0px_8px_24px_-4px_rgba(24,39,75,0.08),0px_6px_12px_-6px_rgba(24,39,75,0.12)] rounded-3xl select-none"
+                    v-else>
+                    <img width="48" height="48" src="~/assets/images/success.png" alt="successful">
+                    <span class="text-black text-lg font-bold">
+                        Вы успешно зарегистрировались
+                    </span>
                 </div>
             </div>
         </div>
@@ -268,5 +407,4 @@ const submit = async () => {
 <style scoped>
 .group {
     -webkit-tap-highlight-color: transparent;
-}
-</style>
+}</style>
