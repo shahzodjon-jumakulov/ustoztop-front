@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col">
+    <div class="min-h-[100svh] flex flex-col">
         <ModalCategories />
         <ModalLogin />
         <ModalSignup />

@@ -11,8 +11,8 @@ const signup = useState("isSignupOpen")
 </script>
 
 <template>
-    <div class="profile flex flex-col justify-between pb-4">
-        <div class="flex flex-col gap-4 h-full">
+    <div class="profile flex flex-col justify-between pb-4 flex-grow">
+        <div class="flex flex-col gap-4 h-full flex-grow">
             <!-- avatar, auth -->
             <div class="p-4 bg-white flex flex-col gap-[15px] justify-center items-center">
                 <div class="avatar w-[60px] rounded-full">
@@ -99,7 +99,7 @@ const signup = useState("isSignupOpen")
                 </NuxtLink>
                 <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
                 </NuxtLink>
-                <NuxtLink to="https://redmedia.uz/main" class="group flex justify-center gap-[5px] flex-wrap">
+                <NuxtLink to="https://redmedia.uz/" class="group flex justify-center gap-[5px] flex-wrap">
                     <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
                         агентством</span>
                     <span class="flex items-center gap-[4.5px]">
@@ -114,9 +114,5 @@ const signup = useState("isSignupOpen")
 <style scoped>
 .nav:active {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #E9EFFF;
-}
-
-.profile {
-    height: calc(100svh - 50px);
 }
 </style>

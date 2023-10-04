@@ -136,7 +136,7 @@ watch(isCategories, () => {
         <div v-if="isCategories"
             class="group/container fixed inset-0 z-[9] lg:top-[90px] h-[100svh] lg:h-[calc(100%-90px)] opacity-0 transition-opacity duration-300 ease-in-out"
             :class="{ 'isOpen opacity-[1]': isCategories }">
-            <div @click="isCategories = false" class="bg-black bg-opacity-60 w-full absolute lg:h-full lg:bottom-0 z-[9] ">
+            <div @click="isCategories = false" class="bg-black bg-opacity-60 w-full absolute lg:h-full lg:bottom-0 z-[9]">
             </div>
             <div
                 class="h-[calc(100%-50px)] flex justify-center items-center lg:items-start w-full min-[1600px]:max-w-[1280px] lg:h-3/4 fixed lg:absolute lg:left-1/2 lg:-translate-x-1/2 z-10">
@@ -175,19 +175,19 @@ watch(isCategories, () => {
                     <div class="flex flex-col text-center w-full h-full " v-else>
                         <div
                             class="text-2xl text-black font-bold p-4 sm:p-5 grid grid-flow-col grid-cols-[max-content] items-center">
-                            <div class="flex items-center justify-center h-6 w-6" @click="selectedCategory = null">
+                            <div class="group/icon flex items-center justify-center h-6 w-6 cursor-pointer" @click="selectedCategory = null">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                     fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM8.46967 6.46967L5.46967 9.46967C5.17678 9.76256 5.17678 10.2374 5.46967 10.5303L8.46967 13.5303C8.76256 13.8232 9.23744 13.8232 9.53033 13.5303C9.82322 13.2374 9.82322 12.7626 9.53033 12.4697L7.81066 10.75H14C14.4142 10.75 14.75 10.4142 14.75 10C14.75 9.58579 14.4142 9.25 14 9.25H7.81066L9.53033 7.53033C9.82322 7.23744 9.82322 6.76256 9.53033 6.46967C9.23744 6.17678 8.76256 6.17678 8.46967 6.46967Z"
-                                        fill="#A7AABC" />
+                                        class="fill-lightGray group-hover/icon:fill-blue group-active/icon:fill-pressed" />
                                 </svg>
                             </div>
                             {{ selectedCategory.name }}
                         </div>
                         <div class="flex flex-col custom-scrollbar overflow-auto py-2">
                             <div class="group cursor-pointer h-[50px] transition-height duration-300 ease-in-out"
-                                v-for="(item, index) in subCategory" :key="item.key"
+                                v-for="(item, index) in selectedCategory.subcategories" :key="item.key"
                                 :class="{ 'active h-full': selectedSubcategory == index && item.sub }"
                                 @click="selectedSubcategory = (selectedSubcategory == index ? null : index)">
                                 <div

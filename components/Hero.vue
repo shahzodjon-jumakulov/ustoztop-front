@@ -40,10 +40,12 @@ const hoveredCategory = ref(null)
 onMounted(() => {
     isTouchDevice.value = isTouchScreen()
     window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1280) {
-            flicking.value.destroy();
-        } else {
-            flicking.value.init();
+        if (flicking) {
+            if (window.innerWidth >= 1280) {
+                flicking.value.destroy();
+            } else {
+                flicking.value.init();
+            }
         }
     })
 })

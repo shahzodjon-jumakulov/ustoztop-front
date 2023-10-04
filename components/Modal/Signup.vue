@@ -60,7 +60,7 @@ const handleSelected = () => {
     }
 }
 
-const digits = ["", "", "", "", "", ""]
+const digits = ref(["", "", "", "", "", ""])
 const submitSms = async () => {
     let isValid = true;
     const submittedPhone = phone.value.replaceAll(" ", "").replaceAll("+", "").replaceAll("-", "")
@@ -93,7 +93,7 @@ const submit = async () => {
         password1: password.value,
         password2: checkPass.value,
         role: isSelected.value == 1 ? 'TUTOR' : 'COURSE_CENTER',
-        otp: digits.join(''),
+        otp: digits.value.join(''),
         phone_number: submittedPhone,
     }
     console.log(body)
@@ -112,9 +112,16 @@ const submit = async () => {
 }
 
 function moveToNext(event, index) {
-    // if(event.target.value) {
-    //     digits[index] = 
-    // }
+    if (event.target) {
+        if (event.target.value.length == 6) {
+            for (let i = 0; i < 6; i++) {
+                const item = document.getElementById(`digit${i}`)
+                const digit = event.target.value.toString().charAt(i)
+                digits.value[i] = digit
+                item.focus();
+            }
+        }
+    }
     if (event.target.value.length === event.target.maxLength) {
         const nextDigit = document.getElementById(`digit${index + 1}`)
         if (nextDigit) {
@@ -122,7 +129,7 @@ function moveToNext(event, index) {
         }
     }
     if (index == 5) {
-        console.log("FInished")
+        console.log("Finished")
         submit();
     }
 }
@@ -137,19 +144,17 @@ const handleKeypress = (event, index) => {
     }
     if (event.keyCode == 8) {
         if (event.target.value) {
-            event.target.value = ""
-            digits[index] = ""
+            digits.value[index] = ""
         } else if (previous) {
             previous.focus();
             previous.value = "";
-            digits[index - 1] = ""
+            digits.value[index - 1] = ""
         }
     }
 
     if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)) {
-        if (digits[index]) {
-            digits[index] = +event.key;
-            event.target.value = "";
+        if (digits.value[index]) {
+            digits.value[index] = "";
         }
     }
 
@@ -192,7 +197,7 @@ async function resendSms() {
         <div class="fixed inset-0 z-[11] h-[100svh]" v-if="auth">
             <div @click="auth = false" class="bg-black bg-opacity-60 w-full absolute md:h-full"
                 :class="{ 'h-full': isValidCode }"></div>
-            <div :class="{'!w-full !h-[calc(100%-50px)] !top-0 !translate-y-0':!isValidCode}"
+            <div :class="{ 'max-md:!w-full max-md:!h-[calc(100%-50px)] max-md:!top-0 max-md:!translate-y-0': !isValidCode }"
                 class="w-max md:w-[500px] h-max fixed md:absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <div v-if="isValidCode == null || isValidCode == false"
                     class="p-5 bg-white inline-flex flex-col gap-2.5 justify-start items-center md:rounded-3xl w-full h-full">
@@ -407,4 +412,5 @@ async function resendSms() {
 <style scoped>
 .group {
     -webkit-tap-highlight-color: transparent;
-}</style>
+}
+</style>

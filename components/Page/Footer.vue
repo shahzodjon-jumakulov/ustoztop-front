@@ -24,7 +24,7 @@ watch(() => route.fullPath, () => getActiveNav());
 </script>
 
 <template>
-    <div class="mt-auto z-10">
+    <div class="mt-auto z-[12]">
         <div class="fixed bottom-0 w-full lg:relative">
             <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex lg:hidden mt-4 sm:mt-5 md:mt-6">
                 <NuxtLink :to="localePath('/')" :class="{ 'active': !isCategories && activeNav == 'main' }"
@@ -154,7 +154,7 @@ watch(() => route.fullPath, () => getActiveNav());
                     <hr class="border border-lightBlue" />
                     <div class="flex justify-between text-xs">
                         <span>©2023 Ustoztop. Все права защищены</span>
-                        <NuxtLink to="https://redmedia.uz/main" class="group flex items-center gap-2.5">
+                        <NuxtLink to="https://redmedia.uz/" class="group flex items-center gap-2.5">
                             <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
                                 агентством</span>
                             <span class="flex items-center gap-[4.5px]">
