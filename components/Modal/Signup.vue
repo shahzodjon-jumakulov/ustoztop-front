@@ -94,7 +94,7 @@ const submit = async () => {
         password2: checkPass.value,
         role: isSelected.value == 1 ? 'TUTOR' : 'COURSE_CENTER',
         otp: digits.value.join(''),
-        phone_number: submittedPhone,
+        phone_number: `+${submittedPhone}`,
     }
     console.log(body)
     // const data = ref(true);
@@ -218,7 +218,7 @@ async function resendSms() {
                             </svg>
                         </div>
                     </div>
-                    <div class="flex flex-col text-center w-full h-full gap-8 md:gap-5 select-none">
+                    <form @submit.prevent class="flex flex-col text-center w-full h-full gap-8 md:gap-5 select-none">
                         <!-- TITLE -->
                         <div class="flex items-center justify-center">
                             <!-- MOBILE only button -->
@@ -355,9 +355,9 @@ async function resendSms() {
                                 <div class="text-xs text-red" v-if="isValidCode == false">Неверный код</div>
                             </div>
                         </div>
-                        <BaseButton v-if="progress == 1" type="primary" size="large" @click="submitSms">{{ $t("submit") }}
+                        <BaseButton v-if="progress == 1" type="submit" state="primary" size="large" @click="submitSms">{{ $t("submit") }}
                         </BaseButton>
-                        <BaseButton v-if="progress == 2" :type="!isPending ? 'primary' : 'loading'" size="large"
+                        <BaseButton v-if="progress == 2" type="submit" :state="!isPending ? 'primary' : 'loading'" size="large"
                             @click="submit">{{ $t("submit") }}
                         </BaseButton>
                         <!-- LOGIN if have account -->
@@ -395,7 +395,7 @@ async function resendSms() {
                                 Отправить повторно
                             </span>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="p-5 bg-white flex flex-col gap-2.5 items-center shadow-[0px_8px_24px_-4px_rgba(24,39,75,0.08),0px_6px_12px_-6px_rgba(24,39,75,0.12)] rounded-3xl select-none"
                     v-else>

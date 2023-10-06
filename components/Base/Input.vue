@@ -19,6 +19,11 @@ const props = defineProps({
         required: false,
         type: String,
     },
+    isLogin: {
+        required: false,
+        type: Boolean,
+        default: false,
+    },
 })
 
 const errorMsg = ref(null);
@@ -118,9 +123,9 @@ function validatePassword() {
         requirements.value.map(item => item.status = false)
         return false;
     }
-    else if (props.type == 'password') {
+    else if (props.type == 'password' && !props.isLogin) {
         const isValid = true;
-        let errorArr = [
+        let errorArr = !props.isLogin ? [
             {
                 name: "Только буквы латинского алфавита, цифры и спецсимволы",
                 status: true,
@@ -137,7 +142,7 @@ function validatePassword() {
                 name: "Хотя бы одна заглавная буква",
                 status: true,
             },
-        ];
+        ] : [];
         // if (inputModelValue.value) {
         //     var regEx = /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*-_+=();:?{}~,./|`~]{8,64}$/;
         //     console.log(regEx.test(inputModelValue.value));
@@ -185,7 +190,7 @@ if (props.checkPassword) {
         <div class="relative h-[50px] w-full">
             <input :type="inputType" :id="props.id"
                 class="block h-full w-full pr-4 pt-5 pb-2.5 pl-[54px] bg-bg hover:bg-bg2 rounded-[25px] text-base text-black outline-none peer caret-yellow border border-bg focus:border-blue focus:hover:shadow-[0px_0px_0px_4px_rgba(25,119,241,0.20)] focus:bg-white group-[.error]:focus:border-red group-[.error]:focus:hover:shadow-[0px_0px_0px_4px_rgba(228,51,93,0.20)]"
-                placeholder=" " @input="updateValue" pattern="\d*" @focus="handleFocus" v-model="inputModelValue"
+                placeholder=" " @input="updateValue" @focus="handleFocus" v-model="inputModelValue"
                 @blur="handleBlur" />
             <label :for="props.id"
                 class="absolute text-sm text-gray duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-[54px] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 group-[.error]:text-red">

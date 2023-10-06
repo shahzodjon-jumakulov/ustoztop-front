@@ -84,7 +84,7 @@ onMounted(() => {
                     </span>
                 </div>
             </NuxtLink>
-            <BaseButton class="hidden xl:block mt-2.5" type="primary" size="large" @click="isCategories = true">{{
+            <BaseButton class="hidden xl:block mt-2.5" state="primary" size="large" @click="isCategories = true">{{
                 $t("categories.all") }}
             </BaseButton>
         </div>

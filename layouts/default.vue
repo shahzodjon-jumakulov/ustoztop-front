@@ -7,7 +7,7 @@
         <ModalCategories />
         <ModalLogin />
         <ModalSignup />
-        <PageHeader class="hidden lg:flex" />
+        <PageHeader />
         <slot></slot>
         <PageFooter />
     </div>

@@ -12,115 +12,6 @@ if (categoriesData.value) {
     categories.value = categoriesData.value
 }
 
-const subCategory = [
-    {
-        name: "Английский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-            "Английский для бизнеса",
-            "Разговорный английский",
-        ],
-    },
-    {
-        name: "Арабский",
-        sub: null,
-    },
-    {
-        name: "Греческий",
-        sub: null,
-    },
-    {
-        name: "Испанский",
-        sub: null,
-    },
-    {
-        name: "Итальянский",
-        sub: null,
-    },
-    {
-        name: "Каракалпакский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-            "Английский для бизнеса",
-            "Разговорный английский",
-        ],
-    },
-    {
-        name: "Китайский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-            "Английский для бизнеса",
-            "Разговорный английский",
-        ],
-    },
-    {
-        name: "Немецкий",
-        sub: null,
-    },
-    {
-        name: "Итальянский",
-        sub: null,
-    },
-    {
-        name: "Норвежский",
-        sub: null,
-    },
-    {
-        name: "Персидский",
-        sub: null,
-    },
-    {
-        name: "Польский",
-        sub: null,
-    },
-    {
-        name: "Узбекский",
-        sub: null,
-    },
-    {
-        name: "Французский",
-        sub: null,
-    },
-    {
-        name: "Корейский",
-        sub: [
-            "IELTS",
-            "Английский для начинающих",
-        ],
-    },
-    {
-        name: "Чешский",
-        sub: null,
-    },
-    {
-        name: "Японский",
-        sub: null,
-    },
-    {
-        name: "Турецкий",
-        sub: null,
-    },
-    {
-        name: "Французский",
-        sub: null,
-    },
-    {
-        name: "Хинди",
-        sub: null,
-    },
-    {
-        name: "Чешский",
-        sub: null,
-    },
-    {
-        name: "Японский",
-        sub: null,
-    },
-]
-
 watch(isCategories, () => {
     if (isCategories.value) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -175,7 +66,8 @@ watch(isCategories, () => {
                     <div class="flex flex-col text-center w-full h-full " v-else>
                         <div
                             class="text-2xl text-black font-bold p-4 sm:p-5 grid grid-flow-col grid-cols-[max-content] items-center">
-                            <div class="group/icon flex items-center justify-center h-6 w-6 cursor-pointer" @click="selectedCategory = null">
+                            <div class="group/icon flex items-center justify-center h-6 w-6 cursor-pointer"
+                                @click="selectedCategory = null">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                     fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -273,5 +165,6 @@ watch(isCategories, () => {
                     </div>
                 </div>
             </div>
-    </div>
-</Teleport></template>
+        </div>
+    </Teleport>
+</template>

@@ -27,7 +27,7 @@ const refresh = () => {
                         Страница, на которую вы пытаетесь попасть, не существует или была удалена.
                     </div>
                 </div>
-                <BaseButton @click="clearError({ redirect: localePath('/') })" class="w-max" size="large" type="primary">
+                <BaseButton @click="clearError({ redirect: localePath('/') })" class="w-max" size="large" state="primary">
                     Перейти на главную страницу
                 </BaseButton>
             </div>
@@ -38,7 +38,7 @@ const refresh = () => {
                         Проверьте подключение к Wi-Fi или мобильной сети и попробуйте снова
                     </div>
                 </div>
-                <BaseButton @click="clearError(), refresh" class="w-max" size="large" type="primary">
+                <BaseButton @click="clearError(), refresh" class="w-max" size="large" state="primary">
                     Повторить попытку
                 </BaseButton>
             </div>

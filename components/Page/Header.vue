@@ -107,7 +107,7 @@ if (categoriesData.value) {
             <PageLogo class="flex md:hidden" color="blue" :isAnimated="false" />
         </NuxtLink>
         <!-- CATEGORIES -->
-        <BaseButton class="hidden lg:flex w-max" type="tertiary" size="large" @click="isCategories = !isCategories">
+        <BaseButton class="hidden lg:flex w-max" state="tertiary" size="large" @click="isCategories = !isCategories">
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M2.08301 0C0.978438 0 0.0830078 0.895431 0.0830078 2V6C0.0830078 7.10457 0.978438 8 2.08301 8H6.08301C7.18758 8 8.08301 7.10457 8.08301 6V2C8.08301 0.895431 7.18758 0 6.08301 0H2.08301ZM14.083 0C12.9784 0 12.083 0.895431 12.083 2V6C12.083 7.10457 12.9784 8 14.083 8H18.083C19.1876 8 20.083 7.10457 20.083 6V2C20.083 0.895431 19.1876 0 18.083 0H14.083ZM0.0830078 14C0.0830078 12.8954 0.978438 12 2.08301 12H6.08301C7.18758 12 8.08301 12.8954 8.08301 14V18C8.08301 19.1046 7.18758 20 6.08301 20H2.08301C0.978438 20 0.0830078 19.1046 0.0830078 18V14ZM14.083 12C12.9784 12 12.083 12.8954 12.083 14V18C12.083 19.1046 12.9784 20 14.083 20H18.083C19.1876 20 20.083 19.1046 20.083 18V14C20.083 12.8954 19.1876 12 18.083 12H14.083Z"
@@ -149,7 +149,7 @@ if (categoriesData.value) {
                                     class="pressed" />
                             </svg>
                         </div>
-                        <BaseButton type="primary" class="px-[11px] py-[7px] text-[10px] h-5" @click="searched = true">Найти
+                        <BaseButton state="primary" class="px-[11px] py-[7px] text-[10px] h-5" @click="searched = true">Найти
                         </BaseButton>
                     </div>
                 </div>
@@ -237,7 +237,7 @@ if (categoriesData.value) {
                                 class="pressed" />
                         </svg>
                     </div>
-                    <BaseButton type="primary" size="medium" @click="searched = true">Найти</BaseButton>
+                    <BaseButton state="primary" size="medium" @click="searched = true">Найти</BaseButton>
                 </div>
             </div>
             <div class="absolute w-[calc(100%-40px)] h-10 top-5 left-5 min-[1600px]:top-0 min-[1600px]:left-0 min-[1600px]:w-full"
@@ -264,7 +264,7 @@ if (categoriesData.value) {
                                             class="pressed" />
                                     </svg>
                                 </div>
-                                <BaseButton type="primary" size="medium" @click="searched = true">Найти</BaseButton>
+                                <BaseButton state="primary" size="medium" @click="searched = true">Найти</BaseButton>
                             </div>
                         </div>
                         <div v-if="!requests.length" class="popular flex flex-col gap-[5px]">
@@ -366,7 +366,7 @@ if (categoriesData.value) {
                 </span>
             </div>
         </div>
-        <BaseButton class="hidden xl:block w-max" type="primary" size="large">Разместить объявление</BaseButton>
+        <BaseButton class="hidden xl:block w-max" state="primary" size="large">Разместить объявление</BaseButton>
     </div>
 </template>
 

@@ -149,6 +149,6 @@ function isInViewport(el) {
                 <div>В сети сегодня в {{ props.lastOnline }}</div>
             </div>
         </div>
-        <BaseButton type="secondary" size="medium">Подробнее</BaseButton>
+        <BaseButton state="secondary" size="medium">Подробнее</BaseButton>
     </div>
 </template>

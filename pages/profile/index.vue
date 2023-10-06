@@ -27,12 +27,12 @@ const signup = useState("isSignupOpen")
                     </div>
                 </div>
                 <div class="auth flex flex-col items-center w-full gap-2.5">
-                    <BaseButton @click="login = true" size="medium" type="primary">{{ $t("login.title") }}</BaseButton>
-                    <BaseButton @click="signup = true" size="medium" type="tertiary">{{ $t("signup.title") }}</BaseButton>
+                    <BaseButton @click="login = true" size="medium" state="primary">{{ $t("login.title") }}</BaseButton>
+                    <BaseButton @click="signup = true" size="medium" state="tertiary">{{ $t("signup.title") }}</BaseButton>
                 </div>
             </div>
             <!-- language with dropdown -->
-            <div class="flex flex-col gap-[5px]">
+            <div class="flex flex-col gap-[5px] sm:mx-5">
                 <div class="group current" :class="{ 'active': lang }">
                     <div class="px-5 py-[13px] rounded-[25px] flex justify-between bg-white border border-bg group-[.active]:border-blue group-[.active]:bg-white"
                         @click="lang = !lang">
@@ -71,7 +71,7 @@ const signup = useState("isSignupOpen")
                 </div>
             </div>
             <!-- links to about and FAQ -->
-            <div class="flex flex-col">
+            <div class="flex flex-col sm:mx-5">
                 <div class="flex flex-col bg-white rounded-[25px]">
                     <NuxtLink to="#" class="nav flex items-center justify-between py-2.5 px-5 h-[50px] rounded-[25px]">
                         <div class="flex items-center gap-2.5">
