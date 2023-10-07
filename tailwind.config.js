@@ -30,6 +30,7 @@ module.exports = {
       black: "#000000",
       icon: "#787B8D",
       pressed: "#166BD9",
+      doublePressed: "#145FC1",
     },
     screens: {
       sm: "480px",

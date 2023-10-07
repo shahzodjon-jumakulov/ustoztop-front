@@ -1,5 +1,11 @@
 <script setup>
-
+const isMain = ref(null);
+onMounted(() => {
+    isMain.value = useRoute().fullPath == '/' || useRoute().fullPath == '/ru'
+})
+watch(() => useRoute().fullPath, newVal => {
+    isMain.value = newVal == '/' || newVal == '/ru'
+})
 </script>
 
 <template>
@@ -7,7 +13,7 @@
         <ModalCategories />
         <ModalLogin />
         <ModalSignup />
-        <PageHeader />
+        <PageHeader :class="{'hidden': !isMain}" />
         <slot></slot>
         <PageFooter />
     </div>

@@ -1,5 +1,7 @@
 <script setup>
-const isLogin = ref(0)
+const { locale } = useI18n();
+const localePath = useLocalePath();
+const isLogin = ref(null)
 // 0 - login
 // 1 - forgot pass, enter phone
 // 2 - forgot pass, confirm code
@@ -13,13 +15,22 @@ watch(auth, () => {
         useState('isCategoriesOpen').value = false;
         disableScroll()
     } else {
+        isLogin.value = null;
         enableScroll();
     }
 })
 
+watch(isLogin, newVal => {
+    if (newVal == 0 || newVal == 1) {
+        focusPhoneInput();
+    }
+})
 // inputs
 const phone = ref(null)
 const password = ref(null)
+
+const incorrectPhone = ref(null)
+const incorrectPass = ref(null)
 
 // login button clicked
 async function handleLogin() {
@@ -28,15 +39,16 @@ async function handleLogin() {
         phone_number: `+${submittedPhone}`,
         password: password.value,
     }
-    const { data, error } = await useMyFetch('/api/users/login/', {
-        body: JSON.stringify(body),
-        method: 'POST',
-        onResponse({response}) {
-            console.log(response)
-        }
-    })
-    console.log(data.value)
-    console.log(error.value)
+    const res = await useAuthUser(body, locale.value);
+    if (res) {
+        navigateTo(localePath("/profile"))
+        auth.value = false;
+        phone.value = null;
+        password.value = null;
+    } else {
+        // incorrectPhone.value = "";
+        incorrectPass.value = "Введен неверный пароль или номер телефона. Повторите попытку";
+    }
 }
 
 watch(() => useRoute().path, () => auth.value = false)
@@ -121,6 +133,13 @@ const handleKeypress = (event, index) => {
     }
 }
 
+function focusPhoneInput() {
+    setTimeout(() => {
+        if (document.getElementById("phone_number")) {
+            document.getElementById("phone_number").focus()
+        }
+    }, 1);
+}
 </script>
 
 <template>
@@ -140,8 +159,7 @@ const handleKeypress = (event, index) => {
                                     class="fill-lightGray group-hover/icon:fill-blue group-active/icon:fill-pressed" />
                             </svg>
                         </div>
-                        <div class="group/icon ml-auto hidden md:block cursor-pointer"
-                            @click="auth = false">
+                        <div class="group/icon ml-auto hidden md:block cursor-pointer" @click="auth = false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                     d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM15.3588 15.3587C15.0659 15.6516 14.591 15.6516 14.2981 15.3587L12 13.0606L9.7019 15.3587C9.40901 15.6516 8.93413 15.6516 8.64124 15.3587C8.34835 15.0658 8.34835 14.5909 8.64124 14.298L10.9393 11.9999L8.64125 9.70184C8.34836 9.40895 8.34836 8.93408 8.64125 8.64118C8.93415 8.34829 9.40902 8.34829 9.70191 8.64118L12 10.9393L14.2981 8.64119C14.591 8.3483 15.0659 8.3483 15.3588 8.64119C15.6516 8.93409 15.6516 9.40896 15.3588 9.70185L13.0607 11.9999L15.3588 14.298C15.6517 14.5909 15.6517 15.0658 15.3588 15.3587Z"
@@ -150,7 +168,8 @@ const handleKeypress = (event, index) => {
                         </div>
                     </div>
                     <!-- login -->
-                    <form @submit.prevent v-if="isLogin == 0" class="flex flex-col text-center w-full h-full gap-8 md:gap-5">
+                    <form @submit.prevent v-if="isLogin == 0"
+                        class="flex flex-col text-center w-full h-full gap-8 md:gap-5">
                         <div class="flex items-center justify-center">
                             <div class="ml-auto md:hidden absolute left-5" @click="auth = false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -163,7 +182,7 @@ const handleKeypress = (event, index) => {
                             <div class="text-2xl text-black font-bold">{{ $t("login.title") }}</div>
                         </div>
                         <div class="flex flex-col gap-[10px]">
-                            <BaseInput placeholder="Номер телефона" id="phone_number" type="tel" v-model="phone">
+                            <BaseInput placeholder="Номер телефона" id="phone_number" type="tel" v-model="phone" :incorrect-input="incorrectPhone">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19"
                                     fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -171,7 +190,8 @@ const handleKeypress = (event, index) => {
                                         fill="#787B8D" class="group-[.error]:fill-red" />
                                 </svg>
                             </BaseInput>
-                            <BaseInput placeholder="Пароль" id="password" type="password" v-model="password" :is-login="true">
+                            <BaseInput placeholder="Пароль" id="password" type="password" v-model="password" :incorrect-input="incorrectPass"
+                                :is-login="true" @input="incorrectPass = null">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19"
                                     fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd"

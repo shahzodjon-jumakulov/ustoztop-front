@@ -24,6 +24,16 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    incorrectInput: {
+        required: false,
+        type: String,
+        default: null,
+    },
+})
+
+watch(() => props.incorrectInput, newVal => {
+    console.log(newVal)
+    errorMsg.value = newVal
 })
 
 const errorMsg = ref(null);
@@ -50,7 +60,7 @@ const updateValue = (event) => {
 
 // phone number
 const formatPhoneNumber = (event) => {
-    let inputValue = event.target.value.replace(/\D/g, '').slice(3);
+    let inputValue = event.target.value.replace(/\D/g, '').replace("9", "").replace("9", "").replace("8", "");
 
     if (inputValue.length > 9) {
         inputValue = inputValue.substring(0, 9);
@@ -190,8 +200,7 @@ if (props.checkPassword) {
         <div class="relative h-[50px] w-full">
             <input :type="inputType" :id="props.id"
                 class="block h-full w-full pr-4 pt-5 pb-2.5 pl-[54px] bg-bg hover:bg-bg2 rounded-[25px] text-base text-black outline-none peer caret-yellow border border-bg focus:border-blue focus:hover:shadow-[0px_0px_0px_4px_rgba(25,119,241,0.20)] focus:bg-white group-[.error]:focus:border-red group-[.error]:focus:hover:shadow-[0px_0px_0px_4px_rgba(228,51,93,0.20)]"
-                placeholder=" " @input="updateValue" @focus="handleFocus" v-model="inputModelValue"
-                @blur="handleBlur" />
+                placeholder=" " @input="updateValue" @focus="handleFocus" v-model="inputModelValue" @blur="handleBlur" />
             <label :for="props.id"
                 class="absolute text-sm text-gray duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-[54px] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 group-[.error]:text-red">
                 {{ props.placeholder }}
