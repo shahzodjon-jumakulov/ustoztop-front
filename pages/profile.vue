@@ -10,11 +10,20 @@ const signup = useState("isSignupOpen")
 
 // user info
 const userInfo = useUserInfo();
-if (!userInfo.value) {
+const token = useCookie("token");
+if (token.value && !userInfo.value) {
     await usePersonalData(locale.value);
 }
 
 const isAuthenticated = useAuthenticated();
+
+// logout
+const isLogout = ref(false);
+function handleLogout() {
+    useLogOut();
+    userInfo.value = null;
+    navigateTo(localePath("/"))
+}
 </script>
 
 <template>
@@ -38,7 +47,7 @@ const isAuthenticated = useAuthenticated();
                     <BaseButton @click="signup = true" size="medium" state="tertiary">{{ $t("signup.title") }}</BaseButton>
                 </div>
             </div>
-            <div v-else class="p-4 bg-white flex flex-col gap-2.5 justify-center">
+            <div v-else class="p-4 bg-white flex flex-col gap-2.5 justify-center sm:py-5">
                 <div class="flex items-center gap-[15px]">
                     <div class="flex gap-2.5 items-center">
                         <div class="border-bg rounded-full border-[1.2px] p-[2.4px] inline-flex">
@@ -80,7 +89,7 @@ const isAuthenticated = useAuthenticated();
                         </svg>
                     </div>
                 </div>
-                <div class="flex flex-col gap-2.5">
+                <div class="flex flex-col gap-2.5 sm:flex-row sm:justify-between">
                     <p class="text-xs text-gray">На Ustoztop.uz с июня 2022</p>
                     <div class="group/blue flex gap-[5px] items-center cursor-pointer">
                         <div class="h-[18px] w-[18px] flex items-center justify-center">
@@ -93,6 +102,76 @@ const isAuthenticated = useAuthenticated();
                         <p class="text-blue text-sm group-hover/blue:text-pressed group-active/blue:text-doublePressed">
                             {{ $t("profile.stats") }}
                         </p>
+                    </div>
+                </div>
+            </div>
+            <!-- options -->
+            <div v-if="isAuthenticated" class="flex flex-col bg-white rounded-3xl sm:mx-4">
+                <div
+                    class="flex items-center justify-between px-5 y-2.5 rounded-[200px] hover:bg-bg2 active:bg-[#D2D7E5] h-[50px] cursor-pointer">
+                    <div class="flex gap-2.5 items-center">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M18.0119 0.740586C18.412 0.847792 18.6494 1.25904 18.5422 1.65914L18.1762 3.02517C18.069 3.42527 17.6577 3.66271 17.2576 3.5555C16.8575 3.44829 16.6201 3.03704 16.7273 2.63694L17.0933 1.27092C17.2005 0.870816 17.6118 0.633379 18.0119 0.740586ZM13.8679 2.43682C13.1951 1.27149 11.5866 1.08969 10.6707 2.07545L4.22214 9.01556C4.44711 9.21961 4.64467 9.46157 4.80468 9.73872L7.30468 14.0689C7.46471 14.346 7.57548 14.6381 7.63971 14.935L16.8743 12.8205C18.186 12.5201 18.8328 11.0363 18.16 9.87093L13.8679 2.43682ZM5.84519 14.7281L3.34519 10.398C2.93097 9.68056 2.01359 9.43474 1.29615 9.84896C0.57871 10.2632 0.332897 11.1806 0.747111 11.898L3.24711 16.2281C3.66132 16.9456 4.57871 17.1914 5.29615 16.7772C6.01359 16.3629 6.2594 15.4456 5.84519 14.7281ZM11.7076 19.1478L9.80417 15.851L12.8638 15.1504L14.3057 17.6478C14.7199 18.3652 14.474 19.2826 13.7566 19.6968C13.0392 20.111 12.1218 19.8652 11.7076 19.1478ZM19.6459 5.57072C19.2458 5.46352 18.8345 5.70095 18.7273 6.10105C18.6201 6.50115 18.8575 6.91241 19.2576 7.01961L20.6236 7.38564C21.0237 7.49285 21.435 7.25541 21.5422 6.85531C21.6494 6.45521 21.412 6.04396 21.0119 5.93675L19.6459 5.57072Z"
+                                    fill="#787B8D" />
+                            </svg>
+                        </div>
+                        <div class="flex gap-[5px] items-center">
+                            Мои объявления
+                            <div class="h-6 bg-bg2 rounded-3xl px-2 text-xs flex items-center">19</div>
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M0.531506 0.414376C0.20806 0.673133 0.155619 1.1451 0.414376 1.46855L4.03956 6.00003L0.414376 10.5315C0.155618 10.855 0.208059 11.3269 0.531506 11.5857C0.854952 11.8444 1.32692 11.792 1.58568 11.4685L5.58568 6.46855C5.80481 6.19464 5.80481 5.80542 5.58568 5.53151L1.58568 0.531506C1.32692 0.20806 0.854953 0.155619 0.531506 0.414376Z"
+                                fill="black" />
+                        </svg>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center justify-between px-5 y-2.5 rounded-[200px] hover:bg-bg2 active:bg-[#D2D7E5] h-[50px] cursor-pointer">
+                    <div class="flex gap-2.5 items-center">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M10 0H4.00001C2.32132 0 0.884159 1.03408 0.290771 2.5H13.7093C13.1159 1.03408 11.6787 0 10 0ZM20 14H16C14.8954 14 14 13.1046 14 12C14 10.8954 14.8954 10 16 10H20V14ZM0 4H16C18.2091 4 20 5.79086 20 8V8.5H16C14.067 8.5 12.5 10.067 12.5 12C12.5 13.933 14.067 15.5 16 15.5H20V16C20 18.2091 18.2091 20 16 20H4C1.79086 20 0 18.2091 0 16V4Z"
+                                    fill="#787B8D" />
+                            </svg>
+                        </div>
+                        <div class="flex gap-[5px] items-center">
+                            Кошелёк: 0 сум
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M0.531506 0.414376C0.20806 0.673133 0.155619 1.1451 0.414376 1.46855L4.03956 6.00003L0.414376 10.5315C0.155618 10.855 0.208059 11.3269 0.531506 11.5857C0.854952 11.8444 1.32692 11.792 1.58568 11.4685L5.58568 6.46855C5.80481 6.19464 5.80481 5.80542 5.58568 5.53151L1.58568 0.531506C1.32692 0.20806 0.854953 0.155619 0.531506 0.414376Z"
+                                fill="black" />
+                        </svg>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center justify-between px-5 y-2.5 rounded-[200px] hover:bg-bg2 active:bg-[#D2D7E5] h-[50px] cursor-pointer">
+                    <div class="flex gap-2.5 items-center">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M11.0455 3H12.9545C14.0089 3 14.8636 3.80589 14.8636 4.8C14.8636 5.93762 16.0808 6.66088 17.08 6.11698L17.1815 6.06174C18.0946 5.56468 19.2622 5.85966 19.7894 6.72058L20.7439 8.27943C21.2711 9.14036 20.9582 10.2412 20.0451 10.7383C19.0455 11.2824 19.0455 12.7176 20.0451 13.2617C20.9582 13.7588 21.2711 14.8596 20.7439 15.7206L19.7894 17.2794C19.2622 18.1403 18.0946 18.4353 17.1815 17.9383L17.08 17.883C16.0808 17.3391 14.8636 18.0624 14.8636 19.2C14.8636 20.1941 14.0089 21 12.9545 21H11.0455C9.99109 21 9.13635 20.1941 9.13635 19.2C9.13635 18.0624 7.91917 17.3391 6.92 17.883L6.81851 17.9383C5.90541 18.4353 4.73782 18.1404 4.21064 17.2794L3.25609 15.7206C2.72891 14.8597 3.04176 13.7588 3.95487 13.2617C4.95451 12.7176 4.95451 11.2824 3.95487 10.7383C3.04176 10.2412 2.72891 9.14034 3.25609 8.27942L4.21064 6.72057C4.73782 5.85964 5.90541 5.56467 6.81852 6.06172L6.92 6.11697C7.91917 6.66087 9.13635 5.93761 9.13635 4.8C9.13635 3.80589 9.99109 3 11.0455 3ZM12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3432 9 9.00001 10.3431 9.00001 12C9.00001 13.6569 10.3432 15 12 15Z"
+                                    fill="#787B8D" />
+                            </svg>
+                        </div>
+                        <div class="flex gap-[5px] items-center">
+                            Настройки профиля
+                        </div>
+                    </div>
+                    <div class="w-6 h-6 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M0.531506 0.414376C0.20806 0.673133 0.155619 1.1451 0.414376 1.46855L4.03956 6.00003L0.414376 10.5315C0.155618 10.855 0.208059 11.3269 0.531506 11.5857C0.854952 11.8444 1.32692 11.792 1.58568 11.4685L5.58568 6.46855C5.80481 6.19464 5.80481 5.80542 5.58568 5.53151L1.58568 0.531506C1.32692 0.20806 0.854953 0.155619 0.531506 0.414376Z"
+                                fill="black" />
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -173,8 +252,8 @@ const isAuthenticated = useAuthenticated();
                 </div>
             </div>
             <!-- logout -->
-            <div
-                class="bg-white px-5 py-2.5 flex justify-between items-center rounded-[200px] sm:mx-5 cursor-pointer hover:bg-bg2 active:bg-[#D2D7E5]">
+            <div v-if="isAuthenticated" @click="isLogout = true"
+                class="bg-white px-5 py-2.5 flex justify-between items-center rounded-[200px] sm:mx-5 cursor-pointer hover:bg-bg2 active:bg-[#D2D7E5] h-[50px]">
                 <div class="flex gap-2.5 items-center">
                     <div class="w-6 h-6 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="21" viewBox="0 0 18 21" fill="none">
@@ -195,17 +274,41 @@ const isAuthenticated = useAuthenticated();
             </div>
             <!-- terms and rules -->
             <div class="flex flex-col gap-4 text-center mb-4 text-xs mt-auto">
-                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Условия использования
+                <NuxtLink to="#" class="hover:text-blue active:text-pressed underline hover:no-underline">Условия использования
                 </NuxtLink>
-                <NuxtLink to="#" class="hover:text-yellow active:text-[#E4B100]">Политика обработки данных
+                <NuxtLink to="#" class="hover:text-blue active:text-pressed underline hover:no-underline">Политика обработки данных
                 </NuxtLink>
                 <NuxtLink to="https://redmedia.uz/" class="group flex justify-center gap-[5px] flex-wrap">
-                    <span class="group-hover:text-yellow group-active:text-[#E4B100]">Разработано креативным
+                    <span class="group-hover:text-blue group-active:text-pressed">Разработано креативным
                         агентством</span>
                     <span class="flex items-center gap-[4.5px]">
                         <img src="~/assets/images/credit.svg" alt="redmedia">
                     </span>
                 </NuxtLink>
+            </div>
+        </div>
+        <!-- logout modal -->
+        <div class="">
+            <div @click="isLogout = false"
+                class="bg-black bg-opacity-60 w-full fixed top-0 h-full transition-all duration-300 ease-in-out"
+                :class="isLogout ? 'z-[99] opacity-100' : '-z-[1] opacity-0'"></div>
+            <div :class="isLogout ? 'z-[99] opacity-100' : '-z-[1] opacity-0'"
+                class="flex flex-col gap-2.5 p-5 bg-white rounded-3xl fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-[500px] transition-all duration-300 ease-in-out">
+                <div class="group/icon self-end cursor-pointer" @click="isLogout = false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM15.3588 15.3587C15.0659 15.6516 14.591 15.6516 14.2981 15.3587L12 13.0606L9.7019 15.3587C9.40901 15.6516 8.93413 15.6516 8.64124 15.3587C8.34835 15.0658 8.34835 14.5909 8.64124 14.298L10.9393 11.9999L8.64125 9.70184C8.34836 9.40895 8.34836 8.93408 8.64125 8.64118C8.93415 8.34829 9.40902 8.34829 9.70191 8.64118L12 10.9393L14.2981 8.64119C14.591 8.3483 15.0659 8.3483 15.3588 8.64119C15.6516 8.93409 15.6516 9.40896 15.3588 9.70185L13.0607 11.9999L15.3588 14.298C15.6517 14.5909 15.6517 15.0658 15.3588 15.3587Z"
+                            class="fill-lightGray group-hover/icon:fill-blue group-active/icon:fill-pressed" />
+                    </svg>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <div class="text-2xl text-black font-bold text-center">Вы уверены, что хотите выйти?</div>
+                    <img class="self-center" width="140" height="140" src="~/assets/images/logout.png" alt="logout">
+                    <div class="flex gap-2.5">
+                        <BaseButton state="tertiary" size="large" @click="isLogout = false">Отмена</BaseButton>
+                        <BaseButton state="primary" size="large" @click="handleLogout()">Выйти</BaseButton>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
