@@ -7,16 +7,22 @@ const handleSelected = () => {
     setTimeout(() => {
         const el = document.getElementById("stick");
         const activeEl = document.getElementsByClassName("active-saved")[0]
-        widthOfNav.value = activeEl.offsetWidth
-        leftOfNav.value = activeEl.offsetLeft
-        el.style.width = `${widthOfNav.value}px`
-        el.style.left = `${leftOfNav.value}px`
+        if (activeEl) {
+            widthOfNav.value = activeEl.offsetWidth
+            leftOfNav.value = activeEl.offsetLeft
+            el.style.width = `${widthOfNav.value}px`
+            el.style.left = `${leftOfNav.value}px`
+        }
     }, 1);
 }
 
 onMounted(() => {
     handleSelected();
     window.addEventListener('resize', () => { handleSelected() }, true);
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', () => { handleSelected() }, true);
 })
 
 watch(selected, () => {
@@ -83,7 +89,7 @@ const privacyPolicy = {
 </script>
 
 <template>
-    <div>
+    <div class="mt-4 sm:mt-5">
         <div class="flex justify-center items-center relative p-4 sm:p-5 bg-white lg:hidden">
             <div class="group w-6 h-6 flex items-center justify-center absolute left-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -128,7 +134,8 @@ const privacyPolicy = {
                 </div>
             </div>
             <div class="cards w-full sm:mx-5 lg:mx-0">
-                <div class="flex flex-col gap-4 sm:gap-5 bg-white rounded-3xl p-4 sm:p-5" id="terms-of-use" v-if="selected == 1">
+                <div class="flex flex-col gap-4 sm:gap-5 bg-white rounded-3xl p-4 sm:p-5" id="terms-of-use"
+                    v-if="selected == 1">
                     <div class="text-sm leading-[140%] text-black">{{ termsOfUse.title }}</div>
                     <div class="flex flex-col" v-for="item in termsOfUse.data" :key="item.key">
                         <div class="font-bold text-base">{{ item.title }}</div>

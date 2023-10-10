@@ -300,7 +300,7 @@ const cards = [
             Премиум репетиторы и учебные заведения
         </div>
         <div class="flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-5">
-            <BasePremiumCard v-for="(item, index) in cards" :key="item.key"
+            <CardPremium v-for="(item, index) in cards" :key="item.key"
                 class="md:w-[calc(50%-10px)] xl:w-[calc(100%/3-(2/3*20px))]" :name="item.name" :type="item.type"
                 :isVerified="item.verified" :isPremium="item.premium" :location="item.location"
                 :lastOnline="item.lastOnline" :avatar="`https://picsum.photos/64?random=${index}`" :tags="item.tags" />

@@ -123,11 +123,8 @@ watch(isCategories, () => {
                                 </div>
                                 <div class="flex items-center gap-[5px] text-left text-base font-bold text-black">
                                     <span>{{ item.name }}</span>
-                                    <span
-                                        class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6"
-                                        v-if="item.subcategories">
-                                        {{ item.subcategories.length }}
-                                    </span>
+                                    <BaseCount class="font-normal" v-if="item.subcategories"
+                                        :count="item.subcategories.length" />
                                 </div>
                             </div>
                         </div>

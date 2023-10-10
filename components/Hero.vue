@@ -40,7 +40,7 @@ const hoveredCategory = ref(null)
 onMounted(() => {
     isTouchDevice.value = isTouchScreen()
     window.addEventListener('resize', () => {
-        if (flicking) {
+        if (flicking.value) {
             if (window.innerWidth >= 1280) {
                 flicking.value.destroy();
             } else {
@@ -67,7 +67,7 @@ onMounted(() => {
                 </div>
                 <div class="flex items-center gap-[5px]">
                     {{ $t("categories.allAnnouncements") }}
-                    <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">19</span>
+                    <BaseCount count="19" />
                 </div>
             </div>
             <NuxtLink :to="!isScrolling ? '#' : null" v-for="item, index in categories.slice(0, 7)" :key="item.key"
@@ -78,10 +78,7 @@ onMounted(() => {
                 </div>
                 <div class="flex items-center gap-[5px]">
                     {{ item.name }}
-                    <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6"
-                        v-if="item.subcategories">
-                        {{ item.subcategories.length }}
-                    </span>
+                    <BaseCount class="font-normal" v-if="item.subcategories" :count="item.subcategories.length" />
                 </div>
             </NuxtLink>
             <BaseButton class="hidden xl:block mt-2.5" state="primary" size="large" @click="isCategories = true">{{
@@ -101,8 +98,7 @@ onMounted(() => {
                     </div>
                     <div class="flex items-center gap-[5px]">
                         {{ $t("categories.allAnnouncements") }}
-                        <span
-                            class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6">19</span>
+                        <BaseCount class="font-normal" count="19" />
                     </div>
                 </div>
                 <NuxtLink to="#" v-for="item in categories" :key="item"
@@ -112,10 +108,7 @@ onMounted(() => {
                     </div>
                     <div class="flex items-center gap-[5px]">
                         {{ item.name }}
-                        <span class="bg-bg2 rounded-3xl text-xs font-normal flex items-center justify-center px-2 h-6"
-                            v-if="item.subcategories">
-                            {{ item.subcategories.length }}
-                        </span>
+                        <BaseCount class="font-normal" v-if="item.subcategories" :count="item.subcategories.length" />
                     </div>
                 </NuxtLink>
             </Flicking>
