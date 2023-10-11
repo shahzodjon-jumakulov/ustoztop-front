@@ -1,35 +1,9 @@
 <script setup>
 const localePath = useLocalePath();
+const route = useRoute();
 
-const activeTab = ref(0)
-// dummy data
-const tabs = [
-    {
-        name: "Активные",
-        count: 19,
-        link: "/profile/my-ads/active",
-    },
-    {
-        name: "Ожидающие",
-        count: 19,
-        link: "/profile/my-ads/pending",
-    },
-    {
-        name: "Неоплаченные",
-        count: 19,
-        link: "/profile/my-ads/not_paid",
-    },
-    {
-        name: "Неактивные",
-        count: 19,
-        link: "/profile/my-ads/not_active",
-    },
-    {
-        name: "Отклоненные",
-        count: 19,
-        link: "/profile/my-ads/rejected",
-    },
-]
+const tabs = useTabs();
+const activeTab = ref(route.params.type ? tabs.value.findIndex(tab => tab.link == route.params.type[0]) : 0);
 </script>
 
 <template>
@@ -44,11 +18,11 @@ const tabs = [
             </div>
         </div>
         <div class="bg-white rounded-3xl flex flex-col sm:mx-5 lg:hidden">
-            <NuxtLink :to="item.link"
+            <NuxtLink :to="localePath(`/profile/my-ads/${item.link}`)"
                 class="px-5 py-2.5 flex justify-between items-center h-[50px] hover:bg-bg2 active:bg-[#D2D7E5] rounded-full"
-                v-for="item in tabs" :key="item.key">
+                v-for="item, index in tabs" :key="item.key">
                 <div class="flex items-center gap-[5px]">
-                    <span>{{ item.name }}</span>
+                    <span>{{ $t(`myAds[${index}]`) }}</span>
                     <BaseCount :count="item.count" />
                 </div>
                 <div class="w-6 h-6 flex items-center justify-center">
@@ -60,16 +34,17 @@ const tabs = [
                 </div>
             </NuxtLink>
         </div>
-        <div class="max-lg:hidden flex gap-5 container">
-            <div class="p-5 bg-white rounded-3xl flex flex-col w-1/3 h-fit">
-                <div class="group px-2.5 flex gap-[5px] items-center h-[34px] hover:bg-bg active:bg-bg2 rounded-full cursor-pointer"
+        <div class="flex gap-5 container">
+            <div class="max-lg:hidden p-5 bg-white rounded-3xl flex flex-col w-1/3 h-fit">
+                <NuxtLink :to="localePath(`/profile/my-ads/${tabs[index].link}`)"
+                    class="group px-2.5 flex gap-[5px] items-center h-[34px] hover:bg-bg active:bg-bg2 rounded-full cursor-pointer"
                     :class="{ 'active bg-bg': activeTab == index }" v-for="item, index in tabs" :key="item.key"
                     @click="activeTab = index">
                     <span class="text-sm text-black group-[.active]:text-blue group-[.active]:font-bold">
-                        {{ item.name }}
+                        {{ $t(`myAds[${index}]`) }}
                     </span>
                     <BaseCount :count="item.count" />
-                </div>
+                </NuxtLink>
             </div>
             <div class="flex flex-col gap-5 w-2/3">
                 <NuxtPage />

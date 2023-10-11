@@ -12,7 +12,13 @@ const breadCrumb = [
         link: null,
     },
 ]
+console.log(useRoute())
 const activeTab = ref(0)
+if (useRoute().name == 'profile-wallet___uz' || useRoute().name == 'profile-wallet___ru') {
+    activeTab.value = 1;
+} else if (useRoute().name == 'profile-settings___uz' || useRoute().name == 'profile-settings___ru') {
+    activeTab.value = 2;
+}
 
 const login = useState("isLoginOpen")
 const signup = useState("isSignupOpen")
@@ -89,14 +95,13 @@ onMounted(() => {
                     <div v-else class="flex flex-col gap-2.5 justify-center">
                         <div class="flex items-center gap-[15px]">
                             <div class="flex gap-2.5 items-center">
-                                <div class="border-bg rounded-full border-[1.2px] p-[2.4px] inline-flex">
-                                    <svg v-if="!userInfo.profile_pic" class="inline-block"
-                                        xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56"
+                                <div class="border-bg rounded-full border-[1.2px] lg:border-2 p-[1.2px] lg:p-0.5 inline-flex">
+                                    <svg v-if="!userInfo.profile_pic" class="inline-block w-[55.2px] h-[55.2px]"
+                                        xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 92 92"
                                         fill="none">
-                                        <rect x="0.400391" y="0.398438" width="55.2" height="55.2" rx="27.6"
-                                            fill="#F4F6FF" />
+                                        <rect width="92" height="92" rx="46" fill="#F4F6FF" />
                                         <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M28.0008 26.2688C31.8115 26.2688 34.9008 23.1795 34.9008 19.3688C34.9008 15.558 31.8115 12.4688 28.0008 12.4688C24.19 12.4688 21.1008 15.558 21.1008 19.3688C21.1008 23.1795 24.19 26.2688 28.0008 26.2688ZM28.0008 43.5188C34.6696 43.5188 40.0758 40.4295 40.0758 36.6187C40.0758 32.808 34.6696 29.7188 28.0008 29.7188C21.3319 29.7188 15.9258 32.808 15.9258 36.6187C15.9258 40.4295 21.3319 43.5188 28.0008 43.5188Z"
+                                            d="M46.0312 42.3214C53.2997 42.3214 59.192 36.4292 59.192 29.1607C59.192 21.8923 53.2997 16 46.0312 16C38.7628 16 32.8705 21.8923 32.8705 29.1607C32.8705 36.4292 38.7628 42.3214 46.0312 42.3214ZM46.0312 75.2232C58.7511 75.2232 69.0625 69.331 69.0625 62.0625C69.0625 54.794 58.7511 48.9018 46.0312 48.9018C33.3114 48.9018 23 54.794 23 62.0625C23 69.331 33.3114 75.2232 46.0312 75.2232Z"
                                             fill="#787B8D" />
                                     </svg>
                                     <img v-else :src="userInfo.profile_pic" alt="avatar">
@@ -123,14 +128,15 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="group/icon w-6 h-6 flex items-center justify-center cursor-pointer">
+                            <NuxtLink :to="localePath('/profile/settings')"
+                                class="group/icon w-6 h-6 flex items-center justify-center cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
                                     fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M1.75 5C1.75 3.20507 3.20507 1.75 5 1.75H11C11.4142 1.75 11.75 1.41421 11.75 1C11.75 0.585786 11.4142 0.25 11 0.25H5C2.37665 0.25 0.25 2.37665 0.25 5V17C0.25 19.6234 2.37665 21.75 5 21.75H17C19.6234 21.75 21.75 19.6234 21.75 17V11C21.75 10.5858 21.4142 10.25 21 10.25C20.5858 10.25 20.25 10.5858 20.25 11V17C20.25 18.7949 18.7949 20.25 17 20.25H5C3.20507 20.25 1.75 18.7949 1.75 17V5ZM15.419 1.67708C16.3218 0.774305 17.7855 0.774305 18.6883 1.67708L20.3229 3.31171C21.2257 4.21449 21.2257 5.67818 20.3229 6.58096L18.8736 8.03028C18.7598 7.97394 18.6401 7.91302 18.516 7.84767C17.6806 7.40786 16.6892 6.79057 15.9493 6.05069C15.2095 5.31082 14.5922 4.31945 14.1524 3.48403C14.087 3.35989 14.0261 3.24018 13.9697 3.12639L15.419 1.67708ZM14.8887 7.11135C15.7642 7.98687 16.8777 8.67594 17.7595 9.14441L12.06 14.8438C11.7064 15.1975 11.2475 15.4269 10.7523 15.4977L7.31963 15.9881C6.5568 16.097 5.90295 15.4432 6.01193 14.6804L6.50231 11.2477C6.57305 10.7525 6.80248 10.2936 7.15616 9.93996L12.8556 4.24053C13.3241 5.12234 14.0131 6.23582 14.8887 7.11135Z"
                                         class="fill-lightGray group-hover/icon:fill-blue group-active/icon:fill-blue" />
                                 </svg>
-                            </div>
+                            </NuxtLink>
                             <div class="group/blue flex gap-[5px] items-center cursor-pointer max-lg:hidden ml-auto">
                                 <div class="h-[18px] w-[18px] flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17"
@@ -165,7 +171,7 @@ onMounted(() => {
                         </div>
                     </div>
                     <div class="flex relative max-lg:hidden">
-                        <NuxtLink :to="localePath('/profile/my-ads')"
+                        <NuxtLink :to="activeTab != 0 ? localePath('/profile/my-ads') : ''"
                             class="group p-5 flex gap-[5px] items-center cursor-pointer"
                             :class="{ 'active': activeTab == 0 }" @click="activeTab = 0">
                             <div class="w-6 h-6 flex items-center justify-center">

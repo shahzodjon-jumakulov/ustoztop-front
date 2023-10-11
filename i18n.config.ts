@@ -52,7 +52,21 @@ export default defineI18nConfig(() => ({
         ],
       },
       faqPage: {
-        title: "Часто задаваемые вопросы",
+        title: "Ko‘p so‘raladigan savollar",
+      },
+      myAds: [
+        "Faol",
+        "Kutilmoqda",
+        "To'lanmagan",
+        "Faol emas",
+        "Rad etilgan",
+      ],
+      adButton: {
+        edit: "Tahrirlash",
+        delete: "O‘chirish",
+        deactivate: "Faolsizlantirish",
+        activate: "Faollashtirish",
+        promote: "TOPga joylash",
       },
     },
     ru: {
@@ -106,7 +120,21 @@ export default defineI18nConfig(() => ({
       },
       faqPage: {
         title: "Ko‘p so‘raladigan savollar",
-      }
+      },
+      myAds: [
+        "Активные",
+        "Ожидающие",
+        "Неоплаченные",
+        "Неактивные",
+        "Отклоненные",
+      ],
+      adButton: {
+        edit: "Редактировать",
+        delete: "Удалить",
+        deactivate: "Деактивировать",
+        activate: "Активировать",
+        promote: "Разместить в ТОП",
+      },
     },
   },
 }));
