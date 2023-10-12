@@ -279,7 +279,8 @@ function handleLogout() {
                                             class="pressed" />
                                     </svg>
                                 </div>
-                                <BaseButton state="primary" size="medium" @click="searched = true">Найти</BaseButton>
+                                <BaseButton state="primary" size="medium" @click="searched = true, navigateTo('/search')">
+                                    Найти</BaseButton>
                             </div>
                         </div>
                         <div v-if="!requests.length" class="popular flex flex-col gap-[5px]">
