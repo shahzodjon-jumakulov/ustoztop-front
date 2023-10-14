@@ -14,9 +14,9 @@ const breadCrumb = [
 ]
 console.log(useRoute())
 const activeTab = ref(0)
-if (useRoute().name == 'profile-wallet___uz' || useRoute().name == 'profile-wallet___ru') {
+if (useRoute().name.includes('profile-wallet')) {
     activeTab.value = 1;
-} else if (useRoute().name == 'profile-settings___uz' || useRoute().name == 'profile-settings___ru') {
+} else if (useRoute().name.includes('profile-settings')) {
     activeTab.value = 2;
 }
 
@@ -46,7 +46,7 @@ const handleSelected = () => {
     setTimeout(() => {
         const el = document.getElementById("stick");
         const activeEl = document.getElementsByClassName("group active")[0]
-        if (activeEl) {
+        if (activeEl && el) {
             widthOfNav.value = activeEl.offsetWidth
             leftOfNav.value = activeEl.offsetLeft
             el.style.width = `${widthOfNav.value}px`

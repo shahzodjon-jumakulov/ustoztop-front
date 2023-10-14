@@ -68,6 +68,11 @@ export default defineI18nConfig(() => ({
         activate: "Faollashtirish",
         promote: "TOPga joylash",
       },
+      myWallet: [
+        "Hamyon",
+        "To‘lovlar tarixi",
+        "Xizmatlar",
+      ],
     },
     ru: {
       welcome: "Привет",
@@ -135,6 +140,11 @@ export default defineI18nConfig(() => ({
         activate: "Активировать",
         promote: "Разместить в ТОП",
       },
+      myWallet: [
+        "Кошелёк",
+        "История операций",
+        "Услуги",
+      ],
     },
   },
 }));

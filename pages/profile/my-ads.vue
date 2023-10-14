@@ -20,7 +20,7 @@ const activeTab = ref(route.params.type ? tabs.value.findIndex(tab => tab.link =
         <div class="bg-white rounded-3xl flex flex-col sm:mx-5 lg:hidden">
             <NuxtLink :to="localePath(`/profile/my-ads/${item.link}`)"
                 class="px-5 py-2.5 flex justify-between items-center h-[50px] hover:bg-bg2 active:bg-[#D2D7E5] rounded-full"
-                v-for="item, index in tabs" :key="item.key">
+                v-for="item, index in tabs" :key="item.key" @click="activeTab = index">
                 <div class="flex items-center gap-[5px]">
                     <span>{{ $t(`myAds[${index}]`) }}</span>
                     <BaseCount :count="item.count" />
@@ -35,7 +35,7 @@ const activeTab = ref(route.params.type ? tabs.value.findIndex(tab => tab.link =
             </NuxtLink>
         </div>
         <div class="flex gap-5 container">
-            <div class="max-lg:hidden p-5 bg-white rounded-3xl flex flex-col w-1/3 h-fit">
+            <div class="max-lg:hidden p-5 bg-white rounded-3xl flex flex-col w-[30%] h-fit">
                 <NuxtLink :to="localePath(`/profile/my-ads/${tabs[index].link}`)"
                     class="group px-2.5 flex gap-[5px] items-center h-[34px] hover:bg-bg active:bg-bg2 rounded-full cursor-pointer"
                     :class="{ 'active bg-bg': activeTab == index }" v-for="item, index in tabs" :key="item.key"
@@ -46,7 +46,7 @@ const activeTab = ref(route.params.type ? tabs.value.findIndex(tab => tab.link =
                     <BaseCount :count="item.count" />
                 </NuxtLink>
             </div>
-            <div class="flex flex-col gap-5 w-2/3">
+            <div class="flex flex-col gap-5 w-[70%]">
                 <NuxtPage />
             </div>
         </div>

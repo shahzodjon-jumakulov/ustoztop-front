@@ -8,7 +8,7 @@ const tabs = useTabs();
 
 <template>
     <div class="max-lg:hidden flex gap-5 container">
-        <div class="p-5 bg-white rounded-3xl flex flex-col w-1/3 h-fit">
+        <div class="p-5 bg-white rounded-3xl flex flex-col w-[30%] h-fit">
             <NuxtLink :to="localePath(`/profile/my-ads/${tabs[index].link}`)"
                 class="group px-2.5 flex gap-[5px] items-center h-[34px] hover:bg-bg active:bg-bg2 rounded-full cursor-pointer"
                 :class="{ 'active bg-bg': activeTab == index }" v-for="item, index in tabs" :key="item.key"
@@ -19,7 +19,7 @@ const tabs = useTabs();
                 <BaseCount :count="item.count" />
             </NuxtLink>
         </div>
-        <div class="flex flex-col gap-5 w-2/3">
+        <div class="flex flex-col gap-5 w-[70%]">
             <CardProfileAds />
         </div>
     </div>

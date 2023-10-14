@@ -17,6 +17,7 @@ input {
 
 * {
   -webkit-tap-highlight-color: transparent;
+  line-height: normal;
 }
 
 ::selection {

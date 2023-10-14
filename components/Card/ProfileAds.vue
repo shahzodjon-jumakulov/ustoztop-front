@@ -94,7 +94,7 @@ switch (props.type) {
                 <span class="text-blue text-xs ">Посмотреть статистику</span>
             </div>
             <!-- rejected message -->
-            <div class="p-2.5 rounded-2xl bg-red bg-opacity-10 text-red text-xs flex flex-wrap gap-[5px]" v-if="type == 'rejected'">
+            <div class="p-2.5 rounded-2xl bg-red bg-opacity-10 text-red text-xs flex flex-wrap gap-[5px] w-fit" v-if="type == 'rejected'">
                 <span>Объявление отклонено модератором.</span>
                 <NuxtLink to="#" class="underline">Подробнее</NuxtLink>
             </div>

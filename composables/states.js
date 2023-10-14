@@ -30,3 +30,16 @@ export const useTabs = () =>
       link: "rejected",
     },
   ]);
+
+export const useWallet = () =>
+  useState("wallets", () => [
+    {
+      link: "my-wallet",
+    },
+    {
+      link: "transactions",
+    },
+    {
+      link: "services",
+    },
+  ]);
