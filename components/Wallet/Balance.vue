@@ -62,17 +62,17 @@ watch(price, newVal => {
                         <div class="flex flex-col gap-2.5 flex-grow md:flex-row">
                             <div @click="selected = 0" :class="{ 'selected border-blue !bg-white': selected == 0 }"
                                 class="group/icon bg-white hover:bg-bg active:bg-bg2 cursor-pointer border border-bg2 rounded-2xl flex justify-center items-center h-1/3 w-full md:h-[200px]">
-                                <img class="transition-all duration-300 ease-in-out group-hover/icon:scale-105 group-[.selected]/icon:scale-105"
+                                <img class="transition-all duration-300 ease-in-out group-hover/icon:scale-105 group-active/icon:scale-105 group-[.selected]/icon:scale-105"
                                     src="~/assets/images/click_large.svg" alt="click">
                             </div>
                             <div @click="selected = 1" :class="{ 'selected border-blue !bg-white': selected == 1 }"
                                 class="group/icon bg-white hover:bg-bg active:bg-bg2 cursor-pointer border border-bg2 rounded-2xl flex justify-center items-center h-1/3 w-full md:h-[200px]">
-                                <img class="transition-all duration-300 ease-in-out group-hover/icon:scale-105 group-[.selected]/icon:scale-105"
+                                <img class="transition-all duration-300 ease-in-out group-hover/icon:scale-105 group-active/icon:scale-105 group-[.selected]/icon:scale-105"
                                     src="~/assets/images/payme_large.svg" alt="payme">
                             </div>
                             <div @click="selected = 2" :class="{ 'selected border-blue !bg-white': selected == 2 }"
                                 class="group/icon bg-white hover:bg-bg active:bg-bg2 cursor-pointer border border-bg2 rounded-2xl flex justify-center items-center h-1/3 w-full md:h-[200px]">
-                                <img class="transition-all duration-300 ease-in-out group-hover/icon:scale-105 group-[.selected]/icon:scale-105"
+                                <img class="transition-all duration-300 ease-in-out group-hover/icon:scale-105 group-active/icon:scale-105 group-[.selected]/icon:scale-105"
                                     src="~/assets/images/paynet_large.svg" alt="paynet">
                             </div>
                         </div>

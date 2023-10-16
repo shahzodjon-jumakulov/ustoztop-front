@@ -92,7 +92,9 @@ const searchPopular = [
 function toggleSearchFocused() {
     searchFocused.value = true;
     const searchBar = document.getElementById("searchbar")
-    searchBar.focus();
+    setTimeout(() => {
+        searchBar.focus();
+    }, 1);
 }
 
 
@@ -109,6 +111,11 @@ function handleLogout() {
     useLogOut();
     userInfo.value = null;
     navigateTo(localePath("/"))
+}
+
+function onSearch() {
+    searched.value = true
+    searchFocused.value = false;
 }
 </script>
 
@@ -140,30 +147,14 @@ function handleLogout() {
             <!-- SEARCH modal -->
             <div class="search-mobile z-[2] fixed inset-0 bg-white flex flex-col gap-4 pt-4 sm:pt-5" v-show="searchMobile">
                 <div class="flex items-center px-4 gap-[5px]">
-                    <div class="group p-0.5" @click="searchMobile = false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM8.46967 6.46967L5.46967 9.46967C5.17678 9.76256 5.17678 10.2374 5.46967 10.5303L8.46967 13.5303C8.76256 13.8232 9.23744 13.8232 9.53033 13.5303C9.82322 13.2374 9.82322 12.7626 9.53033 12.4697L7.81066 10.75H14C14.4142 10.75 14.75 10.4142 14.75 10C14.75 9.58579 14.4142 9.25 14 9.25H7.81066L9.53033 7.53033C9.82322 7.23744 9.82322 6.76256 9.53033 6.46967C9.23744 6.17678 8.76256 6.17678 8.46967 6.46967Z"
-                                fill="#A7AABC" class="group-active:fill-pressed" />
-                        </svg>
-                    </div>
+                    <BaseBack @click="searchMobile = false" />
                     <div class="search-bar w-full overflow-hidden relative rounded-3xl">
                         <input type="text" id="searchMobile" v-model="search"
                             class="rounded-3xl bg-bg hover:bg-bg2 w-full h-[34px] sm:h-[50px] px-2.5 outline-none caret-yellow placeholder:text-gray placeholder:text-sm text-sm text-black"
                             placeholder="Поиск объявлений" autocomplete="off" :class="searched ? 'pr-7' : 'pr-[85px]'" />
                         <div class="btn-group absolute right-2.5 top-0 my-[7px] flex gap-[5px] items-center"
                             :class="{ active: search, searched: searched }">
-                            <div class="clear cursor-pointer" @click="search = null">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 25 25"
-                                    fill="none">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                                        fill="#A7AABC" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                                        class="pressed" />
-                                </svg>
-                            </div>
+                            <BaseClose @click="search = null" />
                             <BaseButton state="primary" class="px-[11px] py-[7px] text-[10px] h-5" @click="searched = true">
                                 Найти
                             </BaseButton>
@@ -245,16 +236,7 @@ function handleLogout() {
                         placeholder="Поиск объявлений" autocomplete="off" :class="searched ? 'pr-10' : 'pr-[135px]'" />
                     <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
                         :class="{ active: search, searched: searched }">
-                        <div class="clear cursor-pointer" @click="search = null">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                                    fill="#A7AABC" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                                    class="pressed" />
-                            </svg>
-                        </div>
+                        <BaseClose @click="search = null" />
                         <BaseButton state="primary" size="medium" @click="searched = true">Найти</BaseButton>
                     </div>
                 </div>
@@ -264,27 +246,19 @@ function handleLogout() {
                     </div>
                     <div class="bg-white z-[21] absolute pt-[50px] w-full rounded-3xl">
                         <div class="p-2.5">
-                            <div class="w-full overflow-hidden absolute top-0 left-0 rounded-3xl">
+                            <form @submit.prevent class="w-full overflow-hidden absolute top-0 left-0 rounded-3xl">
                                 <input type="text" id="searchbar" v-model="search"
                                     class="rounded-3xl bg-bg hover:bg-bg2 w-full px-5 outline-none caret-yellow placeholder:text-gray placeholder:text-base h-[34px] sm:h-[50px]"
                                     placeholder="Поиск объявлений" autocomplete="off"
                                     :class="searched ? 'pr-7' : 'pr-[85px]'" />
                                 <div class="btn-group absolute right-2.5 top-0 my-2 flex gap-2.5 items-center"
                                     :class="{ active: search, searched: searched }">
-                                    <div class="clear cursor-pointer" @click="search = null">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
-                                            fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                                                fill="#A7AABC" />
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M22.5 12.5C22.5 18.0228 18.0228 22.5 12.5 22.5C6.97715 22.5 2.5 18.0228 2.5 12.5C2.5 6.97715 6.97715 2.5 12.5 2.5C18.0228 2.5 22.5 6.97715 22.5 12.5ZM15.8588 15.8587C15.5659 16.1516 15.091 16.1516 14.7981 15.8587L12.5 13.5606L10.2019 15.8587C9.90901 16.1516 9.43413 16.1516 9.14124 15.8587C8.84835 15.5658 8.84835 15.0909 9.14124 14.798L11.4393 12.4999L9.14125 10.2018C8.84836 9.90895 8.84836 9.43408 9.14125 9.14118C9.43415 8.84829 9.90902 8.84829 10.2019 9.14118L12.5 11.4393L14.7981 9.14119C15.091 8.8483 15.5659 8.8483 15.8588 9.14119C16.1516 9.43409 16.1516 9.90896 15.8588 10.2019L13.5607 12.4999L15.8588 14.798C16.1517 15.0909 16.1517 15.5658 15.8588 15.8587Z"
-                                                class="pressed" />
-                                        </svg>
-                                    </div>
-                                    <BaseButton state="primary" size="medium" @click="searched = true">Найти</BaseButton>
+                                    <BaseClose @click="search = null" />
+                                    <BaseButton type="submit" state="primary" size="medium" @click="onSearch()">
+                                        Найти
+                                    </BaseButton>
                                 </div>
-                            </div>
+                            </form>
                             <div v-if="!requests.length" class="popular flex flex-col gap-[5px]">
                                 <div class="text-xs text-gray pl-4">ТОП-5 популярных запросов</div>
                                 <div class="flex flex-col">
@@ -449,7 +423,7 @@ function handleLogout() {
                                     </div>
                                 </div>
                             </div>
-                            <div
+                            <NuxtLink :to="localePath('/profile/my-ads')"
                                 class="group/icon px-2.5 flex gap-2.5 items-center hover:bg-bg active:bg-bg2 rounded-[200px] h-[34px] cursor-pointer">
                                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 17 15"
@@ -461,8 +435,8 @@ function handleLogout() {
                                 </div>
                                 <span class="text-sm">Мои объявления</span>
                                 <BaseCount count="19" />
-                            </div>
-                            <div
+                            </NuxtLink>
+                            <NuxtLink :to="localePath('/profile/wallet')"
                                 class="group/icon px-2.5 flex gap-2.5 items-center hover:bg-bg active:bg-bg2 rounded-[200px] h-[34px] cursor-pointer">
                                 <div class="w-[18px] h-[18px] flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
@@ -473,7 +447,7 @@ function handleLogout() {
                                     </svg>
                                 </div>
                                 <span class="text-sm">Кошелёк: 0 сум</span>
-                            </div>
+                            </NuxtLink>
                             <div
                                 class="group/icon px-2.5 flex gap-2.5 items-center hover:bg-bg active:bg-bg2 rounded-[200px] h-[34px] cursor-pointer">
                                 <div class="w-[18px] h-[18px] flex items-center justify-center">

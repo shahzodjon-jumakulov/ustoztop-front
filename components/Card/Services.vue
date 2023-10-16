@@ -12,13 +12,14 @@ const props = defineProps(['state'])
         </div>
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-2.5">
-                <p class="text-lg text-blue font-bold">Размещение в TOP</p>
-                <p class="text-lg text-blue font-bold">Премиум профиль</p>
+                <p v-if="state == 'top'" class="text-lg text-blue font-bold">Размещение в TOP</p>
+                <p v-else-if="state == 'premium'" class="text-lg text-blue font-bold">Премиум профиль</p>
                 <p class="line-clamp-3 text-gray text-sm">
                     Кошелек используется для оплаты всех платных услуг Ustoztop (реклама, размещение или продвижение
                     объявлений и покупка премиум).
                 </p>
-                <p class="font-bold text-sm text-black">15 000 сум</p>
+                <p v-if="state == 'top'" class="font-bold text-sm text-black">15 000 сум</p>
+                <p v-else-if="state == 'premium'" class="font-bold text-sm text-black">50 000 сум</p>
             </div>
             <BaseButton state="primary" size="medium">Подключить услугу</BaseButton>
         </div>

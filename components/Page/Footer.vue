@@ -125,7 +125,7 @@ watch(() => route.fullPath, () => getActiveNav());
                             <div class="flex gap-5">
                                 <NuxtLink to="#"
                                     class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">
-                                    <img src="~/assets/images/telegram.svg" alt="telegram">
+                                    <img class="mr-px" src="~/assets/images/telegram.svg" alt="telegram">
                                 </NuxtLink>
                                 <NuxtLink to="#"
                                     class="bg-white hover:bg-yellow flex justify-center items-center h-[30px] w-[30px] rounded-full">

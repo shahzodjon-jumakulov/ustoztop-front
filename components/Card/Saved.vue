@@ -16,7 +16,7 @@ const saved = ref(props.isSaved)
 </script>
 
 <template>
-    <div class="p-4 bg-white flex flex-col gap-[15px] rounded-3xl">
+    <div class="p-4 bg-white flex flex-col gap-[15px] rounded-3xl border-2 border-white" :class="{'border-yellow': isTop}">
         <div class="flex flex-col gap-2.5">
             <div class="flex flex-col gap-[5px]">
                 <div class="flex justify-between">
