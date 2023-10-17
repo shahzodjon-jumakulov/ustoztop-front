@@ -97,15 +97,6 @@ function toggleSearchFocused() {
     }, 1);
 }
 
-
-// CATEGORIES
-const { data: categoriesData } = await useMyFetch(`/api/announcements/categories/?format=json`)
-console.log(categoriesData.value)
-const categories = ref([])
-if (categoriesData.value) {
-    categories.value = categoriesData.value
-}
-
 function handleLogout() {
     isLogout.value = false;
     useLogOut();
@@ -116,6 +107,7 @@ function handleLogout() {
 function onSearch() {
     searched.value = true
     searchFocused.value = false;
+    navigateTo(localePath('/category/search'))
 }
 </script>
 

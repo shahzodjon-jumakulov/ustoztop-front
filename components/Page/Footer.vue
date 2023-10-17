@@ -26,7 +26,7 @@ watch(() => route.fullPath, () => getActiveNav());
 <template>
     <div class="mt-auto z-[12] md:z-10">
         <div class="fixed bottom-0 w-full lg:relative">
-            <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex lg:hidden mt-4 sm:mt-5 md:mt-6">
+            <div class="bg-white shadow-[0_-2px_10px_0_rgba(7,37,77,0.05)] h-[50px] flex lg:hidden">
                 <NuxtLink :to="localePath('/')" :class="{ 'active': !isCategories && activeNav == 'main' }"
                     @click="isCategories = false"
                     class="group flex flex-col flex-[1_0_0] items-center justify-center gap-0.5">
@@ -200,7 +200,7 @@ watch(() => route.fullPath, () => getActiveNav());
                 </div>
             </div>
         </div>
-        <div class="max-lg:h-[50px] w-full"></div>
+        <div class="max-lg:h-[50px] w-full mt-4 sm:mt-5 lg:mt-0"></div>
     </div>
 </template>
 

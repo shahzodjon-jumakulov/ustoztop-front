@@ -3,6 +3,25 @@ const search = ref(null);
 const searched = ref(false);
 const sort = ref(0);
 const isSortOpen = ref(false);
+const categories = useCategories();
+
+const breadCrumb = [
+    {
+        name: "Все категории",
+        link: '/category/search',
+    },
+    {
+        name: "Школьные предметы",
+        link: '/category/search',
+    },
+    {
+        name: "Математика",
+        link: null,
+    },
+]
+
+const selectedCategory1 = ref(null);
+const selectedCategory2 = ref(null);
 
 watch(search, () => { searched.value = search.value ? false : true; });
 
@@ -51,48 +70,63 @@ const results = [
         top: false,
     },
 ]
+
+onMounted(() => {
+    console.log(categories.value)
+})
 </script>
 
 <template>
     <div class="flex flex-col gap-2.5">
-        <div class="bg-white flex flex-col gap-4 p-4 sm:gap-5 sm:p-5">
-            <div class="flex gap-[5px] items-center">
-                <BaseBack />
-                <div class="search-bar w-full overflow-hidden relative rounded-3xl">
-                    <input type="text" id="searchMobile" v-model="search"
-                        class="rounded-3xl bg-bg hover:bg-bg2 w-full h-[34px] sm:h-[50px] px-2.5 outline-none caret-yellow placeholder:text-gray placeholder:text-sm text-sm text-black"
-                        placeholder="Поиск объявлений" autocomplete="off" :class="searched ? 'pr-7' : 'pr-[85px]'" />
-                    <div class="absolute right-2.5 top-0 my-[7px] flex gap-[5px] items-center transition-transform duration-300 ease-[cubic-bezier(0.68,0,0.265,1.55)]"
-                        :class="{ 'translate-x-0': search, '!translate-x-[calc(100%-12px)]': searched }">
-                        <BaseClose class="w-[18px] h-[18px]" @click="search = null" />
-                        <BaseButton state="primary" class="px-[11px] py-[7px] text-[10px] h-5" @click="searched = true">
-                            Найти
-                        </BaseButton>
+        <div class="bg-white py-4 sm:py-5 lg:pt-0">
+            <div class="container flex flex-col gap-4 sm:gap-5">
+                <div class="flex items-center gap-5 lg:hidden">
+                    <NuxtLink :to="localePath('/')" class="h-10 max-md:hidden">
+                        <PageLogo color="blue" :isAnimated="true" />
+                    </NuxtLink>
+                    <div class="flex gap-[5px] items-center flex-grow">
+                        <BaseBack class="md:hidden" />
+                        <div class="search-bar w-full overflow-hidden relative rounded-3xl">
+                            <input type="text" id="searchMobile" v-model="search"
+                                class="rounded-3xl bg-bg hover:bg-bg2 w-full h-[34px] sm:h-[50px] px-2.5 sm:px-5 outline-none caret-yellow placeholder:text-gray placeholder:text-sm text-sm text-black"
+                                placeholder="Поиск объявлений" autocomplete="off"
+                                :class="searched ? 'pr-7' : 'pr-[85px]'" />
+                            <div class="absolute right-2.5 top-0 my-[7px] flex gap-[5px] sm:gap-2.5 items-center transition-transform duration-300 ease-[cubic-bezier(0.68,0,0.265,1.55)]"
+                                :class="{ 'translate-x-0': search, '!translate-x-[calc(100%-12px)] sm:!translate-x-[calc(100%-24px)]': searched }">
+                                <BaseClose class="max-sm:w-[18px] max-sm:h-[18px]" @click="search = null" />
+                                <BaseButton state="primary"
+                                    class="px-[11px] py-[7px] text-[10px] h-5 sm:h-[34px] sm:px-5 sm:py-3 sm:text-sm"
+                                    @click="searched = true">
+                                    Найти
+                                </BaseButton>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex flex-col gap-2.5">
-                <div class="text-2xl font-bold text-black">
-                    Объявления по запросу
-                    <span class="text-blue">«математика»</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span>Найдено 136 объявлений</span>
-                    <div class="flex gap-[5px] items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M8 14.6615C10.25 14.6615 14 10.5268 14 7.25405C14 3.98125 11.3137 1.32812 8 1.32812C4.68629 1.32812 2 3.98125 2 7.25405C2 10.5268 5.75 14.6615 8 14.6615ZM8 9.32812C9.10457 9.32812 10 8.43269 10 7.32812C10 6.22356 9.10457 5.32812 8 5.32812C6.89543 5.32812 6 6.22356 6 7.32812C6 8.43269 6.89543 9.32812 8 9.32812Z"
-                                fill="#1977F1" />
-                        </svg>
-                        <span class="text-xs text-blue">Показать на карте</span>
+                <BreadCrumb class="max-md:hidden" :navs="breadCrumb" />
+                <div class="flex flex-col gap-2.5">
+                    <div class="text-2xl font-bold text-black">
+                        Объявления по запросу
+                        <span class="text-blue">«математика»</span>
+                    </div>
+                    <div class="flex max-sm:justify-between sm:gap-5 items-center">
+                        <span>Найдено 136 объявлений</span>
+                        <div class="flex gap-[5px] items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8 14.6615C10.25 14.6615 14 10.5268 14 7.25405C14 3.98125 11.3137 1.32812 8 1.32812C4.68629 1.32812 2 3.98125 2 7.25405C2 10.5268 5.75 14.6615 8 14.6615ZM8 9.32812C9.10457 9.32812 10 8.43269 10 7.32812C10 6.22356 9.10457 5.32812 8 5.32812C6.89543 5.32812 6 6.22356 6 7.32812C6 8.43269 6.89543 9.32812 8 9.32812Z"
+                                    fill="#1977F1" />
+                            </svg>
+                            <span class="text-xs text-blue">Показать на карте</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container flex flex-col gap-2.5">
-            <div class="flex justify-between items-center flex-wrap">
-                <div class="relative select-none">
-                    <div class="px-5 flex gap-2.5 items-center h-[34px] rounded-3xl bg-bg hover:bg-bg2 cursor-pointer whitespace-nowrap"
+        <div class="container flex flex-col gap-2.5 md:gap-5 max-sm:px-1 sm:px-5">
+            <div class="flex justify-between items-center select-none flex-wrap lg:w-2/3">
+                <div class="relative">
+                    <div class="px-4 sm:px-5 flex gap-2.5 items-center h-[34px] rounded-3xl bg-bg hover:bg-bg2 cursor-pointer whitespace-nowrap"
                         @click="isSortOpen = !isSortOpen">
                         {{ sortOptions[sort].name }}
                         <div class="w-[18px] h-[18px] flex items-center justify-center">
@@ -113,7 +147,7 @@ const results = [
                     </div>
                 </div>
                 <div
-                    class="px-5 flex gap-2.5 items-center h-[34px] text-sm text-blue rounded-[200px] hover:bg-bg active:bg-bg2 cursor-pointer">
+                    class="px-5 flex gap-2.5 items-center h-[34px] text-sm text-blue rounded-[200px] hover:bg-bg active:bg-bg2 cursor-pointer lg:hidden">
                     <div class="w-6 h-6 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -124,8 +158,91 @@ const results = [
                     Фильтры
                 </div>
             </div>
-            <div class="flex flex-col gap-4">
-                <CardSaved v-for="card in results" :key="card.key" :is-top="card.top" />
+            <div class="flex gap-5">
+                <div class="flex flex-col gap-4 sm:gap-5 lg:w-2/3">
+                    <CardSaved v-for="card in results" :key="card.key" :is-top="card.top" />
+                </div>
+                <div class="max-lg:hidden w-1/3">
+                    <div class="bg-white p-5 rounded-3xl flex flex-col gap-10">
+                        <div class="flex flex-col gap-[15px]">
+                            <div class="flex justify-between">
+                                <p class="text-base font-bold">Категории</p>
+                                <p class="text-blue text-xs hover:text-pressed active:text-doublePressed cursor-pointer">
+                                    Сбросить
+                                </p>
+                            </div>
+                            <div class="flex flex-col">
+                                <div v-if="selectedCategory2" @click="selectedCategory1 = null"
+                                    class="flex gap-2.5 items-center rounded-[100px] px-2.5 py-[15px] h-[34px] cursor-pointer hover:bg-bg active:bg-bg2">
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="4" height="8" viewBox="0 0 4 8"
+                                                fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M3.64534 0.273646C3.86097 0.446151 3.89593 0.760797 3.72342 0.976428L1.30664 3.99741L3.72342 7.0184C3.89593 7.23403 3.86097 7.54868 3.64534 7.72118C3.42971 7.89369 3.11506 7.85873 2.94256 7.6431L0.275889 4.30976C0.129801 4.12715 0.129801 3.86768 0.275889 3.68507L2.94256 0.351733C3.11506 0.136102 3.42971 0.101142 3.64534 0.273646Z"
+                                                    fill="#787B8D" />
+                                            </svg>
+                                        </div>
+                                        <span class="text-sm text-gray">{{ categories[0].name }}</span>
+                                    </div>
+                                    <BaseCount count="19" />
+                                </div>
+                                <div class="">
+                                    <div v-if="selectedCategory1" @click="selectedCategory1 = null"
+                                        class="flex gap-2.5 items-center rounded-[100px] px-2.5 py-[15px] h-[34px] cursor-pointer hover:bg-bg active:bg-bg2">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4 flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="4" height="8"
+                                                    viewBox="0 0 4 8" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M3.64534 0.273646C3.86097 0.446151 3.89593 0.760797 3.72342 0.976428L1.30664 3.99741L3.72342 7.0184C3.89593 7.23403 3.86097 7.54868 3.64534 7.72118C3.42971 7.89369 3.11506 7.85873 2.94256 7.6431L0.275889 4.30976C0.129801 4.12715 0.129801 3.86768 0.275889 3.68507L2.94256 0.351733C3.11506 0.136102 3.42971 0.101142 3.64534 0.273646Z"
+                                                        fill="#787B8D" />
+                                                </svg>
+                                            </div>
+                                            <span class="text-sm text-gray">{{ selectedCategory1.name }}</span>
+                                        </div>
+                                        <BaseCount count="19" />
+                                    </div>
+                                    <div v-else v-for="item in categories[0].subcategories" :key="item.key"
+                                        @click="selectedCategory1 = item"
+                                        class="flex gap-2.5 items-center rounded-[100px] px-2.5 py-[15px] h-[34px] cursor-pointer hover:bg-bg active:bg-bg2">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4"></div>
+                                            <span class="text-sm text-black">{{ item.name }}</span>
+                                        </div>
+                                        <BaseCount count="19" />
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <!-- <div v-if="selectedCategory1" @click="selectedCategory1 = null"
+                                        class="flex gap-2.5 items-center rounded-[100px] px-2.5 py-[15px] h-[34px] cursor-pointer hover:bg-bg active:bg-bg2">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4 flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="4" height="8"
+                                                    viewBox="0 0 4 8" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M3.64534 0.273646C3.86097 0.446151 3.89593 0.760797 3.72342 0.976428L1.30664 3.99741L3.72342 7.0184C3.89593 7.23403 3.86097 7.54868 3.64534 7.72118C3.42971 7.89369 3.11506 7.85873 2.94256 7.6431L0.275889 4.30976C0.129801 4.12715 0.129801 3.86768 0.275889 3.68507L2.94256 0.351733C3.11506 0.136102 3.42971 0.101142 3.64534 0.273646Z"
+                                                        fill="#787B8D" />
+                                                </svg>
+                                            </div>
+                                            <span class="text-sm text-gray">{{ selectedCategory1.name }}</span>
+                                        </div>
+                                        <BaseCount count="19" />
+                                    </div> -->
+                                    <div v-if="selectedCategory1" v-for="item in selectedCategory1.subcategories"
+                                        :key="item.key" @click="selectedCategory2 = item"
+                                        class="flex gap-2.5 items-center rounded-[100px] px-2.5 py-[15px] h-[34px] cursor-pointer hover:bg-bg active:bg-bg2">
+                                        <div class="flex items-center">
+                                            <div class="w-4 h-4"></div>
+                                            <span class="text-sm text-black">{{ item.name }}</span>
+                                        </div>
+                                        <BaseCount count="19" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

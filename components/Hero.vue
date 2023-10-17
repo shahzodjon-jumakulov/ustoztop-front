@@ -43,12 +43,8 @@ const pluginsLarge = [
 const flicking = ref(null)
 
 // categories
-const { data: categoriesData } = await useMyFetch(`/api/announcements/categories/?format=json`)
+const categories = useCategories();
 
-const categories = ref([])
-if (categoriesData.value) {
-    categories.value = categoriesData.value
-}
 const isCategories = useState('isCategoriesOpen');
 
 const isTouchDevice = ref(false)
@@ -232,8 +228,8 @@ onMounted(() => {
 
 .flicking-arrow-prev,
 .flicking-arrow-next {
-    width: 40px!important;
-    height: 40px!important;
+    width: 40px !important;
+    height: 40px !important;
 }
 
 .flicking-arrow-prev::before,

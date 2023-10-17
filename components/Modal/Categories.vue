@@ -5,12 +5,7 @@ const selectedCategory = ref(null)
 const selectedSubcategory = ref(null)
 const hoveredCategory = ref(0)
 
-const { data: categoriesData } = await useMyFetch(`/api/announcements/categories/?format=json`)
-console.log(categoriesData.value)
-const categories = ref([])
-if (categoriesData.value) {
-    categories.value = categoriesData.value
-}
+const categories = useCategories();
 
 watch(isCategories, () => {
     if (isCategories.value) {

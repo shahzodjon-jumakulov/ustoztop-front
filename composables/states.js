@@ -2,6 +2,8 @@ export const useAuthenticated = () => useState("isAuthenticated", () => false);
 
 export const useUserInfo = () => useState("userInfo", () => null);
 
+export const useCategories = () => useState("categories", () => null);
+
 export const useTabs = () =>
   useState("tabs", () => [
     {

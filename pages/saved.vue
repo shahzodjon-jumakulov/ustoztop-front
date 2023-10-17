@@ -105,7 +105,7 @@ const seen = [
 </script>
 
 <template>
-    <div class="mt-4 sm:mt-5">
+    <div class="lg:mt-5">
         <div class="flex justify-center items-center relative p-4 sm:p-5 bg-white lg:hidden">
             <h1 class="text-xl sm:text-2xl font-bold text-black">Избранное</h1>
         </div>
@@ -146,13 +146,11 @@ const seen = [
                         class="bg-bg2 rounded-3xl text-xs text-black font-normal flex items-center justify-center px-2 h-6">19</span>
                 </div>
             </div>
-            <div class="cards w-full">
-                <div class="flex flex-col gap-4 sm:gap-5 sm:px-5 lg:px-0" v-if="selected == 1">
-                    <CardSaved v-for="item in saved" :key="item.key" :isTop="item.isTop" :isSaved="true" />
-                </div>
-                <div class="flex flex-col gap-4 sm:gap-5 sm:px-5 lg:px-0" v-else>
-                    <CardSaved v-for="item in seen" :key="item.key" :isTop="item.isTop" :isSaved="item.isSaved" />
-                </div>
+            <div class="flex flex-col gap-4 sm:gap-5 px-1 sm:px-5 lg:px-0" v-if="selected == 1">
+                <CardSaved v-for="item in saved" :key="item.key" :isTop="item.isTop" :isSaved="true" />
+            </div>
+            <div class="flex flex-col gap-4 sm:gap-5 px-1 sm:px-5 lg:px-0" v-else>
+                <CardSaved v-for="item in seen" :key="item.key" :isTop="item.isTop" :isSaved="item.isSaved" />
             </div>
         </div>
     </div>
