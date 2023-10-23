@@ -39,28 +39,16 @@ export default defineI18nConfig(() => ({
         allAnnouncements: "Barcha e’lonlar",
       },
       saved: {
-        tabs: [
-          "Saqlangan e‘lonlar",
-          "Yaqinda ko‘rilganlar",
-        ],
+        tabs: ["Saqlangan e‘lonlar", "Yaqinda ko‘rilganlar"],
       },
       terms: {
         title: "Ustoztop.uz xizmati qoidalari",
-        tabs: [
-          "Foydalanish shartlari",
-          "Maxfiylik siyosati",
-        ],
+        tabs: ["Foydalanish shartlari", "Maxfiylik siyosati"],
       },
       faqPage: {
         title: "Ko‘p so‘raladigan savollar",
       },
-      myAds: [
-        "Faol",
-        "Kutilmoqda",
-        "To'lanmagan",
-        "Faol emas",
-        "Rad etilgan",
-      ],
+      myAds: ["Faol", "Kutilmoqda", "To'lanmagan", "Faol emas", "Rad etilgan"],
       adButton: {
         edit: "Tahrirlash",
         delete: "O‘chirish",
@@ -68,11 +56,54 @@ export default defineI18nConfig(() => ({
         activate: "Faollashtirish",
         promote: "TOPga joylash",
       },
-      myWallet: [
-        "Hamyon",
-        "To‘lovlar tarixi",
-        "Xizmatlar",
-      ],
+      myWallet: ["Hamyon", "To‘lovlar tarixi", "Xizmatlar"],
+      filter: {
+        for: {
+          title: "Kim uchun",
+          options: [
+            "Farqi yo'q",
+            "Maktabgacha yoshdagi bolalar",
+            "O'quvchilar",
+            "Abituriyentlar",
+            "Studentlar",
+            "Kattalar",
+          ],
+        },
+        tutor: {
+          title: "Kim o'rgatadi",
+          options: [
+            "Farqi yo'q",
+            "Erkak",
+            "Ayol",
+          ],
+        },
+        format: {
+          title: "Darslar o'tkaziladigan joy",
+          options: [
+            "Farqi yo'q",
+            "O'quvchinikida",
+            "O'qituvchinikida",
+            "Online",
+          ],
+        },
+        group: {
+          title: "Dars turi",
+          options: [
+            "Farqi yo'q",
+            "Guruh",
+            "Individual",
+          ],
+        },
+        lang: {
+          title: "Dars tili",
+          options: [
+            "Farqi yo'q",
+            "O'zbek tili",
+            "Rus tili",
+            "Ingliz tili",
+          ],
+        },
+      },
     },
     ru: {
       welcome: "Привет",
@@ -111,17 +142,11 @@ export default defineI18nConfig(() => ({
         allAnnouncements: "Все объявления",
       },
       saved: {
-        tabs: [
-          "Избранные объявления",
-          "Недавно просмотренные",
-        ],
+        tabs: ["Избранные объявления", "Недавно просмотренные"],
       },
       terms: {
         title: "Правила сервиса ustoztop.uz",
-        tabs: [
-          "Условия использования",
-          "Политика конфиденциальности",
-        ],
+        tabs: ["Условия использования", "Политика конфиденциальности"],
       },
       faqPage: {
         title: "Ko‘p so‘raladigan savollar",
@@ -140,11 +165,54 @@ export default defineI18nConfig(() => ({
         activate: "Активировать",
         promote: "Разместить в ТОП",
       },
-      myWallet: [
-        "Кошелёк",
-        "История операций",
-        "Услуги",
-      ],
+      myWallet: ["Кошелёк", "История операций", "Услуги"],
+      filter: {
+        for: {
+          title: "Для кого",
+          options: [
+            "Без разницы",
+            "Дошкольники",
+            "Школьники",
+            "Абитуриенты",
+            "Студенты",
+            "Взрослые",
+          ],
+        },
+        tutor: {
+          title: "Кто преподает",
+          options: [
+            "Без разницы",
+            "Мужчина",
+            "Женщина",
+          ],
+        },
+        format: {
+          title: "Место занятий",
+          options: [
+            "Без разницы",
+            "У ученика",
+            "У репетитора",
+            "Онлайн",
+          ],
+        },
+        group: {
+          title: "Тип занятий",
+          options: [
+            "Без разницы",
+            "Групповые",
+            "Индивидуальные",
+          ],
+        },
+        lang: {
+          title: "Язык занятий",
+          options: [
+            "Без разницы",
+            "Узбекский",
+            "Русский",
+            "Английский",
+          ],
+        },
+      },
     },
   },
 }));
