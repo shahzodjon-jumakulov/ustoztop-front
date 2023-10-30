@@ -13,8 +13,10 @@ watch(() => useRoute().fullPath, newVal => {
         <ModalCategories />
         <ModalLogin />
         <ModalSignup />
-        <PageHeader :class="{'max-lg:hidden': !isMain}" />
-        <slot></slot>
+        <PageHeader :class="{ 'max-lg:hidden': !isMain }" />
+        <div class="flex-grow">
+            <slot></slot>
+        </div>
         <PageFooter />
     </div>
 </template>

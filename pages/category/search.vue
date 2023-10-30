@@ -157,7 +157,12 @@ function initRoleTab() {
 }
 
 onMounted(() => {
+    window.addEventListener('resize', () => initRoleTab());
     console.log(categories.value)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', () => initRoleTab());
 })
 
 </script>
@@ -246,7 +251,7 @@ onMounted(() => {
             </div>
             <div class="flex gap-5">
                 <div class="flex flex-col gap-4 sm:gap-5 lg:w-2/3">
-                    <CardSaved v-for="card in results" :key="card.key" :is-top="card.top" />
+                    <CardAnnouncement v-for="card in results" :key="card.key" :is-top="card.top" link="/announcement/ustoztop123" />
                 </div>
                 <div class="max-lg:fixed inset-0 w-full h-full lg:block lg:w-1/3 bg-white rounded-3xl max-lg:overflow-y-auto max-lg:z-20 relative"
                     :class="{ 'max-lg:hidden max-lg:-z-10': !isFilterOpen }">
@@ -255,7 +260,7 @@ onMounted(() => {
                         Сбросить
                     </span>
                     <!-- filter -->
-                    <div class="flex items-center p-4 gap-[5px] sm:p-5 lg:hidden">
+                    <div class="flex items-center p-4 gap-[5px] sm:p-[18px] lg:hidden">
                         <BaseBack @click="isFilterOpen = false" class="absolute left-4 sm:left-5" />
                         <span class="text-xl font-bold text-center flex-grow">Фильтры</span>
                     </div>
@@ -352,14 +357,14 @@ onMounted(() => {
                         <div class="flex flex-col gap-[15px]">
                             <p class="text-base font-bold">Цена (сум)</p>
                             <div class="flex gap-2.5">
-                                <div class="relative flex-grow-0">
+                                <div class="relative flex-grow">
                                     <label class="text-xs text-gray absolute left-5 top-[9px]" for="gte">от</label>
                                     <input
                                         class="w-full px-5 pr-3 pl-9 rounded-[200px] h-[34px] text-sm font-bold text-black border border-[rgba(0,0,0,0)] caret-yellow bg-bg hover:bg-bg2 active:bg-[#D2D7E5] focus-within:border-blue focus-within:!bg-white focus-within:outline-none"
                                         id="gte" type="tel" :placeholder="numberWithSpaces('200000')"
                                         @input="onInputPrice(true)" @keypress="isNumber($event)" v-model="gte">
                                 </div>
-                                <div class="relative flex-grow-0">
+                                <div class="relative flex-grow">
                                     <label class="text-xs text-gray absolute left-5 top-[9px]" for="lte">до</label>
                                     <input
                                         class="w-full px-5 pr-3 pl-9 rounded-[200px] h-[34px] text-sm font-bold text-black border border-[rgba(0,0,0,0)] caret-yellow bg-bg hover:bg-bg2 active:bg-[#D2D7E5] focus-within:border-blue focus-within:!bg-white focus-within:outline-none"
@@ -404,7 +409,8 @@ onMounted(() => {
                         </div>
                         <!-- TUTOR or LC -->
                         <div id="tab" class="bg-bg rounded-[70px] p-[5px] w-full flex relative select-none justify-around">
-                            <span id="stick" class="h-6 rounded-[70px] bg-white absolute transition-all duration-300 ease-in-out"></span>
+                            <span id="stick"
+                                class="h-6 rounded-[70px] bg-white absolute transition-all duration-300 ease-in-out"></span>
                             <div class="group/icon flex-auto cursor-pointer z-[1] h-6 flex items-center justify-center hover:bg-bg2 active:bg-[#D2D7E5] rounded-full text-xs text-gray"
                                 @click="role = 0" :class="{ 'selected !text-blue !bg-white': role == 0 }">Все</div>
                             <div class="group/icon flex-auto cursor-pointer z-[1] h-6 flex items-center justify-center gap-[5px] hover:bg-bg2 active:bg-[#D2D7E5] rounded-full text-xs text-gray"
@@ -569,7 +575,7 @@ onMounted(() => {
                         <!-- map -->
                         <div class="flex flex-col gap-[15px]">
                             <p class="text-base font-bold">Локация</p>
-
+                            <span class="text-base">To be continued...</span>
                         </div>
                     </div>
                 </div>

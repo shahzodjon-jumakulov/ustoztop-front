@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: {enabled: true},
+  devtools: { enabled: true },
   css: ["~/assets/css/main.css", "~/assets/fonts/TT-Norms/stylesheet.css"],
-  modules: ["@nuxtjs/i18n", "@vite-pwa/nuxt"],
+  modules: ["@nuxt/image", "@nuxtjs/i18n", "@vite-pwa/nuxt"],
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL,
@@ -50,6 +50,17 @@ export default defineNuxtConfig({
     locales: ["uz", "ru"],
     defaultLocale: "uz",
     strategy: "prefix_except_default",
+  },
+  image: {
+    format: ["webp"],
+    domains: [`${process.env.BASE_URL}`, 'https://i.imgur.com'],
+    screens: {
+      'sm': 480,
+      'md': 768,
+      'lg': 1000,
+      'xl': 1280,
+      '2xl': 1440,
+    },
   },
   postcss: {
     plugins: {

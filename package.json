@@ -21,6 +21,7 @@
   "dependencies": {
     "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/vue3-flicking": "^4.11.0",
+    "@nuxt/image": "^1.0.0",
     "@unhead/vue": "^1.2.2",
     "@vueuse/core": "^10.3.0",
     "click-outside-vue3": "^4.0.1",

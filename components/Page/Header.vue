@@ -324,16 +324,16 @@ function onSearch() {
             <!-- LANG and auth (profile) -->
             <div class="navbar hidden lg:flex items-center">
                 <NuxtLink v-if="locale == 'ru'" :to="switchLocalePath('uz')"
-                    class="hidden lg:flex lang px-2.5 w-max gap-[5px]">
+                    class="hidden lg:flex lg:items-center lang px-2.5 w-max gap-[5px]">
                     <img src="~/assets/images/ru.svg" alt="ru" />
                     <span class="hidden 2xl:block">Рус</span>
                 </NuxtLink>
-                <NuxtLink v-else :to="switchLocalePath('ru')" class="hidden lg:flex lang px-2.5 w-max gap-[5px]">
+                <NuxtLink v-else :to="switchLocalePath('ru')" class="hidden lg:flex lg:items-center lang px-2.5 w-max gap-[5px]">
                     <img src="~/assets/images/uz.svg" alt="uz" />
                     <span class="hidden 2xl:block">O‘zb</span>
                 </NuxtLink>
                 <!-- saved -->
-                <NuxtLink :to="localePath('/saved')" class="group saved px-2.5 flex w-max gap-[5px]">
+                <NuxtLink :to="localePath('/saved')" class="group saved px-2.5 flex items-center w-max gap-[5px]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M4 8.75V19C4 20.6481 5.88153 21.5889 7.2 20.6L10.8 17.9C11.5111 17.3667 12.4889 17.3667 13.2 17.9L16.8 20.6C18.1185 21.5889 20 20.6481 20 19V8.75H4ZM4 7.25H20V5C20 3.89543 19.1046 3 18 3H6C4.89543 3 4 3.89543 4 5V7.25Z"
@@ -357,7 +357,7 @@ function onSearch() {
                 <div v-else
                     class="group/avatar relative p-[1px] border border-bg rounded-full hover:border-blue active:border-pressed w-[50px] h-[50px] select-none">
                     <NuxtLink :to="localePath('/profile')" class="group/icon">
-                        <svg v-if="userInfo.profile_pic" xmlns="http://www.w3.org/2000/svg" width="46" height="46"
+                        <svg v-if="userInfo && userInfo.profile_pic" xmlns="http://www.w3.org/2000/svg" width="46" height="46"
                             viewBox="0 0 46 46" fill="none">
                             <rect width="46" height="46" rx="23" fill="#F4F6FF"
                                 class="group-hover/icon:fill-bg2 group-active/icon:fill-[#D2D7E5]" />
@@ -366,8 +366,8 @@ function onSearch() {
                                 fill="#787B8D"
                                 class="fill-icon group-hover/icon:fill-blue group-active/icon:fill-pressed" />
                         </svg>
-                        <div class="" v-else>
-                            <img draggable="false" src="~/assets/images/ava.png" alt="avatar">
+                        <div class="rounded-full overflow-hidden" v-else>
+                            <img width="46" height="46" draggable="false" src="~/assets/images/ava.png" alt="avatar">
                             <div
                                 class="absolute w-full h-full bg-black bg-opacity-0 group-hover/icon:bg-opacity-[15%] group-active/icon:bg-opacity-[30%] top-0 left-0 rounded-full transition-opacity duration-300 ease-in-out">
                             </div>
@@ -379,8 +379,8 @@ function onSearch() {
                         <div
                             class="flex flex-col bg-white p-2.5 rounded-3xl border border-bg2 shadow-[0px_8px_24px_-4px_rgba(24,39,75,0.08),_0px_6px_12px_-6px_rgba(24,39,75,0.12)]">
                             <div class="flex gap-2.5 items-center p-2.5">
-                                <div class="">
-                                    <svg v-if="userInfo.profile_pic" xmlns="http://www.w3.org/2000/svg" width="46"
+                                <div class="rounded-full overflow-hidden">
+                                    <svg v-if="userInfo && userInfo.profile_pic" xmlns="http://www.w3.org/2000/svg" width="46"
                                         height="46" viewBox="0 0 46 46" fill="none">
                                         <rect width="46" height="46" rx="23" fill="#F4F6FF"
                                             class="group-hover/avatar:fill-bg2 group-active/avatar:fill-[#D2D7E5]" />
@@ -389,7 +389,7 @@ function onSearch() {
                                             fill="#787B8D"
                                             class="fill-icon group-hover/avatar:fill-blue group-active/avatar:fill-pressed" />
                                     </svg>
-                                    <img v-else draggable="false" src="~/assets/images/ava.png" alt="avatar">
+                                    <img width="46" height="46" v-else draggable="false" src="~/assets/images/ava.png" alt="avatar">
                                 </div>
                                 <div class="flex flex-col gap-[5px]">
                                     <p class="text-base font-bold">ustoz1234</p>

@@ -147,10 +147,10 @@ const seen = [
                 </div>
             </div>
             <div class="flex flex-col gap-4 sm:gap-5 px-1 sm:px-5 lg:px-0" v-if="selected == 1">
-                <CardSaved v-for="item in saved" :key="item.key" :isTop="item.isTop" :isSaved="true" />
+                <CardAnnouncement v-for="item in saved" :key="item.key" :isTop="item.isTop" :isSaved="true" />
             </div>
             <div class="flex flex-col gap-4 sm:gap-5 px-1 sm:px-5 lg:px-0" v-else>
-                <CardSaved v-for="item in seen" :key="item.key" :isTop="item.isTop" :isSaved="item.isSaved" />
+                <CardAnnouncement v-for="item in seen" :key="item.key" :isTop="item.isTop" :isSaved="item.isSaved" />
             </div>
         </div>
     </div>
