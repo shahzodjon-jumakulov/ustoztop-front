@@ -1,4 +1,5 @@
 <script setup>
+const localePath = useLocalePath();
 
 const breadCrumb = [
     {
@@ -190,15 +191,18 @@ const isTutor = ref(false)
                 <div class="sm:px-5 xl:px-0 flex flex-col gap-5 md:flex-row xl:flex-col xl:sticky xl:top-5">
                     <div class="bg-white p-4 sm:p-5 rounded-3xl flex flex-col gap-[15px] md:w-1/2 xl:w-full">
                         <div class="flex flex-col gap-[5px]">
-                            <div class="p-2.5 flex gap-[15px] rounded-full hover:bg-bg active:bg-bg2 cursor-pointer select-none">
+                            <NuxtLink :to="localePath('/ustoztop123')"
+                                class="p-2.5 flex gap-[15px] rounded-full hover:bg-bg active:bg-bg2 cursor-pointer select-none">
                                 <div class="w-[64px] h-[64px] border border-bg2 rounded-full overflow-hidden">
                                     <img draggable="false" src="~/assets/images/ava.png" alt="avatar">
                                 </div>
-                                <div class="flex flex-col gap-[5px]">
+                                <div class="flex flex-col justify-center gap-[5px]">
                                     <div class="flex gap-[5px] items-center">
                                         <p class="text-lg font-bold text-black">Рустам Абдуллаев</p>
-                                        <img draggable="false" width="18" height="18" src="~/assets/images/verified.png" alt="verified">
-                                        <img draggable="false" width="18" height="18" src="~/assets/images/crown.png" alt="crown">
+                                        <img draggable="false" width="18" height="18" src="~/assets/images/verified.png"
+                                            alt="verified">
+                                        <img draggable="false" width="18" height="18" src="~/assets/images/crown.png"
+                                            alt="crown">
                                     </div>
                                     <div v-if="isTutor" class="flex gap-[5px] items-center">
                                         <div class="w-[18px] h-[18px] flex items-center justify-center">
@@ -223,7 +227,7 @@ const isTutor = ref(false)
                                         <span class="text-sm text-gray">Учебное заведение</span>
                                     </div>
                                 </div>
-                            </div>
+                            </NuxtLink>
                             <p class="text-sm text-gray">На Ustoztop.uz с июня 2022</p>
                         </div>
                         <BaseButton state="tertiary" size="large">
@@ -272,5 +276,5 @@ const isTutor = ref(false)
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 </div></template>

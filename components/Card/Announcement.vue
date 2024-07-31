@@ -13,6 +13,10 @@ const props = defineProps({
     link: {
         type: String,
     },
+    phoneNumber: {
+        default: true,
+        type: Boolean,
+    },
 })
 
 const saved = ref(props.isSaved)
@@ -112,7 +116,7 @@ const number = '+998996073137'
                             </div>
                         </div>
                     </div>
-                    <div @click="showNumber = true"  v-if="showNumber || isHovered"
+                    <div @click="showNumber = true"  v-if="(showNumber || isHovered) && props.phoneNumber"
                         class="max-md:hidden self-end bg-bg rounded-[125px] px-5 py-3 h-[34px] flex gap-[5px] items-center hover:bg-bg2 active:bg-[#D2D7E5] z-10">
                         <span class="w-[18px] h-[18px] flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">

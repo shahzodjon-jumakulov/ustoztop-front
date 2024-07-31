@@ -1,5 +1,13 @@
-export const useMyFetch = (request, opts) => {
+export const useMyFetch = async (request, opts) => {
+  const { $i18n } = useNuxtApp();
+  const locale = $i18n.locale;
   const config = useRuntimeConfig();
-
-  return useFetch(request, { baseURL: config.public.baseURL, ...opts });
+  return await useFetch(() => `${locale.value}/api${request}`, {
+    baseURL: config.public.baseURL,
+    onResponse({ request, response }) {
+      // console.log(request);
+      // console.log(response);
+    },
+    ...opts,
+  });
 };

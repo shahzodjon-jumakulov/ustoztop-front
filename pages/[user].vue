@@ -77,7 +77,7 @@ onMounted(() => {
     handleSelected();
     window.addEventListener('resize', () => { handleSelected() }, true);
 })
-
+// TODO delete show number
 </script>
 
 <template>
@@ -105,7 +105,7 @@ onMounted(() => {
             </div>
             <div class="flex flex-col md:gap-5">
                 <div class="-mb-[50px] md:mb-0" v-if="!isTutor">
-                    <nuxt-img
+                    <nuxt-img :preload="true"
                         class="w-full object-cover aspect-[3.2] sm:aspect-[3.42] md:aspect-[3.84] lg:aspect-[4.17] xl:aspect-[4.57] 2xl:aspect-[6]"
                         format="webp" src="https://i.imgur.com/dwgi0UM.jpeg" width="4096" height="2731" provider="ipx"
                         sizes="480px sm:768px md:1000px lg:1280px xl:1440px 2xl:4096px" />

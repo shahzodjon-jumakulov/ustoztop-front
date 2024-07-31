@@ -33,7 +33,7 @@ watch(isCategories, () => {
                         <div class="text-2xl text-black font-bold p-4 sm:p-5">{{ $t("sticky.category") }}</div>
                         <div class="flex flex-col custom-scrollbar overflow-auto py-2">
                             <div class="flex hover:bg-bg rounded-[200px] active:bg-bg2 justify-between items-center py-2.5 px-5 cursor-pointer"
-                                v-for="item in categories" :key="item.key" @click="selectedCategory = item">
+                                v-for="item in categories[0].subcategories" :key="item.key" @click="selectedCategory = item">
                                 <div class="flex gap-2.5 items-center">
                                     <div class="w-[30px] h-[30px] bg-bg2 rounded-full overflow-hidden">
                                         <img class="ml-[3px]" src="~/assets/images/category.svg" alt="icon">
@@ -110,7 +110,7 @@ watch(isCategories, () => {
                     <!-- CATEGORIES -->
                     <div class="w-[350px] overflow-y-auto flex-shrink-0 pr-2.5">
                         <div class="flex hover:bg-bg2 rounded-[200px] justify-between items-center py-2.5 px-5 cursor-pointer"
-                            v-for="item, index in categories" :key="item.key" @click="selectedCategory = item"
+                            v-for="item, index in categories[0].subcategories" :key="item.key" @click="selectedCategory = item"
                             @mouseover="hoveredCategory = index">
                             <div class="flex gap-2.5 items-center">
                                 <div class="w-[30px] h-[30px] bg-bg2 rounded-full overflow-hidden">
@@ -128,7 +128,7 @@ watch(isCategories, () => {
                     <div class="overflow-y-auto flex flex-col gap-5">
                         <!-- name -->
                         <div class="flex text-2xl font-bold items-center">
-                            {{ categories[hoveredCategory].name }}
+                            {{ categories[0].subcategories[hoveredCategory].name }}
                             <div class="w-6 h-6 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12"
                                     fill="none">
@@ -141,7 +141,7 @@ watch(isCategories, () => {
                         <!-- categories -->
                         <div class="gap-5 columns-3 xl:columns-4">
                             <div class="flex flex-col gap-2.5 pb-5 text-black break-inside-avoid"
-                                v-for="(item, index) in categories[hoveredCategory].subcategories" :key="item.key"
+                                v-for="(item, index) in categories[0].subcategories[hoveredCategory].subcategories" :key="item.key"
                                 :class="{ 'inline-flex': item.sub }">
                                 <NuxtLink to="#" class="text-base font-bold hover:text-blue active:text-pressed">
                                     {{ item.name }}
